@@ -4,9 +4,9 @@ on:
     branches: [master]
     paths-ignore:
       - .gitignore
+      - bin/
       - README.md
       - LICENSE
-      - bin
 
 jobs:
   build:

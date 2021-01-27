@@ -16,16 +16,16 @@ new Vue({
     loaded: false,
   },
   render(h) {
-    firebase.auth().onAuthStateChanged((user) =>
-      store.dispatch("AuthUser", user).then(() =>
-        user
-          ? user
-              .getIdToken(true)
-              .then((token) => this.$store.commit("SET_TOKEN", token))
-              .then(() => (this.loaded = true))
-          : (this.loaded = true) | this.$store.dispatch("SignOut")
-      )
-    );
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        this.loaded = true;
+        store.dispatch('SignOut');
+      } else {
+        this.loaded = true;
+        store.dispatch("AuthUser", user);
+        user.getIdToken(true).then((token) => store.commit("SET_TOKEN", token));
+      }
+    });
     return h(App);
   },
 }).$mount("#app");

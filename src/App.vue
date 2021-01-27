@@ -1,10 +1,8 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+  <v-app v-if="$root.loaded">
+    <v-app-bar app color="primary" dark>
+      <side-navbar :drawer="drawer" :items="menuItems"></side-navbar>
+
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -26,35 +24,53 @@
       </div>
 
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-main>
   </v-app>
+  <v-container v-else>
+    <v-overlay value="!$root.loaded">
+      <v-progress-circular
+        :width="7"
+        color="blue"
+        indeterminate
+      ></v-progress-circular>
+    </v-overlay>
+  </v-container>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import SideNavbar from "./components/SideNavbar";
+
+const menuItems = [
+  {
+    icon: "mdi-home",
+    title: "Home",
+    path: "/",
+    visible: true,
+  },
+];
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
+    SideNavbar,
   },
 
-  data: () => ({
-    //
-  }),
+  data() {
+    return {
+      drawer: false,
+      menuItems,
+    };
+  },
 };
 </script>
+
+<style>
+a {
+  text-decoration: none;
+}
+</style>

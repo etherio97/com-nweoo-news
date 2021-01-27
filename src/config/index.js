@@ -1,1 +1,3 @@
-export const firebaseConfig = require("./firebaseConfig.json");
+const firebaseConfig = require("./firebaseConfig.json");
+
+export { firebaseConfig };

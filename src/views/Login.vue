@@ -1,7 +1,7 @@
 <template>
   <v-row class="top-spacer text-center" justify="center">
     <v-form @submit.prevent="signInWithUsername" ref="loginForm">
-      <v-card width="460">
+      <v-card max-width="460" min-width="300">
         <v-card-title>
           <div style="width: 100%; align-text: center;">Log In</div>
         </v-card-title>

@@ -1,70 +1,51 @@
 <template>
-  <v-app v-if="$root.loaded">
-    <v-app-bar app color="primary" dark>
-      <side-navbar :drawer="drawer" :items="menuItems"></side-navbar>
-
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-    </v-app-bar>
+  <v-app>
+    <app-bar :menu="menu"></app-bar>
 
     <v-main>
       <router-view></router-view>
     </v-main>
-  </v-app>
-  <v-container v-else>
-    <v-overlay value="!$root.loaded">
-      <v-progress-circular
-        :width="7"
-        color="blue"
-        indeterminate
-      ></v-progress-circular>
+
+    <v-overlay :value="!loaded" opacity=".95" class="text-center">
+      <v-progress-circular :width="7" color="blue" indeterminate />
+      <div class="mt-4 body-2" id="loading"></div>
     </v-overlay>
-  </v-container>
+  </v-app>
 </template>
 
 <script>
-import SideNavbar from "./components/SideNavbar";
-
-const menuItems = [
-  {
-    icon: "mdi-home",
-    title: "Home",
-    path: "/",
-    visible: true,
-  },
-];
+import menu from "./menu";
+import AppBar from "./components/AppBar";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "App",
 
   components: {
-    SideNavbar,
+    AppBar,
   },
 
-  data() {
-    return {
-      drawer: false,
-      menuItems,
-    };
+  data: () => ({
+    drawer: false,
+    menu,
+  }),
+
+  methods: {
+    ...mapActions("auth", {
+      registerEvent: "registerEvent",
+    }),
+  },
+
+  computed: {
+    ...mapState("auth", ["user"]),
+
+    loaded() {
+      return this.$root.loaded;
+    },
+  },
+
+  beforeMount() {
+    this.registerEvent().then(() => (this.$root.loaded = true));
   },
 };
 </script>
@@ -72,5 +53,22 @@ export default {
 <style>
 a {
   text-decoration: none;
+}
+
+#loading::after {
+  content: "loading";
+  animation: loading 1.8s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    content: "loading.";
+  }
+  50% {
+    content: "loading..";
+  }
+  100% {
+    content: "loading...";
+  }
 }
 </style>

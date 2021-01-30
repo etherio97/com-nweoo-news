@@ -42,6 +42,7 @@
 
 <script>
 import firebase from "firebase/app";
+import { mapState } from "vuex";
 
 let validators = [true, true];
 
@@ -118,14 +119,14 @@ export default {
       this.hasError({ username: true, password: true });
     },
   },
+
   computed: {
+    ...mapState("auth", ["user"]),
+
     email() {
       return this.username.split("@").length == 1
         ? `${this.username}@etherio.net`
         : this.username;
-    },
-    user() {
-      return this.$store.state.user;
     },
   },
 

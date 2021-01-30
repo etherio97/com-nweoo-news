@@ -1,0 +1,83 @@
+<template>
+  <div>
+    <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      fixed
+      light
+      temporary
+      hide-overlay
+    >
+      <template v-slot:prepend v-if="user">
+        <v-list-item two-line to="/profile">
+          <v-list-item-avatar>
+            <v-img v-if="user && user.photoURL" :src="user.photoURL" />
+            <v-icon v-else large>mdi-account</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-subtitle class="ml-2 mt-1">
+              {{ user.displayName || user.email || user.phoneNumber }}
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+
+      <v-divider></v-divider>
+
+      <v-list nav dense>
+        <v-list-item-group active-class="deep-purple--text text--accent-4">
+          <template v-for="(menu, index) in items">
+            <v-list-item :to="menu.path" :key="index" v-if="menu.visible">
+              <v-list-item-icon>
+                <v-icon>{{ menu.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ menu.title }}</v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-list-item-group>
+      </v-list>
+
+      <template v-slot:append v-show="user">
+        <v-list-item>
+          <v-btn @click="signOut" color="secondary" class="mb-6" block>
+            Log Out
+          </v-btn>
+        </v-list-item>
+      </template>
+    </v-navigation-drawer>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+
+export default {
+  name: "NavBar",
+  props: {
+    items: {
+      type: Array,
+      required: true,
+    },
+    user: {
+      type: Object,
+      required: true,
+    },
+    logged: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
+  data: () => ({
+    drawer: false,
+  }),
+
+  methods: {
+    signOut() {
+      //
+    },
+  },
+};
+</script>

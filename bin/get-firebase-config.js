@@ -3,7 +3,7 @@ const FIREBASE_WEBSITE_URL = `${PROJECT_ID}.firebaseapp.com`;
 const axios = require("axios").default;
 const { existsSync, writeFile } = require("fs");
 const { join } = require("path");
-const configFile = join(process.cwd(), "src/config/firebaseConfig.json");
+const configFile = join(process.cwd(), "src/config/firebase-config.json");
 const configUrl = `https://${FIREBASE_WEBSITE_URL}/__/firebase/init.json`;
 if (existsSync(configFile)) {
   console.log("[OK] Already existed config file at:", configFile);

@@ -1,13 +1,16 @@
 require("dotenv").config();
 
 module.exports = async function bootstrap() {
-  const { join } = require("path");
+  const { join, dirname } = require("path");
   const { existsSync, writeFileSync } = require("fs");
   const fetch = require("isomorphic-fetch");
   const credentialURL = process.env.FIREBASE_CREDENTIAL_URL;
   const databaseURL = process.env.FIREBASE_DATABASE_URL;
   const storageBucket = process.env.FIREBASE_STORAGE_BUCKET;
-  const credentialPath = join(process.cwd(), "serviceAccount-config.json");
+  const credentialPath = join(
+    dirname(dirname(__dirname)),
+    "serviceAccount-config.json"
+  );
   const admin = require("firebase-admin");
   if (!existsSync(credentialPath)) {
     if (!credentialURL) {

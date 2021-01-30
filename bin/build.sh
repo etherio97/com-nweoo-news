@@ -2,5 +2,6 @@
 
 npm install
 npm run firebase:config
-npm run build
+node_modules/.bin/vue-cli-service build
 mv -R ./dist ./server
+cd server && npm install

@@ -7,15 +7,14 @@ const bootstrap = require("./bootstrap");
 app.use(json());
 
 bootstrap().then(() => {
+  const { existsSync } = require("fs");
   const { resolve } = require("path");
+  const dist = resolve(__dirname, "/dist");
   if (process.env.NODE_ENV !== "production") {
     app.use(require("morgan")("dev"));
-  } else {
-    app.use(express.static(resolve(__dirname, "/dist")));
   }
-  // register routing
+  existsSync(dist) && app.use(express.static(dist));
   app.use(require("./routes"));
-  // [404] route not found
   app.use((req, res) => res.status(404).json({ error: "Not Found" }));
   app.listen(PORT, () => console.log("server is serving on port", PORT));
 });

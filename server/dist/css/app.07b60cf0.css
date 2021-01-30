@@ -1,1 +1,0 @@
-a{text-decoration:none}#loading:after{content:"loading";-webkit-animation:loading 1.8s ease-in-out infinite;animation:loading 1.8s ease-in-out infinite}@-webkit-keyframes loading{0%{content:"loading."}50%{content:"loading.."}to{content:"loading..."}}@keyframes loading{0%{content:"loading."}50%{content:"loading.."}to{content:"loading..."}}

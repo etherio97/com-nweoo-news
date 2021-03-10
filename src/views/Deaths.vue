@@ -1,39 +1,36 @@
 <template>
   <v-container>
     <h2>သေဆုံးသူများ</h2>
-    <v-simple-table>
-      <thead>
-        <tr>
-          <th>စဥ်</th>
-          <th>နေ့စွဲ</th>
-          <th>အမည်</th>
-          <th>အသက်</th>
-          <th>မှတ်ချက်</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, i) in items" :key="i">
-          <td>{{ num(i + 1) }}။</td>
-          <td>{{ date(item.id) }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ num(item.age) }} နှစ်</td>
-          <td>
-            {{ item.region + (item.district ? "၊ " + item.district : "") }}
-          </td>
-          <td>{{ item.remarks }}</td>
-        </tr>
-      </tbody>
-    </v-simple-table>
+    <v-row>
+      <template v-for="(item, i) in items">
+        <v-col cols="6" sm="4" md="3" lg="3" xl="3" :key="i">
+          <fallen-star-card
+            :id="item.id"
+            :name="item.name"
+            :age="item.age"
+            :image="item.image"
+            :region="item.region"
+            :district="item.district"
+          />
+        </v-col>
+      </template>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-import burmeseNumber from "../functions/burmeseNumber";
 import { convertMonth } from "../functions/burmeseDate";
 import { getPublicURL } from "../functions/database";
+import burmeseNumber from "../functions/burmeseNumber";
+import FallenStarCard from "../components/FallenStarCard.vue";
+
+const components = {
+  FallenStarCard,
+};
 
 export default {
   name: "Deaths",
+  components,
   data: () => ({
     total: 0,
     items: [],

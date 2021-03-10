@@ -9,14 +9,16 @@
   >
     <nav-bar :items="menu" :user="user" :logged="logged"></nav-bar>
     <v-spacer></v-spacer>
-    <v-img
-      alt="NweOo Logo"
-      class="shrink mr-10"
-      contain
-      src="../assets/nweoo-logo.png"
-      transition="scale-transition"
-      width="40"
-    />
+    <router-link to="/">
+      <v-img
+        alt="NweOo Logo"
+        class="shrink mr-10"
+        contain
+        src="../assets/nweoo-logo.png"
+        transition="scale-transition"
+        width="40"
+      />
+    </router-link>
     <v-spacer></v-spacer>
   </v-app-bar>
   <side-bar :items="menu" :user="user" :logged="logged" v-else></side-bar>

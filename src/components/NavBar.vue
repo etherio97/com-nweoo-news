@@ -39,16 +39,10 @@
         </v-list-item-group>
       </v-list>
 
-      <template v-slot:append v-if="logged">
-        <v-list-item>
-          <v-btn color="secondary" class="mb-6" block> Log Out </v-btn>
-        </v-list-item>
-      </template>
-      <template v-slot:append v-else>
-        <v-list-item>
-          <v-btn text outlined class="mb-6" color="red darken-2" block>
-            Log In
-          </v-btn>
+      <template v-slot:append>
+        <v-list-item class="mb-10">
+          <v-btn v-if="logged" color="secondary" block>Log Out</v-btn>
+          <v-btn v-else text outlined color="red darken-2" block :to="{ name: 'LogIn' }">အကောင့်သို့ဝင်ရန်</v-btn>
         </v-list-item>
       </template>
     </v-navigation-drawer>

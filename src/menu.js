@@ -12,6 +12,12 @@ export default [
     visible: true,
   },
   {
+    title: "စာစုများ",
+    icon: "mdi-post",
+    path: "/feeds",
+    visible: true,
+  },
+  {
     title: "သီချင်းများ",
     icon: "mdi-music",
     path: "/music",

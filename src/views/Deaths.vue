@@ -1,8 +1,9 @@
 <template>
   <v-container class="mb-12">
-    <v-card elevation="1" :loading="loading">
+    <v-card elevation="0">
       <v-card-title class="mt-2 mb-4 font-weight-bold">
         သေဆုံးသူများ
+        ({{ num(total) }} ဦး)
       </v-card-title>
       <v-card-text>
         <v-row class="mx-auto">
@@ -52,7 +53,7 @@
 </template>
 
 <script>
-import { convertMonth } from "../functions/burmeseDate";
+import { convertMonth, backDate, formatDate } from "../functions/burmeseDate";
 import { getPublicURL } from "../functions/database";
 import burmeseNumber from "../functions/burmeseNumber";
 import FallenStarCard from "../components/FallenStarCard.vue";
@@ -76,6 +77,11 @@ export default {
     date(d) {
       const dt = new Date(parseInt(d));
       return `${convertMonth(dt.getMonth())}လ ${burmeseNumber(dt.getDate())}`;
+    },
+    fetchFallenCountFor(day = 0) {
+      const d = new Date(backDate(day));
+      const url = getPublicURL("prisoners", formatDate(d).join(""));
+      return this.axios(url).then(({ data }) => data && data.death);
     },
     fetchFallenStars() {
       const url = getPublicURL("fallen-stars");

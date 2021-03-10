@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "bin/build.sh",
-    "firebase:config": "node bin/get-firebase-config.js",
-    "dev": "concurrently \"npm run serve\" \"cd server && npm run dev\""
+    "build": "vue-cli-service build",
+    "firebase:deploy": "firebase deploy --project nwe-oo",
+    "deploy": "npm run build && npm run firebase:deploy"
   },
   "dependencies": {
     "axios": "^0.21.1",

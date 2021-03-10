@@ -1,24 +1,21 @@
 <template>
-  <v-app-bar app color="primary darken-1" dark v-if="appBarVisible">
+  <v-app-bar
+    app
+    color="red darken-4"
+    elevate-on-scroll
+    dark
+    dense
+    v-if="appBarVisible"
+  >
     <nav-bar :items="menu" :user="user" :logged="logged"></nav-bar>
-
     <v-spacer></v-spacer>
     <v-img
-      alt="Vuetify Logo"
+      alt="NweOo Logo"
       class="shrink mr-10"
       contain
-      src="../assets/logo-dark.png"
+      src="../assets/nweoo-logo.png"
       transition="scale-transition"
       width="40"
-    />
-
-    <v-img
-      alt="Vuetify Name"
-      class="shrink mt-1 hidden-sm-and-down"
-      contain
-      min-width="100"
-      src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-      width="100"
     />
     <v-spacer></v-spacer>
   </v-app-bar>
@@ -26,7 +23,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 
@@ -37,10 +33,13 @@ export default {
       required: true,
       type: Array,
     },
-  },
-  methods: {
-    signOut() {
-      //
+    user: {
+      default: Object,
+      type: Object,
+    },
+    logged: {
+      default: false,
+      type: Boolean,
     },
   },
   computed: {
@@ -51,8 +50,6 @@ export default {
     breakpoint() {
       return this.$vuetify.breakpoint.name;
     },
-
-    ...mapState("auth", ["user", "logged"]),
   },
   components: {
     NavBar,

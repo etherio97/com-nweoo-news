@@ -14,6 +14,12 @@ Vue.mixin({
   },
 });
 
+routes.push({
+  name: "NotFound",
+  path: "*",
+  component: () => import("../views/404.vue"),
+});
+
 export default new VueRouter({
   scrollBehavior(from, to, pos) {
     let s = 0;

@@ -5,8 +5,13 @@ export default [
     component: () => import("../views/Home.vue"),
   },
   {
-    name: "Login",
-    path: "/login",
-    component: () => import("../views/Login.vue"),
+    name: "Deaths",
+    path: "/deaths",
+    component: () => import("../views/Deaths.vue"),
+  },
+  {
+    name: "Music",
+    path: "/music",
+    component: () => import("../views/Music.vue"),
   },
 ];

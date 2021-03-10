@@ -2,10 +2,10 @@
   <v-navigation-drawer app v-model="drawer" :mini-variant="mini" permanent>
     <v-list-item>
       <v-list-item-title style="max-width: 40px;">
-        <v-img src="../assets/logo-bw.png"></v-img>
+        <v-img src="../assets/nweoo-logo.png"></v-img>
       </v-list-item-title>
       <v-list-item-subtitle class="pl-3 subtitle-1 font-weight-bold">
-        NEG
+        နွေဦးတော်လှန်ရေး
       </v-list-item-subtitle>
     </v-list-item>
 
@@ -16,7 +16,7 @@
         <v-icon>{{ mini ? "mdi-chevron-right" : "mdi-chevron-left" }}</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon v-show="logged">
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-list-item>

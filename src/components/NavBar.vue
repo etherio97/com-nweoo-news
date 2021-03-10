@@ -10,7 +10,7 @@
       temporary
       hide-overlay
     >
-      <template v-slot:prepend v-if="user">
+      <template v-slot:prepend v-if="logged">
         <v-list-item two-line to="/profile">
           <v-list-item-avatar>
             <v-img v-if="user && user.photoURL" :src="user.photoURL" />
@@ -39,9 +39,9 @@
         </v-list-item-group>
       </v-list>
 
-      <template v-slot:append v-show="user">
+      <template v-slot:append v-if="logged">
         <v-list-item>
-          <v-btn @click="signOut" color="secondary" class="mb-6" block>
+          <v-btn color="secondary" class="mb-6" block>
             Log Out
           </v-btn>
         </v-list-item>
@@ -51,8 +51,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "NavBar",
   props: {

@@ -3,7 +3,7 @@
     <v-row class="mt-3">
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="red darken-2"
+          color="red darken-4"
           title="သေဆုံးသူ"
           :total="today.death"
           :count="death"
@@ -22,7 +22,7 @@
       </v-col> -->
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-4"
+          color="red darken-3"
           title="ဖမ်းစီးခံရသူ"
           :total="arrestedToday"
           :count="detention + released"
@@ -31,7 +31,7 @@
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-3"
+          color="red darken-2"
           title="လက်ရှိဖမ်းခံထားသူ"
           :total="today.detention"
           :count="detention"
@@ -40,7 +40,7 @@
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-2"
+          color="red darken-1"
           title="ပြန်လွတ်မြောက်သူ"
           :total="today.released"
           :count="released"
@@ -49,7 +49,7 @@
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-1"
+          color="red"
           title="တိမ်းရှောင်နေရသူ"
           :total="today.warrant"
           :count="warrant"
@@ -58,7 +58,7 @@
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-1"
+          color="red lighten-1"
           title="ပြစ်ဒဏ်ချမှတ်ခံရသူ"
           :total="today.sentenced"
           :count="sentenced"

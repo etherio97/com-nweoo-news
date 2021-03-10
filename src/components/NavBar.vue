@@ -41,8 +41,13 @@
 
       <template v-slot:append v-if="logged">
         <v-list-item>
-          <v-btn color="secondary" class="mb-6" block>
-            Log Out
+          <v-btn color="secondary" class="mb-6" block> Log Out </v-btn>
+        </v-list-item>
+      </template>
+      <template v-slot:append v-else>
+        <v-list-item>
+          <v-btn text outlined class="mb-6" color="red darken-2" block>
+            Log In
           </v-btn>
         </v-list-item>
       </template>

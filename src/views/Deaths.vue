@@ -2,7 +2,18 @@
   <v-container>
     <h2 class="mt-2 mb-4">သေဆုံးသူများ</h2>
     <v-row class="mx-auto">
-      <template v-for="(item, i) in items">
+      <v-col cols="12" v-if="mode">
+        <v-chip
+          color="red darken-2"
+          dark
+          style="text-transform: capitalize"
+          close
+          @click:close="mode = null"
+        >
+          {{ mode }}: {{ value }}
+        </v-chip>
+      </v-col>
+      <template v-for="(item, i) in items" :v-if="item.visible">
         <v-col cols="12" sm="6" md="4" lg="3" xl="3" :key="i">
           <fallen-star-card
             :id="item.id"
@@ -11,6 +22,11 @@
             :image="item.image"
             :region="item.region"
             :district="item.district"
+            :reason="item.reason"
+            :remarks="item.remarks"
+            :filterByDate="filterByDate.bind(this)"
+            :filterByRegion="filterByRegion.bind(this)"
+            :filterByCase="filterByCase.bind(this)"
           />
         </v-col>
       </template>
@@ -34,6 +50,9 @@ export default {
   data: () => ({
     total: 0,
     items: [],
+    deaths: [],
+    mode: null,
+    value: null,
   }),
   methods: {
     date(d) {
@@ -54,9 +73,43 @@ export default {
     num(n) {
       return burmeseNumber(n);
     },
+    filterByCase(reason) {
+      this.value = reason;
+      this.mode = "case";
+    },
+    filterByRegion(region) {
+      this.value = region;
+      this.mode = "region";
+    },
+    filterByDate(date) {
+      this.value = parseInt(date);
+      this.mode = "date";
+    },
+  },
+  watch: {
+    mode(value) {
+      if (value) {
+        this.items = this.deaths.filter((item) => {
+          if (this.mode === "date") {
+            const a = new Date(parseInt(this.value));
+            const b = new Date(parseInt(items[id]));
+            const x = [a.getMonth(), a.getDate(), a.getFullYear()];
+            const z = [b.getMonth(), b.getDate(), b.getFullYear()];
+            return (
+              x[0] == this.value[0] &&
+              x[1] === this.value[1] &&
+              x[2] === this.value[2]
+            );
+          }
+          return item[value] == this.value;
+        });
+      } else {
+        this.items = this.deaths;
+      }
+    },
   },
   async beforeMount() {
-    this.items = await this.fetchFallenStars();
+    this.deaths = this.items = await this.fetchFallenStars();
   },
 };
 </script>

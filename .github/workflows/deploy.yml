@@ -14,5 +14,7 @@ jobs:
         node-version: 12
     - name: Install
       run: npm install
-    - name: Build & Deploy
-      run: npm run deploy --token ${{ secrets.FIREBASE_PROJECT }}
+    - name: Build
+      run: npm run build
+    - name: Deploy
+      run: npx firebase deploy --project "nwe-oo" --token "${{ secrets.FIREBASE_PROJECT }}"

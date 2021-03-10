@@ -17,4 +17,4 @@ jobs:
     - name: Build
       run: npm run build
     - name: Deploy
-      run: npx firebase deploy --project "nwe-oo" --token "${{ secrets.FIREBASE_PROJECT }}"
+      run: npx firebase deploy --project "nwe-oo" --token "${{ secrets.FIREBASE_TOKEN }}"

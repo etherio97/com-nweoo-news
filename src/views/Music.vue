@@ -1,8 +1,8 @@
 <template>
-  <v-container>
+  <v-container class="mb-12">
     <h2>{{ title || "သီချင်းများ" }}</h2>
     <div class="mt-3 mb-2" id="player">
-      <video v-show="played" ref="video"  preload="auto" controls></video>
+      <video v-show="played" ref="video" preload="auto" controls></video>
     </div>
     <v-simple-table>
       <tbody>
@@ -59,14 +59,18 @@ export default {
       this.$refs.video.play().then(() => (this.played = true))
     );
     this.$refs.video.addEventListener("ended", () => {
-      const current = this.items.findIndex(item => item.src === this.$refs.video.src);
+      const current = this.items.findIndex(
+        (item) => item.src === this.$refs.video.src
+      );
       if (current < 0 || current > this.items.length) {
         this.$refs.video.src = this.items[0];
         return;
       }
       this.$refs.video.src = this.items[current + 1];
     });
-    this.$refs.video.src = this.items[Math.floor(Math.random() * this.items.length)].src;
+    this.$refs.video.src = this.items[
+      Math.floor(Math.random() * this.items.length)
+    ].src;
   },
 };
 </script>

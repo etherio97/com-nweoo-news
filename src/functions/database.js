@@ -1,17 +1,16 @@
+import { backDate, getDate } from "./burmeseDate";
+
 const DATABASE_URL =
   "https://etherio-server.herokuapp.com";
-  // "https://nwe-oo-default-rtdb.firebaseio.com";
+// "https://nwe-oo-default-rtdb.firebaseio.com";
 
 function getPublicURL(...path) {
   return `${DATABASE_URL}/v0/public/${path.join("/")}.json`;
 }
 
 function getStatisticURL(diff = 0) {
-  let dt = new Date();
-  let d = 24 * 3600000 * diff;
-  dt = new Date(`${dt.getMonth() + 1}-${dt.getDate()}-${dt.getFullYear()}`);
-  dt = new Date(dt.getTime() - d);
-  return getPublicURL("statistic", dt.getTime());
+  const date = backDate(diff);
+  return getPublicURL("prisoners", getDate(date).join(''));
 }
 
 export { getPublicURL, getStatisticURL };

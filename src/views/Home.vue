@@ -1,5 +1,12 @@
 <template>
-  <v-container>
+  <v-container class="mb-12">
+    <v-row class="mt-2">
+      <v-col cols="12">
+        <h6 class="text-h6">
+          ဖေဖော်ဝါရီလ (၁)ရက် မှ {{ formatDate(updatedAt) }} ထိ
+        </h6>
+      </v-col>
+    </v-row>
     <v-row class="mt-3">
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
@@ -17,7 +24,6 @@
           title="ဒဏ်ရာရရှိသူ"
           total="0"
           count="0"
-          :loading="loading"
         />
       </v-col> -->
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
@@ -65,11 +71,24 @@
           :loading="loading"
         />
       </v-col>
+
+      <v-col cols="12">
+        <p class="text-center text-caption">
+          <a href="https://aappb.org" target="_blank" rel="noreferrer"
+            >နိုင်ငံရေးအကျဉ်းသားများ ကူညီစောင့်ရှောက်ရေးအသင်း (AAPP)</a
+          >
+          မှ ပြန်လည်ဖော်ပြထားခြင်းဖြစ်သည်။
+          <br />
+          စုစုပေါင်းရလဒ်မှာ ပြန်လည်ပေါင်းထားခြင်းဖြစ်သောကြောင့်
+          အနည်းငယ်ကွဲလွဲမှုရှိနိုင်ပါသည်။
+        </p>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { backDate, formatDate } from "@/functions/burmeseDate";
 import StatisticCard from "../components/StatisticCard.vue";
 import { getStatisticURL } from "../functions/database";
 
@@ -85,6 +104,7 @@ export default {
     col: [6, 4, 3, 3, 3],
     today: {},
     yesterday: {},
+    updatedAt: null,
   }),
   methods: {
     fetchTodayStatistic() {
@@ -96,10 +116,13 @@ export default {
     fetchDayBeforeYesterday() {
       return this.axios(getStatisticURL(2)).then((res) => res.data);
     },
+    formatDate,
   },
   async beforeMount() {
+    this.updatedAt = backDate(0);
     this.today = await this.fetchTodayStatistic();
     if (!this.today) {
+      this.updatedAt = backDate(1);
       this.today = (await this.fetchYesterdayStatistic()) || {};
       this.yesterday = (await this.fetchDayBeforeYesterday()) || {};
     } else {

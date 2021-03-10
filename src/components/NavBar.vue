@@ -27,7 +27,7 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item-group active-class="deep-purple--text text--accent-4">
+        <v-list-item-group active-class="red--text text--accent-4">
           <template v-for="(menu, index) in items">
             <v-list-item :to="menu.path" :key="index" v-if="menu.visible">
               <v-list-item-icon>

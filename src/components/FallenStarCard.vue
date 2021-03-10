@@ -2,7 +2,7 @@
   <v-card>
     <v-img :src="image" />
     <v-card-title class="mb-2">
-      <h4 class="text-subtitle-1 font-weight-bold red--grey text--darken-4">
+      <h4 class="text-subtitle-1 font-weight-bold text--darken-4">
         {{ name }}
       </h4>
       <v-chip class="ma-1" color="red darken-2" dark small>
@@ -12,7 +12,7 @@
     <v-card-subtitle>
       <v-chip
         class="my-1 mr-1"
-        color="red darken-1"
+        color="grey  darken-1"
         dark
         small
         @click="filterByDate(id)"
@@ -21,7 +21,7 @@
       </v-chip>
       <v-chip
         class="my-1 mr-1"
-        color="red darken-1"
+        color="grey  darken-1"
         dark
         small
         @click="filterByRegion(region)"

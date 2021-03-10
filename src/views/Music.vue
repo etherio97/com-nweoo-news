@@ -2,9 +2,7 @@
   <v-container>
     <h2>{{ title || "သီချင်းများ" }}</h2>
     <div class="mt-3 mb-2" id="player">
-      <video v-show="played" ref="video" class="video-js" preload="auto" data-setup="{}" controls>
-        <source type="video/mp4">
-      </video>
+      <video v-show="played" ref="video"  preload="auto" controls></video>
     </div>
     <v-simple-table>
       <tbody>
@@ -52,23 +50,23 @@ export default {
     },
     play({ name, artist, src }) {
       this.title = `${name}${artist ? " - " + artist : ""}`;
-      this.$refs.video.querySelector("source").src = src;
+      this.$refs.video.src = src;
     },
   },
   async beforeMount() {
     this.items = await this.fetchMusic();
     this.$refs.video.addEventListener("canplaythrough", () =>
-      this.$refs.video.querySelector("source").play().then(() => (this.played = true))
+      this.$refs.video.play().then(() => (this.played = true))
     );
-    this.$refs.video.querySelector("source").addEventListener("ended", () => {
-      const current = this.items.findIndex(item => item.src === this.$refs.video.querySelector("source").src);
+    this.$refs.video.addEventListener("ended", () => {
+      const current = this.items.findIndex(item => item.src === this.$refs.video.src);
       if (current < 0 || current > this.items.length) {
         this.$refs.video.src = this.items[0];
         return;
       }
-      this.$refs.video.querySelector("source").src = this.items[current + 1];
+      this.$refs.video.src = this.items[current + 1];
     });
-    this.$refs.video.querySelector("source").src = this.items[Math.floor(Math.random() * this.items.length)].src;
+    this.$refs.video.src = this.items[Math.floor(Math.random() * this.items.length)].src;
   },
 };
 </script>
@@ -78,6 +76,7 @@ export default {
   margin: auto;
   max-width: 1280px;
   max-height: 720px;
+  min-height: 360px;
   align-text: center;
   background: #222;
   border: 2px solid #444;

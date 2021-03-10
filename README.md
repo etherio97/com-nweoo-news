@@ -1,4 +1,4 @@
-# neg-web
+# nwe-oo-vue
 
 ## Project setup
 ```

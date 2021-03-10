@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "firebase:deploy": "firebase deploy --project nwe-oo",
+    "firebase:deploy": "firebase deploy --project nwe-oo -- $@",
     "deploy": "npm run build && npm run firebase:deploy"
   },
   "dependencies": {

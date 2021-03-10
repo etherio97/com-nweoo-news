@@ -3,7 +3,7 @@
     <v-card elevation="0">
       <v-card-title class="mt-2 mb-4 font-weight-bold">
         သေဆုံးသူများ
-        ({{ num(total) }} ဦး)
+        <span v-if="total">({{ num(total) }} ဦး)</span>
       </v-card-title>
       <v-card-text>
         <v-row class="mx-auto">
@@ -29,12 +29,11 @@
               :key="i"
             >
               <fallen-star-card
-                :id="item.id"
+                :date="item.date"
                 :name="item.name"
                 :age="item.age"
                 :image="item.image"
                 :region="item.region"
-                :district="item.district"
                 :reason="item.reason"
                 :remarks="item.remarks"
                 :filterByDate="filterByDate.bind(this)"
@@ -44,7 +43,11 @@
             </v-col>
           </template>
           <template v-else>
-            <v-col cols="12" sm="6" md="4" lg="3" xl="3">ရလဒ်မရှိပါ</v-col>
+            <v-col cols="12" class="text-center" v-if="loading">
+              <v-progress-circular indeterminate color="red darken-2">
+              </v-progress-circular>
+            </v-col>
+            <v-col v-else cols="12" class="text-center">ရလဒ်မရှိပါ</v-col>
           </template>
         </v-row>
       </v-card-text>
@@ -84,7 +87,7 @@ export default {
       return this.axios(url).then(({ data }) => data && data.death);
     },
     fetchFallenStars() {
-      const url = getPublicURL("fallen-stars");
+      const url = getPublicURL("crackdown");
       return this.axios(url).then((res) =>
         Object.entries(res.data)
           .map(([id, value]) => ({
@@ -113,16 +116,9 @@ export default {
   watch: {
     mode(value) {
       if (value) {
-        this.items = this.deaths.filter((item) => {
-          if (this.mode === "date") {
-            const a = new Date(parseInt(this.value));
-            const b = new Date(parseInt(items[id]));
-            const x = [a.getMonth(), a.getDate(), a.getFullYear()];
-            const z = [b.getMonth(), b.getDate(), b.getFullYear()];
-            return x[0] == z[0] && x[1] === z[1] && x[2] === z[2];
-          }
-          return item[value] == this.value;
-        });
+        this.items = this.deaths.filter((item) =>
+          item[value] == this.value
+        );
       } else {
         this.items = this.deaths;
       }

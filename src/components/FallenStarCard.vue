@@ -15,9 +15,9 @@
         color="grey  darken-1"
         dark
         small
-        @click="filterByDate(id)"
+        @click="filterByDate(date)"
       >
-        {{ date }}
+        {{ displayDate }}
       </v-chip>
       <v-chip
         class="my-1 mr-1"
@@ -41,11 +41,6 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-    <v-card-text v-else>
-      <h4 class="text-caption text-body-1 font-weight-bold">
-        {{ reason }}
-      </h4>
-    </v-card-text>
   </v-card>
 </template>
 
@@ -57,7 +52,7 @@ import avatar from "../assets/avatar.png";
 export default {
   name: "FallenStarCard",
   props: {
-    id: {
+    date: {
       type: String,
       required: true,
     },
@@ -108,8 +103,8 @@ export default {
   },
 
   computed: {
-    date() {
-      const d = new Date(parseInt(this.id));
+    displayDate() {
+      const d = new Date(this.date);
       return `${convertMonth(d.getMonth())}လ (${convertDate(d.getDate())}) ရက်`;
     },
   },

@@ -1,6 +1,6 @@
 const DATABASE_URL =
-  // "https://cors-anywhere.herokuapp.com/https://nwe-oo-default-rtdb.firebaseio.com";
-  "https://nwe-oo-default-rtdb.firebaseio.com";
+  "https://etherio-server.herokuapp.com";
+  // "https://nwe-oo-default-rtdb.firebaseio.com";
 
 function getPublicURL(...path) {
   return `${DATABASE_URL}/v0/public/${path.join("/")}.json`;

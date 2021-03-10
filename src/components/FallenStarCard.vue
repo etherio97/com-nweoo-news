@@ -5,8 +5,12 @@
       {{ name }}
     </v-card-title>
     <v-card-subtitle>
-      {{ num(age) }} နှစ်
-      <div class="my-4 subtitle-1">{{ date }}</div>
+      <v-chip class="ma-1" color="grey darken-2" dark small>{{ num(age) }} နှစ်</v-chip>
+    </v-card-subtitle>
+    <v-card-subtitle>
+    <v-chip class="ma-1" color="primary" small>{{ region }}</v-chip>
+    <v-chip class="ma-1" color="primary lighten-2" small>{{ date }}</v-chip>
+    <v-chip v-show="reason" class="ma-1" color="primary darken-2" small>{{ reason }}</v-chip>
     </v-card-subtitle>
   </v-card>
 </template>

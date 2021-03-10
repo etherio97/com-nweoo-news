@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <h2>သေဆုံးသူများ</h2>
-    <v-row>
+    <h2 class="mt-2 mb-4">သေဆုံးသူများ</h2>
+    <v-row class="mx-auto">
       <template v-for="(item, i) in items">
-        <v-col cols="6" sm="4" md="3" lg="3" xl="3" :key="i">
+        <v-col cols="12" sm="6" md="4" lg="3" xl="3" :key="i">
           <fallen-star-card
             :id="item.id"
             :name="item.name"

@@ -18,14 +18,6 @@
           :loading="loading"
         />
       </v-col>
-      <!-- <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
-        <statistic-card
-          color="yellow darken-4"
-          title="ဒဏ်ာရာရရှိသူ"
-          total="0"
-          count="0"
-        />
-      </v-col> -->
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red darken-3"

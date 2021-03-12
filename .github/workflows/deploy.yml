@@ -19,4 +19,4 @@ jobs:
     - name: Install Firebase CLI
       run: npm i -g firebase-tools@latest
     - name: Deploy
-      run: firebase deploy --project "${{ secrets.FUREBAAE_PROJECT }}" --token "${{ secrets.FIREBASE_TOKEN }}"
+      run: firebase deploy --project "${{ secrets.FIREBASE_PROJECT }}" --token "${{ secrets.FIREBASE_TOKEN }}"

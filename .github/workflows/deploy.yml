@@ -13,8 +13,10 @@ jobs:
       with:
         node-version: 12
     - name: Install
-      run: npm install
+      run: npm i
     - name: Build
       run: npm run build
+    - name: Install Firebase CLI
+      run: npm i -g firebase-tools@latest
     - name: Deploy
-      run: npx firebase deploy --project "nwe-oo" --token "${{ secrets.FIREBASE_TOKEN }}"
+      run: firebase deploy --project "${{ secrets.FUREBAAE_PROJECT }}" --token "${{ secrets.FIREBASE_TOKEN }}"

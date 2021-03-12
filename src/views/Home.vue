@@ -132,14 +132,12 @@ export default {
     arrestedToday() {
       return (
         parseInt(this.today.detention || 0) +
-        parseInt(this.today.sentenced || 0) +
         parseInt(this.today.released || 0)
       );
     },
     arrestedYesterday() {
       return (
         parseInt(this.yesterday.detention || 0) +
-        parseInt(this.yesterday.sentenced || 0) +
         parseInt(this.yesterday.released || 0)
       );
     },

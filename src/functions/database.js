@@ -9,12 +9,12 @@ function getURL(...path) {
 }
 
 function getPublicURL(...path) {
-  return getURL("v0/public/", ...path);
+  return getURL("v0/public/", ...path) + ".json";
 }
 
 function getStatisticURL(diff = 0) {
   const date = backDate(diff);
-  return getPublicURL("prisoners", getDate(date).join("") + ".json");
+  return getPublicURL("prisoners", getDate(date).join(""));
 }
 
 export { getURL, getPublicURL, getStatisticURL };

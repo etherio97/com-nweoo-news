@@ -137,7 +137,7 @@ const components = {
 };
 
 function fetchCDM(axios) {
-  return axios(getURL("/v0/cdm")).then((res) => res.data);
+  return axios(getURL("v0/cdm")).then((res) => res.data);
 }
 
 export default {

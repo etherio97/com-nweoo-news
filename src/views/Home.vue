@@ -2,9 +2,12 @@
   <v-container class="mb-12">
     <v-row class="mt-2">
       <v-col cols="12">
-        <h2 class="text-h4 mm-font">
+        <h2 class="text-h6 mm-font">
           ဖေဖော်ဝါရီလ(၁)ရက် မှ {{ formatDate(updatedAt) }} ထိ
         </h2>
+        <p class="text-body-1 mt-2">
+          ဖမ်းစီးထိန်းသိမ်းကျဆုံးမှုများ
+        </p>
       </v-col>
     </v-row>
     <v-row class="mt-3">
@@ -64,40 +67,42 @@
         />
       </v-col>
     </v-row>
+    <v-divider class="mt-5"></v-divider>
     <v-row>
-      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
-        <statistic-card
-          color="blue darken-1"
-          title="အစိုးရဌာနများ"
-          :total="today.sentenced"
-          :count="sentenced"
-          :loading="loading"
-        />
+      <v-col cols="12">
+        <p class="text-body-1 mt-2">
+          CDM တွင်ပါ၀င်လာသူများ
+        </p>
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-1"
+          color="blue darken-4"
           title="အစိုးရဝန်ထမ်းများ"
-          :total="today.sentenced"
-          :count="sentenced"
+          :total="cdm.participant"
           :loading="loading"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-1"
+          color="blue darken-3"
           title="ကျွမ်းကျင်မှု/ရာထူး"
-          :total="today.sentenced"
-          :count="sentenced"
+          :total="cdm.position"
           :loading="loading"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
-          color="blue darken-1"
+          color="blue darken-2"
+          title="အစိုးရဌာနများ"
+          :total="cdm.sector"
+          :loading="loading"
+        />
+      </v-col>
+      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
+        <statistic-card
+          color="blue darken-2"
           title="ဝန်ကြီးဌာန"
-          :total="today.sentenced"
-          :count="sentenced"
+          :total="cdm.ministry"
           :loading="loading"
         />
       </v-col>
@@ -105,8 +110,7 @@
         <statistic-card
           color="blue darken-1"
           title="မြို့နယ်"
-          :total="today.sentenced"
-          :count="sentenced"
+          :total="cdm.cityAndDistrict"
           :loading="loading"
         />
       </v-col>
@@ -114,7 +118,7 @@
         <statistic-card
           color="blue darken-1"
           title="ပြည်နယ်/တိုင်း"
-          :total="today.sentenced"
+          :total="cdm.stateAndRegion"
           :count="sentenced"
           :loading="loading"
         />
@@ -126,11 +130,15 @@
 <script>
 import { backDate, formatDate } from "@/functions/burmeseDate";
 import StatisticCard from "../components/StatisticCard.vue";
-import { getStatisticURL } from "../functions/database";
+import { getURL, getStatisticURL } from "../functions/database";
 
 const components = {
   StatisticCard,
 };
+
+function fetchCDM(axios) {
+  return axios(getURL("/v0/cdm")).then((res) => res.data);
+}
 
 export default {
   name: "Home",
@@ -138,6 +146,7 @@ export default {
   data: () => ({
     loading: true,
     col: [6, 4, 4, 2, 2],
+    cdm: {},
     today: {},
     yesterday: {},
     updatedAt: null,
@@ -155,6 +164,7 @@ export default {
     formatDate,
   },
   async beforeMount() {
+    this.cdm = await fetchCDM(this.axios);
     this.updatedAt = backDate(0);
     this.today = await this.fetchTodayStatistic();
     if (!this.today) {

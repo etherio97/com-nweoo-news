@@ -1,15 +1,19 @@
 import { backDate, getDate } from "./burmeseDate";
 
-const DATABASE_URL = "https://api.herokuapp.com";
+const DATABASE_URL = "https://api.nweoo.com";
 // "https://nwe-oo-default-rtdb.firebaseio.com";
 
+function getURL(...path) {
+  return `${DATABASE_URL}/${path.join("/")}`;
+}
+
 function getPublicURL(...path) {
-  return `${DATABASE_URL}/v0/public/${path.join("/")}.json`;
+  return getURL("v0/public/", ...path);
 }
 
 function getStatisticURL(diff = 0) {
   const date = backDate(diff);
-  return getPublicURL("prisoners", getDate(date).join(""));
+  return getPublicURL("prisoners", getDate(date).join("") + ".json");
 }
 
-export { getPublicURL, getStatisticURL };
+export { getURL, getPublicURL, getStatisticURL };

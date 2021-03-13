@@ -9,7 +9,7 @@ function getURL(...path) {
 }
 
 function getPublicURL(...path) {
-  return getURL("v0/public/", ...path) + ".json";
+  return getURL("v0/public", ...path) + ".json";
 }
 
 function getStatisticURL(diff = 0) {

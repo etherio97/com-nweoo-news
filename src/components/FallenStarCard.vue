@@ -61,12 +61,10 @@ export default {
       required: true,
     },
     age: {
-      type: Number,
-      required: true,
+      type: [String, Number],
     },
     region: {
       type: String,
-      required: true,
     },
     district: {
       type: String,

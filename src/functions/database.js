@@ -1,7 +1,6 @@
 import { backDate, getDate } from "./burmeseDate";
 
-const DATABASE_URL =
-  "https://etherio-server.herokuapp.com";
+const DATABASE_URL = "https://api.herokuapp.com";
 // "https://nwe-oo-default-rtdb.firebaseio.com";
 
 function getPublicURL(...path) {
@@ -10,7 +9,7 @@ function getPublicURL(...path) {
 
 function getStatisticURL(diff = 0) {
   const date = backDate(diff);
-  return getPublicURL("prisoners", getDate(date).join(''));
+  return getPublicURL("prisoners", getDate(date).join(""));
 }
 
 export { getPublicURL, getStatisticURL };

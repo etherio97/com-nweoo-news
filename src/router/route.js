@@ -5,19 +5,14 @@ export default [
     component: () => import("@/views/Home.vue"),
   },
   {
-    name: "Deaths",
-    path: "/deaths",
+    name: "Fallen Stars",
+    path: "/fallen-stars",
     component: () => import("@/views/Deaths.vue"),
   },
   {
-    name: "Music",
-    path: "/music",
-    component: () => import("@/views/Music.vue"),
-  },
-  {
-    name: "Feeds",
-    path: "/feeds",
-    component: () => import("@/views/Feeds.vue"),
+    name: "CDMs",
+    path: "/cdms",
+    component: () => import("@/views/cdms/index.vue"),
   },
   {
     name: "LogIn",

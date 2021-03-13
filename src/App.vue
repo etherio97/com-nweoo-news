@@ -12,6 +12,15 @@
           <v-btn
             class="mx-4 red darken-2 white--text text-center"
             icon
+            v-show="!$root.logged"
+            :to="{ name: 'LogIn' }"
+          >
+            <v-icon size="24px">mdi-account</v-icon>
+          </v-btn>
+
+          <v-btn
+            class="mx-4 red darken-2 white--text text-center"
+            icon
             href="tel:+12029006727"
             target="_blank"
           >

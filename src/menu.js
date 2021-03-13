@@ -6,21 +6,15 @@ export default [
     visible: true,
   },
   {
-    title: "သေဆုံးသူများ",
+    title: "ကျဆုံးသူများ",
+    icon: "mdi-star-four-points-outline",
+    path: "/fallen-stars",
+    visible: true,
+  },
+  {
+    title: "CDMs",
     icon: "mdi-account-multiple",
-    path: "/deaths",
-    visible: true,
-  },
-  {
-    title: "စာစုများ",
-    icon: "mdi-post",
-    path: "/feeds",
-    visible: true,
-  },
-  {
-    title: "သီချင်းများ",
-    icon: "mdi-music",
-    path: "/music",
+    path: "/cdms",
     visible: true,
   },
 ];

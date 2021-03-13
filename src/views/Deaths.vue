@@ -2,8 +2,10 @@
   <v-container class="mb-12">
     <v-card elevation="0">
       <v-card-title class="mt-2 mb-4 font-weight-bold">
-        သေဆုံးသူများ
+        <h2>Fallen Stars</h2>
         <span v-if="total">({{ num(total) }} ဦး)</span>
+        <v-spacer></v-spacer>
+        <add-fallen-star v-show="$root.logged"></add-fallen-star>
       </v-card-title>
       <v-card-text>
         <v-row class="mx-auto">
@@ -11,7 +13,7 @@
             <v-chip
               color="secondary lighten-4"
               dark
-              style="text-transform: capitalize"
+              style="text-transform: capitalize;"
               close
               @click:close="mode = null"
             >
@@ -60,14 +62,14 @@ import { convertMonth, backDate, formatDate } from "../functions/burmeseDate";
 import { getPublicURL } from "../functions/database";
 import burmeseNumber from "../functions/burmeseNumber";
 import FallenStarCard from "../components/FallenStarCard.vue";
-
-const components = {
-  FallenStarCard,
-};
+import AddFallenStar from "@/components/AddFallenStar.vue";
 
 export default {
+  components: {
+    AddFallenStar,
+    FallenStarCard,
+  },
   name: "Deaths",
-  components,
   data: () => ({
     total: 0,
     items: [],
@@ -116,9 +118,7 @@ export default {
   watch: {
     mode(value) {
       if (value) {
-        this.items = this.deaths.filter((item) =>
-          item[value] == this.value
-        );
+        this.items = this.deaths.filter((item) => item[value] == this.value);
       } else {
         this.items = this.deaths;
       }

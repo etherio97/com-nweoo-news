@@ -2,16 +2,16 @@
   <v-container class="mb-12">
     <v-row class="mt-2">
       <v-col cols="12">
-        <h6 class="text-h6">
-          ‌ေဖ‌ေဖာ်ဝါရီ (၁)ရက် မှ {{ formatDate(updatedAt) }} ထိ
-        </h6>
+        <h2 class="text-h4 mm-font">
+          ဖေဖော်ဝါရီလ(၁)ရက် မှ {{ formatDate(updatedAt) }} ထိ
+        </h2>
       </v-col>
     </v-row>
     <v-row class="mt-3">
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red darken-4"
-          title="သေဆုံးသူ""
+          title="သေဆုံးသူ"
           :total="today.death"
           :count="death"
           :to="{ name: 'Deaths' }"
@@ -63,10 +63,61 @@
           :loading="loading"
         />
       </v-col>
-
-      <v-col cols="12">
-        <p class="text-center mm-font">
-        </p>
+    </v-row>
+    <v-row>
+      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
+        <statistic-card
+          color="blue darken-1"
+          title="အစိုးရဌာနများ"
+          :total="today.sentenced"
+          :count="sentenced"
+          :loading="loading"
+        />
+      </v-col>
+      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
+        <statistic-card
+          color="blue darken-1"
+          title="အစိုးရဝန်ထမ်းများ"
+          :total="today.sentenced"
+          :count="sentenced"
+          :loading="loading"
+        />
+      </v-col>
+      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
+        <statistic-card
+          color="blue darken-1"
+          title="ကျွမ်းကျင်မှု/ရာထူး"
+          :total="today.sentenced"
+          :count="sentenced"
+          :loading="loading"
+        />
+      </v-col>
+      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
+        <statistic-card
+          color="blue darken-1"
+          title="ဝန်ကြီးဌာန"
+          :total="today.sentenced"
+          :count="sentenced"
+          :loading="loading"
+        />
+      </v-col>
+      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
+        <statistic-card
+          color="blue darken-1"
+          title="မြို့နယ်"
+          :total="today.sentenced"
+          :count="sentenced"
+          :loading="loading"
+        />
+      </v-col>
+      <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
+        <statistic-card
+          color="blue darken-1"
+          title="ပြည်နယ်/တိုင်း"
+          :total="today.sentenced"
+          :count="sentenced"
+          :loading="loading"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -86,7 +137,7 @@ export default {
   components,
   data: () => ({
     loading: true,
-    col: [6, 4, 3, 3, 3],
+    col: [6, 4, 4, 2, 2],
     today: {},
     yesterday: {},
     updatedAt: null,
@@ -123,8 +174,7 @@ export default {
     },
     arrestedToday() {
       return (
-        parseInt(this.today.detention || 0) +
-        parseInt(this.today.released || 0)
+        parseInt(this.today.detention || 0) + parseInt(this.today.released || 0)
       );
     },
     arrestedYesterday() {

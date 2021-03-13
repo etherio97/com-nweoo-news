@@ -2,16 +2,26 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
+import firebase from "./plugins/firebase";
 import "./plugins/axios";
-import "./plugins/firebase";
 
 Vue.config.productionTip = false;
 
+const data = {
+  loaded: false,
+  logged: false,
+  user: null,
+};
+
 new Vue({
-  data: {
-    loaded: false,
-  },
+  data,
   router,
   vuetify,
-  render: (h) => h(App),
+  render: (h) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      data.user = user;
+      data.logged = Boolean(user);
+    });
+    return h(App);
+  },
 }).$mount("#app");

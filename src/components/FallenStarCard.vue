@@ -1,13 +1,13 @@
 <template>
   <v-card>
-    <v-img :src="image" />
+    <v-img :src="image" v-if="image" />
     <v-card-title class="mb-2">
-      <h4 class="text-subtitle-1 font-weight-bold text--darken-4">
-        {{ name }}
-      </h4>
       <v-chip class="ma-1" color="red darken-2" dark small>
         {{ num(age) }} နှစ်
       </v-chip>
+      <h4 class="text-subtitle-1 font-weight-bold text--darken-4">
+        {{ name }}
+      </h4>
     </v-card-title>
     <v-card-subtitle>
       <v-chip
@@ -15,9 +15,9 @@
         color="grey  darken-1"
         dark
         small
-        @click="filterByDate(date)"
+        @click="filterByDate(deceased)"
       >
-        {{ displayDate }}
+        {{ deceased }}
       </v-chip>
       <v-chip
         class="my-1 mr-1"
@@ -33,7 +33,7 @@
       <v-expansion-panel>
         <v-expansion-panel-header>
           <h4 class="text-caption text-body-1 font-weight-bold">
-            {{ reason }}
+            {{ (remarks||'').slice(0, 20) }}..
           </h4>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="text-caption">
@@ -47,12 +47,12 @@
 <script>
 import { convertDate, convertMonth } from "../functions/burmeseDate";
 import burmeseNumber from "../functions/burmeseNumber";
-import avatar from "../assets/avatar.png";
+//import avatar from "../assets/avatar.png";
 
 export default {
   name: "FallenStarCard",
   props: {
-    date: {
+    deceased: {
       type: String,
       required: true,
     },
@@ -61,15 +61,12 @@ export default {
       required: true,
     },
     age: {
-      type: [String, Number],
+      type: Number,
     },
-    region: {
+    sr: {
       type: String,
     },
-    district: {
-      type: String,
-    },
-    reason: {
+    cd: {
       type: String,
     },
     remarks: {
@@ -77,7 +74,7 @@ export default {
     },
     image: {
       type: String,
-      default: avatar,
+      //default: avatar,
     },
     filterByDate: {
       type: Function,
@@ -104,6 +101,9 @@ export default {
     displayDate() {
       const d = new Date(this.date);
       return `${convertMonth(d.getMonth())}လ (${convertDate(d.getDate())}) ရက်`;
+    },
+    region() {
+      return (this.cd||'').replace(/township/i,'') + ' ' + (this.sr||'').replace(/(?:state|region)/i,'');
     },
   },
 };

@@ -5,7 +5,7 @@ export default [
     component: () => import("@/views/Home.vue"),
   },
   {
-    name: "Fallen Stars",
+    name: "FallenStars",
     path: "/fallen-stars",
     component: () => import("@/views/Deaths.vue"),
   },

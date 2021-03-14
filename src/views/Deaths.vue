@@ -31,12 +31,14 @@
               :key="i"
             >
               <fallen-star-card
-                :date="item.date"
+                :deceased="item.deceased_date"
+                :org="item.organization"
                 :name="item.name"
-                :age="item.age"
+                :age="parseInt(item.age) || 0"
                 :image="item.image"
-                :region="item.region"
-                :reason="item.reason"
+                :sr="item.state_region"
+                :cd="item.township"
+                :gender="item.sex"
                 :remarks="item.remarks"
                 :filterByDate="filterByDate.bind(this)"
                 :filterByRegion="filterByRegion.bind(this)"
@@ -89,7 +91,7 @@ export default {
       return this.axios(url).then(({ data }) => data && data.death);
     },
     fetchFallenStars() {
-      const url = getPublicURL("crackdown");
+      const url = getPublicURL("fallenStars");
       return this.axios(url).then((res) =>
         Object.entries(res.data)
           .map(([id, value]) => ({

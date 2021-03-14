@@ -17,7 +17,7 @@
           title="သေဆုံးသူ"
           :total="today.death"
           :count="death"
-          :to="{ name: 'Deaths' }"
+          :to="{ name: 'FallenStars' }"
           :loading="loading"
         />
       </v-col>

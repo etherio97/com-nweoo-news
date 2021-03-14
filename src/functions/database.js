@@ -1,8 +1,8 @@
 import { backDate, getDate } from "./burmeseDate";
 
-const DATABASE_URL = "https://etherio-server.herokuapp.com";
-// "https://api.nweoo.com";
-// "https://nwe-oo-default-rtdb.firebaseio.com";
+const DATABASE_URL = "https://api.nweoo.com";
+// "https://etherio-server.herokuapp.com"
+// "https://nwe-oo-default-rtdb.firebaseio.com"
 
 function getURL(...path) {
   return `${DATABASE_URL}/${path.join("/")}`;

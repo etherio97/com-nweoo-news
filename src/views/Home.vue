@@ -92,7 +92,7 @@
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-4"
-          :title="$t('goverment_employees')"
+          :title="$t('government_employees')"
           :total="cdm.participant"
           :loading="loading"
           :locale="locale"
@@ -101,7 +101,7 @@
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-3"
-          :title="$t('positon')"
+          :title="$t('position')"
           :total="cdm.position"
           :loading="loading"
           :locale="locale"
@@ -174,7 +174,7 @@ export default {
     yesterday: {},
     updatedAt: null,
     locale: '',
-    languages : ['English','Myanmar Uni'],
+    languages : ['English','Myanmar Uni','Japan'],
     current_language : null
   }),
   methods: {
@@ -264,6 +264,8 @@ export default {
         this.changeLocale('eg');
       } else if(this.current_language == 'Myanmar Uni') {
         this.changeLocale('mm');
+      } else if(this.current_language == 'Japan') {
+        this.changeLocale('jp');
       }
     }
   }

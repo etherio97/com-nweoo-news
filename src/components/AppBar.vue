@@ -33,7 +33,7 @@ export default {
   props: {
     menu: {
       required: true,
-      type: Array,
+      type: Array
     },
     user: {
       default: Object,
@@ -43,6 +43,12 @@ export default {
       default: false,
       type: Boolean,
     },
+  },
+  data() {
+    return {
+      languages : ['English','Myanmar'],
+      c_language : null,
+    }
   },
   computed: {
     appBarVisible() {

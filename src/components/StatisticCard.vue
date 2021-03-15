@@ -2,7 +2,7 @@
   <v-card :color="color" :dark="dark" :to="to" :loading="loading">
     <v-card-title>
       <div class="text-center font-weight-bold" style="width: 100%;">
-        {{ loading ? "-" : burmeseNumber }}
+        {{ loading ? "-" : toNumber }}
         <span v-if="parseInt(count)">{{ updated }}</span>
       </div>
     </v-card-title>
@@ -43,15 +43,29 @@ export default {
       type: Boolean,
       required: true,
     },
+    locale: {
+      type: String,
+      required: true
+    }
   },
   computed: {
-    burmeseNumber() {
-      return burmeseNumber(parseInt(this.total).toLocaleString());
+    toNumber() {
+      switch (this.locale) {
+        case 'mm':
+          return burmeseNumber(parseInt(this.total).toLocaleString());
+        default:
+          return this.total.toLocaleString();
+      }
     },
     updated() {
       let value = parseInt(this.count);
       value = value < 0 ? value * -1 : value;
-      return `${value ? "+" : ""}${burmeseNumber(value.toLocaleString())}`;
+      switch (this.locale) {
+        case 'mm':
+          return `${value ? "+" : ""}${burmeseNumber(value.toLocaleString())}`;
+        default:
+          return `${value ? "+" : ""}${value.toLocaleString()}`;
+      }
     },
   },
 };

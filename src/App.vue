@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import menu from "./menu";
 import AppBar from "./components/AppBar";
+import menu from './menu';
 
 export default {
   name: "App",

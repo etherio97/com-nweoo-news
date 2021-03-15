@@ -3,7 +3,7 @@
     <v-img :src="image" v-if="image" />
     <v-card-title class="mb-2">
       <v-chip class="ma-1" color="red darken-2" dark small>
-        {{ num(age) }} နှစ်
+        {{ num(age) }} {{$t('yo')}}
       </v-chip>
       <h4 class="text-subtitle-1 font-weight-bold text--darken-4">
         {{ name }}
@@ -84,6 +84,10 @@ export default {
       type: Function,
       required: true,
     },
+    locale: {
+      type: String,
+      required: true
+    }
   },
 
   data: () => ({
@@ -94,7 +98,14 @@ export default {
   }),
 
   methods: {
-    num: burmeseNumber,
+    num(age) {
+      switch (this.locale) {
+        case 'mm':
+          return burmeseNumber(age);
+        default:
+          return age;
+      }
+    },
   },
 
   computed: {

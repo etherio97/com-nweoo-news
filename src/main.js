@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
 import firebase from "./plugins/firebase";
+import i18n from './i18n';
 import "./plugins/axios";
 
 Vue.config.productionTip = false;
@@ -17,6 +18,7 @@ new Vue({
   data,
   router,
   vuetify,
+  i18n,
   render: (h) => {
     firebase.auth().onAuthStateChanged((user) => {
       data.user = user;

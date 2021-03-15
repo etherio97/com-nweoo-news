@@ -1,7 +1,8 @@
 name: Deploy to Firebase Web Hosting
 on:
-  pull: 
-    branches: [master] 
+  pull_request: 
+    branch:
+
 jobs:
   build:
     runs-on: ubuntu-latest

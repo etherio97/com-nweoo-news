@@ -1,4 +1,6 @@
-# nwe-oo-vue
+# NweOo | နွေဦး
+
+[![Deploy to Firebase Web Hosting](https://github.com/etherio/nwe-oo-vue/actions/workflows/deploy.yml/badge.svg)](https://github.com/etherio/nwe-oo-vue/actions/workflows/deploy.yml)
 
 ## Project setup
 ```

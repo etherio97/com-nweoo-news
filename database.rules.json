@@ -1,0 +1,10 @@
+{
+    "rules": {
+        "v0": {
+            "public": {
+                ".read": true,
+                ".write": true
+            }
+        }
+    }
+}

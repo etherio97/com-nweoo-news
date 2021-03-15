@@ -1,7 +1,11 @@
 name: Deploy to Firebase Web Hosting
 on:
-  push: 
-    branches: [master] 
+  push:
+    paths:
+      - 'src/**'
+      - 'public/**'
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,3 +24,4 @@ jobs:
       run: npm i -g firebase-tools@latest
     - name: Deploy
       run: firebase deploy --project "${{ secrets.FIREBASE_PROJECT }}" --token "${{ secrets.FIREBASE_TOKEN }}"
+

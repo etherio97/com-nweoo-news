@@ -21,7 +21,10 @@ jobs:
     - name: Build
       run: npm run build
     - name: Install Firebase CLI
-      run: npm i -g firebase-tools@latest
-    - name: Deploy
-      run: firebase deploy --project "${{ secrets.FIREBASE_PROJECT }}" --token "${{ secrets.FIREBASE_TOKEN }}"
-
+      run: npm i -g firebase-tools
+    - name: Deploy new branch
+      run: |
+      git checkout --orphan -B released
+      git remote add deploy "https://etherio97:${{ secrets.GH_SECRET_TOKEN }}@github.com/etherio97/nwe-oo-vue"
+      git push deploy released --force
+      firebase deploy --project "${{ secrets.FIREBASE_PROJECT }}" --token "${{ secrets.FIREBASE_TOKEN }}"

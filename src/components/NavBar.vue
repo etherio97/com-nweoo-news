@@ -33,12 +33,11 @@
               <v-list-item-icon>
                 <v-icon>{{ menu.icon }}</v-icon>
               </v-list-item-icon>
-              <v-list-item-title>{{ menu.title }}</v-list-item-title>
+              <v-list-item-title>{{ $t(menu.title) }}</v-list-item-title>
             </v-list-item>
           </template>
         </v-list-item-group>
       </v-list>
-
       <template v-slot:append>
         <v-list-item class="mb-10">
           <v-btn v-if="logged" color="secondary" block>Log Out</v-btn>

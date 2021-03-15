@@ -2,7 +2,7 @@
   <v-container class="mb-12">
     <v-card elevation="0">
       <v-card-title class="mt-2 mb-4 font-weight-bold">
-        <h2>Fallen Stars</h2>
+        <h2>{{$t('killed_in_action')}}</h2>
         <span v-if="total">({{ num(total) }} ဦး)</span>
         <v-spacer></v-spacer>
         <add-fallen-star v-show="$root.logged"></add-fallen-star>
@@ -43,6 +43,7 @@
                 :filterByDate="filterByDate.bind(this)"
                 :filterByRegion="filterByRegion.bind(this)"
                 :filterByCase="filterByCase.bind(this)"
+                :locale="locale"
               />
             </v-col>
           </template>
@@ -65,6 +66,7 @@ import { getPublicURL } from "../functions/database";
 import burmeseNumber from "../functions/burmeseNumber";
 import FallenStarCard from "../components/FallenStarCard.vue";
 import AddFallenStar from "@/components/AddFallenStar.vue";
+import { getLocale } from '../i18n';
 
 export default {
   components: {
@@ -79,6 +81,7 @@ export default {
     mode: null,
     value: null,
     loading: true,
+    locale: ''
   }),
   methods: {
     date(d) {
@@ -129,6 +132,8 @@ export default {
   async beforeMount() {
     this.deaths = this.items = (await this.fetchFallenStars()) || [];
     this.loading = false;
+    this.locale = getLocale();
+    console.log(this.locale);
   },
 };
 </script>

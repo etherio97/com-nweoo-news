@@ -1,69 +1,84 @@
 <template>
   <v-container class="mb-12">
     <v-row class="mt-2">
-      <v-col cols="12">
+      <v-col cols="8">
         <h2 class="text-h6 mm-font">
-          ဖေဖော်ဝါရီလ(၁)ရက် မှ {{ formatDate(updatedAt) }} ထိ
+          {{$t('feb_1')}} {{$t('from')}} {{ getDate(updatedAt) }} {{$t('to')}}
         </h2>
         <p class="text-body-1 mt-2">
-          ဖမ်းစီးထိန်းသိမ်းကျဆုံးမှုများ
+          {{$t('deaths_or_detained')}}
         </p>
+      </v-col>
+      <v-col cols="4">
+        <v-select
+          label="language"
+          dense
+          outlined
+          :items="languages"
+          v-model="current_language"
+        ></v-select>
       </v-col>
     </v-row>
     <v-row class="mt-3">
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red darken-4"
-          title="သေဆုံးသူ"
+          :title="$t('deaths')"
           :total="today.death"
           :count="death"
           :to="{ name: 'FallenStars' }"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red darken-3"
-          title="ဖမ်းစီးခံရသူ"
+          :title="$t('arrested')"
           :total="arrestedToday"
           :count="detention + released"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red darken-2"
-          title="ထိန်းသိမ်းထားသူ"
+          :title="$t('detained')"
           :total="today.detention"
           :count="detention"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red darken-1"
-          title="လွတ်မြောက်လာသူ"
+          :title="$t('survivors')"
           :total="today.released"
           :count="released"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red"
-          title="ရှောင်တိမ်းနေရသူ"
+          :title="$t('who_avoided')"
           :total="today.warrant"
           :count="warrant"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="red lighten-1"
-          title="ပြစ်ဒဏ်ချမှတ်ခံရသူ "
+          :title="$t('who_punished')"
           :total="today.sentenced"
           :count="sentenced"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
     </v-row>
@@ -71,56 +86,62 @@
     <v-row>
       <v-col cols="12">
         <p class="text-body-1 mt-2">
-          CDM တွင်ပါ၀င်လာသူများ
+          {{$t('people_in_cdm')}}
         </p>
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-4"
-          title="အစိုးရဝန်ထမ်းများ"
+          :title="$t('goverment_employees')"
           :total="cdm.participant"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-3"
-          title="ကျွမ်းကျင်မှု/ရာထူး"
+          :title="$t('positon')"
           :total="cdm.position"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-2"
-          title="အစိုးရဌာနများ"
+          :title="$t('offices')"
           :total="cdm.sector"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-2"
-          title="ဝန်ကြီးဌာန"
+          :title="$t('ministry')"
           :total="cdm.ministry"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-1"
-          title="မြို့နယ်"
+          :title="$t('township')"
           :total="cdm.cityAndDistrict"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
         <statistic-card
           color="blue darken-1"
-          title="ပြည်နယ်/တိုင်း"
+          :title="$t('state')"
           :total="cdm.stateAndRegion"
           :count="sentenced"
           :loading="loading"
+          :locale="locale"
         />
       </v-col>
     </v-row>
@@ -129,8 +150,10 @@
 
 <script>
 import { backDate, formatDate } from "@/functions/burmeseDate";
+import engFormatDate from '@/functions/normalDate';
 import StatisticCard from "../components/StatisticCard.vue";
 import { getURL, getStatisticURL } from "../functions/database";
+import { getLocale } from '../i18n';
 
 const components = {
   StatisticCard,
@@ -150,8 +173,16 @@ export default {
     today: {},
     yesterday: {},
     updatedAt: null,
+    locale: '',
+    languages : ['English','Myanmar Uni'],
+    current_language : null
   }),
   methods: {
+    changeLocale (locale) {
+      this.$i18n.locale = locale;
+      window.localStorage.setItem('lang',locale);
+      this.$router.go();
+    },
     fetchTodayStatistic() {
       return this.axios(getStatisticURL()).then((res) => res.data);
     },
@@ -161,12 +192,20 @@ export default {
     fetchDayBeforeYesterday() {
       return this.axios(getStatisticURL(2)).then((res) => res.data);
     },
-    formatDate,
+    getDate(updatedAt) {
+      switch (this.locale) {
+        case 'mm':
+          return formatDate(updatedAt);
+        case 'eg':
+          return engFormatDate(updatedAt);
+      }
+    }
   },
   async beforeMount() {
     this.cdm = await fetchCDM(this.axios);
     this.updatedAt = backDate(0);
     this.today = await this.fetchTodayStatistic();
+    this.locale = getLocale();
     if (!this.today) {
       this.updatedAt = backDate(1);
       this.today = (await this.fetchYesterdayStatistic()) || {};
@@ -218,5 +257,15 @@ export default {
       );
     },
   },
+  watch: {
+    current_language: function() {
+      console.log("language changed");
+      if(this.current_language == 'English') {
+        this.changeLocale('eg');
+      } else if(this.current_language == 'Myanmar Uni') {
+        this.changeLocale('mm');
+      }
+    }
+  }
 };
 </script>

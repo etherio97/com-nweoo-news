@@ -4,6 +4,7 @@
 
     <v-main>
       <router-view :key="$route.path"></router-view>
+      <!-- <fab-button></fab-button> -->
     </v-main>
 
     <v-footer padless dark>
@@ -58,13 +59,15 @@
 
 <script>
 import AppBar from "./components/AppBar";
-import menu from './menu';
+import menu from "./menu";
+import FabButton from "./components/FabButton.vue";
 
 export default {
   name: "App",
 
   components: {
     AppBar,
+    FabButton,
   },
 
   data: () => ({

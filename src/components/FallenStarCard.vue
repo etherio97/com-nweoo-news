@@ -3,7 +3,7 @@
     <v-img :src="image" v-if="image" />
     <v-card-title class="mb-2">
       <v-chip class="ma-1" color="red darken-2" dark small>
-        {{ num(age) }} {{$t('yo')}}
+        {{ num(age) }} {{ $t("year") }}
       </v-chip>
       <h4 class="text-subtitle-1 font-weight-bold text--darken-4">
         {{ name }}
@@ -33,7 +33,7 @@
       <v-expansion-panel>
         <v-expansion-panel-header>
           <h4 class="text-caption text-body-1 font-weight-bold">
-            {{ (remarks||'').slice(0, 20) }}..
+            {{ (remarks || "").slice(0, 20) }}..
           </h4>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="text-caption">
@@ -86,8 +86,8 @@ export default {
     },
     locale: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data: () => ({
@@ -100,7 +100,7 @@ export default {
   methods: {
     num(age) {
       switch (this.locale) {
-        case 'mm':
+        case "mm":
           return burmeseNumber(age);
         default:
           return age;
@@ -114,7 +114,11 @@ export default {
       return `${convertMonth(d.getMonth())}လ (${convertDate(d.getDate())}) ရက်`;
     },
     region() {
-      return (this.cd||'').replace(/township/i,'') + ' ' + (this.sr||'').replace(/(?:state|region)/i,'');
+      return (
+        (this.cd || "").replace(/township/i, "") +
+        " " +
+        (this.sr || "").replace(/(?:state|region)/i, "")
+      );
     },
   },
 };

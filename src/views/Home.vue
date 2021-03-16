@@ -3,10 +3,12 @@
     <v-row class="mt-2">
       <v-col cols="8">
         <h2 class="text-h6 mm-font">
-          {{$t('feb_1')}} {{$t('from')}} {{ getDate(updatedAt) }} {{$t('to')}}
+          {{ $t("feb_1") }} {{ $t("from") }}
+          {{ getDate(updatedAt) }}
+          {{ $t("to") }}
         </h2>
         <p class="text-body-1 mt-2">
-          {{$t('deaths_or_detained')}}
+          {{ $t("deaths_or_detained") }}
         </p>
       </v-col>
       <v-col cols="4">
@@ -86,7 +88,7 @@
     <v-row>
       <v-col cols="12">
         <p class="text-body-1 mt-2">
-          {{$t('people_in_cdm')}}
+          {{ $t("people_in_cdm") }}
         </p>
       </v-col>
       <v-col :cols="col[0]" :sm="col[1]" :md="col[2]" :lg="col[3]" :xl="col[4]">
@@ -150,10 +152,10 @@
 
 <script>
 import { backDate, formatDate } from "@/functions/burmeseDate";
-import engFormatDate from '@/functions/normalDate';
+import { engFormatDate, otherFormatDate } from "@/functions/normalDate";
 import StatisticCard from "../components/StatisticCard.vue";
 import { getURL, getStatisticURL } from "../functions/database";
-import { getLocale } from '../i18n';
+import { getLocale } from "../i18n";
 
 const components = {
   StatisticCard,
@@ -173,14 +175,14 @@ export default {
     today: {},
     yesterday: {},
     updatedAt: null,
-    locale: '',
-    languages : ['English','Myanmar Uni','Japan'],
-    current_language : null
+    locale: "",
+    languages: ["English", "Myanmar Uni", "Japan", "Korea"],
+    current_language: null,
   }),
   methods: {
-    changeLocale (locale) {
+    changeLocale(locale) {
       this.$i18n.locale = locale;
-      window.localStorage.setItem('lang',locale);
+      window.localStorage.setItem("lang", locale);
       this.$router.go();
     },
     fetchTodayStatistic() {
@@ -194,12 +196,17 @@ export default {
     },
     getDate(updatedAt) {
       switch (this.locale) {
-        case 'mm':
+        case "mm":
           return formatDate(updatedAt);
-        case 'eg':
+        case "en":
           return engFormatDate(updatedAt);
+        default:
+          return otherFormatDate(updatedAt, {
+            day: this.$t("day"),
+            month: this.$t("month"),
+          });
       }
-    }
+    },
   },
   async beforeMount() {
     this.cdm = await fetchCDM(this.axios);
@@ -258,16 +265,17 @@ export default {
     },
   },
   watch: {
-    current_language: function() {
-      console.log("language changed");
-      if(this.current_language == 'English') {
-        this.changeLocale('eg');
-      } else if(this.current_language == 'Myanmar Uni') {
-        this.changeLocale('mm');
-      } else if(this.current_language == 'Japan') {
-        this.changeLocale('jp');
+    current_language: function () {
+      if (this.current_language == "English") {
+        this.changeLocale("en");
+      } else if (this.current_language == "Korea") {
+        this.changeLocale("kr");
+      } else if (this.current_language == "Myanmar Uni") {
+        this.changeLocale("mm");
+      } else if (this.current_language == "Japan") {
+        this.changeLocale("jp");
       }
-    }
-  }
+    },
+  },
 };
 </script>

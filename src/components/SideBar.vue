@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer app v-model="drawer" :mini-variant="mini" permanent>
     <v-list-item>
-      <v-list-item-title style="max-width: 40px;">
+      <v-list-item-title style="max-width: 40px">
         <v-img src="../assets/nweoo-logo.png"></v-img>
       </v-list-item-title>
       <v-list-item-subtitle class="pl-3 subtitle-1 font-weight-bold">

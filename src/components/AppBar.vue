@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     app
-    color="red darken-4"
+    color="secondary"
     elevate-on-scroll
     dark
     dense
@@ -33,7 +33,7 @@ export default {
   props: {
     menu: {
       required: true,
-      type: Array
+      type: Array,
     },
     user: {
       default: Object,
@@ -46,9 +46,9 @@ export default {
   },
   data() {
     return {
-      languages : ['English','Myanmar'],
-      c_language : null,
-    }
+      languages: ["English", "Myanmar"],
+      c_language: null,
+    };
   },
   computed: {
     appBarVisible() {

@@ -1,20 +1,14 @@
 export default [
-        {
-          title: "home",
-          icon: "mdi-home",
-          path: "/",
-          visible: true,
-        },
-        {
-          title: "killed_in_action",
-          icon: "mdi-star-four-points-outline",
-          path: "/fallen-stars",
-          visible: true,
-        },
-        {
-          title: "cdms",
-          icon: "mdi-account-multiple",
-          path: "/cdms",
-          visible: true,
-        }
+  {
+    title: "Homepage",
+    icon: "mdi-home",
+    path: "/",
+    visible: true,
+  },
+  {
+    title: "SMS Reporter",
+    icon: "mdi-message-bookmark-outline",
+    path: "/sms",
+    visible: true,
+  },
 ];

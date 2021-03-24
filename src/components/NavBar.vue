@@ -22,12 +22,11 @@
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
+        <v-divider></v-divider>
       </template>
 
-      <v-divider></v-divider>
-
       <v-list nav dense>
-        <v-list-item-group active-class="red--text text--accent-4">
+        <v-list-item-group active-class="secondary--text text--accent-4">
           <template v-for="(menu, index) in items">
             <v-list-item :to="menu.path" :key="index" v-if="menu.visible">
               <v-list-item-icon>
@@ -38,10 +37,19 @@
           </template>
         </v-list-item-group>
       </v-list>
+
       <template v-slot:append>
         <v-list-item class="mb-10">
-          <v-btn v-if="logged" color="secondary" block>Log Out</v-btn>
-          <v-btn v-else text outlined color="red darken-2" block :to="{ name: 'LogIn' }">အကောင့်သို့ဝင်ရန်</v-btn>
+          <v-btn v-if="logged" color="secondary darken-1" block>Log Out</v-btn>
+          <v-btn
+            v-else
+            text
+            outlined
+            color="secondary darken-1"
+            block
+            :to="{ name: 'LogIn' }"
+            >အကောင့်သို့ဝင်ရန်</v-btn
+          >
         </v-list-item>
       </template>
     </v-navigation-drawer>

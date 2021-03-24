@@ -1,10 +1,18 @@
 {
-    "rules": {
-        "v0": {
-            "public": {
-                ".read": true,
-                ".write": true
-            }
+  "rules": {
+    "v0": {
+      "public": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "v1": {
+      "smsreports": {
+        "$id": {
+          ".read": true,
+          ".write": true
         }
+      }
     }
+  }
 }

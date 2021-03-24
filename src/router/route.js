@@ -2,21 +2,21 @@ export default [
   {
     name: "Home",
     path: "/",
-    component: () => import("@/views/Home.vue"),
+    component: () => import("../views/Index.vue"),
   },
   {
-    name: "FallenStars",
-    path: "/fallen-stars",
-    component: () => import("@/views/Deaths.vue"),
+    name: "SMSReporter",
+    path: "/sms",
+    component: () => import("../views/sms/Index.vue"),
   },
   {
-    name: "CDMs",
-    path: "/cdms",
-    component: () => import("@/views/cdms/index.vue"),
+    name: "ReportSMS",
+    path: "/report",
+    component: () => import("../views/sms/Report.vue"),
   },
   {
     name: "LogIn",
     path: "/login",
-    component: () => import("@/views/auth/LogIn.vue"),
+    component: () => import("../views/auth/LogIn.vue"),
   },
 ];

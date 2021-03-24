@@ -56,7 +56,7 @@ export default {
     instantDelete() {
       this.loading = true;
       this.axios
-        .put(`http://localhost:3000/report/${this.id}`, {
+        .put(`${this.$root.api}/report/${this.id}`, {
           phone: this.phone,
         })
         .then(({ data }) => {

@@ -12,6 +12,7 @@ const data = {
   loaded: false,
   logged: false,
   user: null,
+  api: 'https://api.nweoo.com'
 };
 
 new Vue({

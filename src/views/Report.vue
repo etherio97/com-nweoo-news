@@ -82,6 +82,10 @@
               Post#{{ id }} ကို ပယ်ဖျက်ရန်တောင်းဆိုခြင်း
             </v-card-title>
             <v-card-text>
+              <v-alert type="warning">
+                အခုလောလောဆယ် ပယ်ဖျက်ရန်တောင်းဆိုလိုပါက chatbox ကတဆင့်သာသ
+                ဆက်သွယ်တောင်းဆိုပေးပါ။
+              </v-alert>
               <v-select
                 label="အကြောင်းအရာ"
                 outlined

@@ -56,21 +56,9 @@ export default {
     instantDelete() {
       this.loading = true;
       this.axios
-        .put(`${this.$root.api}/report/${this.id}`, {
-          phone: this.phone,
-        })
-        .then(({ data }) => {
-          if (data === null) {
-            throw new Error(`ID#${this.id} does not exist.`);
-          }
-          if (this.phone !== data.phone) {
-            throw new Error("Incorrect Phone Number");
-          }
-          this.$router.push("/?deleted=1");
-        })
-        .catch((err) => {
-          this.error = err.message;
-        })
+        .delete(`${this.$root.api}/report/${this.id}?phone=${this.phone}`)
+        .then(() => this.$router.push("/?deleted=1"))
+        .catch((err) => (this.error = err.message))
         .finally(() => (this.loading = false));
     },
   },

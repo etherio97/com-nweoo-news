@@ -5,18 +5,13 @@ export default [
     component: () => import("../views/Index.vue"),
   },
   {
-    name: "SMSReporter",
-    path: "/sms",
-    component: () => import("../views/sms/Index.vue"),
-  },
-  {
-    name: "ReportSMS",
+    name: "Report",
     path: "/report",
-    component: () => import("../views/sms/Report.vue"),
+    component: () => import("../views/Report.vue"),
   },
   {
-    name: "LogIn",
-    path: "/login",
-    component: () => import("../views/auth/LogIn.vue"),
+    name: "ReportID",
+    path: "/report/:id",
+    component: () => import("../views/Report.vue"),
   },
 ];

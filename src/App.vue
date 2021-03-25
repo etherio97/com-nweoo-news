@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import AppBar from "./components/AppBar";
 import menu from "./menu";
+import AppBar from "./components/AppBar";
 import AppFooter from "./components/AppFooter.vue";
-import FabButton from "./components/FabButton.vue";
+import FacebookMessenger from "./components/FacebookMessenger.vue";
 
 export default {
   name: "App",
@@ -23,7 +23,7 @@ export default {
   components: {
     AppBar,
     AppFooter,
-    FabButton,
+    FacebookMessenger,
   },
 
   data: () => ({

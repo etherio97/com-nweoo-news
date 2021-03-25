@@ -7,7 +7,7 @@
       }
     },
     "v1": {
-      "smsreports": {
+      "sms-reports": {
         "$id": {
           ".read": true,
           ".write": true

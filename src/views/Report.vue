@@ -104,7 +104,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" @click="submitReport">တောင်းဆိုပါ</v-btn>
+              <v-btn color="primary" :disabled="!reason" @click="submitReport">
+                တောင်းဆိုပါ
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-stepper-content>
@@ -134,7 +136,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="error" @click="instantDelete">ဖျက်ပါ</v-btn>
+              <v-btn color="error" :disabled="!phone" @click="instantDelete"
+                >ဖျက်ပါ</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-stepper-content>
@@ -169,8 +173,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "ReportSMS",
   components: {},
@@ -197,31 +199,40 @@ export default {
       this.step = 5;
       this.error = null;
       this.status = "အတည်ပြုနေသည်။";
-      const report = {
-        phone: this.phone,
-      };
-      axios
-        .put(`https://api.nweoo.com/report/${this.id}`, report)
+      return this.axios
+        .put(`${this.$root.api}/report/${this.id}`, {
+          phone: this.phone,
+        })
         .catch((e) => {
-          if ((e.message || "").match(/500/g)) {
-            return this.push(
-              (this.$route.query["fbclid"] &&
-                "https://facebook.com/NweOO22222") ||
-                "/"
-            );
+          if (e.message.match(/500/)) {
+            this.step = 6;
+            return;
           }
-          this.withError("ဖုန်းနံပါတ် (သို့) တစ်ခုခုမှားယွင်းနေသည်။", 3);
+          this.withError("တစ်ခုခုမှားယွင်းနေသည်။", 4);
         });
+      this.axios
+        .delete(`${this.$root.api}/report/${this.id}?phone=${this.phone}`)
+        .then(({ data }) => {
+          this.step = 6;
+        })
+        .catch((e) =>
+          this.withError("ဖုန်းနံပါတ် (သို့) တစ်ခုခုမှားယွင်းနေသည်။", 4)
+        );
     },
     submitReport() {
       this.step = 5;
       this.error = null;
-      this.status = "တိုင်ကြားစာပို့နေသည်။";
+      this.status = "တိုင်ကြားနေသည်။";
       const report = {
-        id: this.id,
-        verify: this.phone,
+        reason: this.reason,
+        otherReson: this.otherReason,
       };
-      setTimeout(() => (this.step = 6), 3000);
+      this.axios
+        .put(`${this.$root.api}/report/${this.id}`, report)
+        .then(({ data }) => {
+          this.step = 6;
+        })
+        .catch((e) => this.withError("တစ်ခုခုမှားယွင်းနေသည်။", 3));
     },
     withError(error, step) {
       this.step = step || 2;
@@ -233,6 +244,9 @@ export default {
       if (this.items[this.items.length - 1] === value) {
         this.useOtherReason = true;
         this.otherReason = "";
+      } else {
+        this.useOtherReason = false;
+        this.otherReason = undefined;
       }
     },
   },
@@ -241,9 +255,7 @@ export default {
       return this.$router.push(`/report/${this.$route.query["id"]}`);
     }
     this.id = this.$route.params["id"];
-    if (this.id) {
-      this.step = 2;
-    }
+    if (this.id) this.step = 2;
   },
 };
 </script>

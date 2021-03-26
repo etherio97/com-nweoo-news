@@ -15,7 +15,6 @@
 import menu from "./menu";
 import AppBar from "./components/AppBar";
 import AppFooter from "./components/AppFooter.vue";
-import FacebookMessenger from "./components/FacebookMessenger.vue";
 
 export default {
   name: "App",
@@ -23,7 +22,6 @@ export default {
   components: {
     AppBar,
     AppFooter,
-    FacebookMessenger,
   },
 
   data: () => ({

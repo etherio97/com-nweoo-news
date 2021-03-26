@@ -8,10 +8,7 @@
     },
     "v1": {
       "sms-reports": {
-        "$id": {
-          ".read": true,
-          ".write": true
-        }
+        ".indexOn": "timestamp"
       }
     }
   }

@@ -42,7 +42,7 @@
                     </v-list-item-title>
                     <v-divider></v-divider>
                     <v-list-item-subtitle>
-                      {{ report.message }}
+                      {{ report.message || report.text }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item-content>

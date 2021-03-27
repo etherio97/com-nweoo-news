@@ -21,7 +21,7 @@ export default {
 
   actions: {
     UPDATE_REPORTS({ commit }, payload) {
-      return axios(`${payload.url}/report`)
+      return axios(`${payload.url}/report?limit=20`)
         .then(({ data }) => commit('SET_REPORTS', data.data));
     },
   }

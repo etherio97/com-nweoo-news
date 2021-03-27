@@ -4,7 +4,13 @@
     style="max-width: 500px; min-width: 320px; width: 100%"
   >
     <v-expand-transition>
-      <v-stepper :value="step" v-show="loaded && !disabled">
+      <v-alert type="error" v-show="disabled">
+        စာစုအမှတ် #{{ id }} ကို ရှာမတွေ့ပါ။
+      </v-alert>
+    </v-expand-transition>
+
+    <v-expand-transition>
+      <v-stepper :value="step" v-show="loaded">
         <v-stepper-items>
           <v-stepper-content step="1">
             <v-card>
@@ -18,7 +24,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="step = 2">တိုင်ကြားရန်</v-btn>
+                <v-btn
+                  color="primary"
+                  @click="$router.push(`/report/${id}`) && (step = 2)"
+                  >တိုင်ကြားရန်</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-stepper-content>
@@ -44,6 +54,7 @@
                       dark
                       color="red darken-2"
                       large
+                      :disabled="disabled"
                       @click="step = 4"
                     >
                       ချက်ချင်းပယ်ဖျက်ခြင်း
@@ -51,9 +62,9 @@
                   </v-col>
                   <v-col cols="12" v-if="post_id">
                     <iframe
-                      src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Fnweoo22222%2Fposts%2F125208022951963&width=450&show_text=true&appId=2927529797469638&height=482"
+                      :src="`https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Fnweoo22222%2Fposts%2F${post_id}&width=386&show_text=true&appId=2927529797469638&height=482`"
                       width="100%"
-                      height="460"
+                      height="500"
                       style="border: none; overflow: hidden"
                       scrolling="no"
                       frameborder="0"
@@ -169,6 +180,11 @@
                   <v-icon>mdi-check</v-icon>
                 </v-progress-circular>
                 <div class="text-h6 mt-5">ပြီးပါပြီ။</div>
+                <div class="mt-5">
+                  <v-btn block color="primary" to="/reports">
+                    ပေးပို့ချက်များကိုကြည့်ရန်
+                  </v-btn>
+                </div>
               </v-card-text>
             </v-card>
           </v-stepper-content>
@@ -176,11 +192,7 @@
       </v-stepper>
     </v-expand-transition>
 
-    <v-expand-transition>
-      <v-alert type="error" v-show="disabled"> ရှာမတွေ့ပါ </v-alert>
-    </v-expand-transition>
-
-    <v-overlay :value="!loaded" opacity="0.6">
+    <v-overlay :value="!loaded">
       <v-progress-circular indeterminate size="120" />
     </v-overlay>
   </v-container>
@@ -252,8 +264,12 @@ export default {
     },
   },
   beforeMount() {
-    if (!this.$route.params["id"] && this.$route.query["id"]) {
-      return this.$router.push(`/report/${this.$route.query["id"]}`);
+    if (!this.$route.params["id"]) {
+      if (this.$route.query["id"]) {
+        return this.$router.push(`/report/${this.$route.query["id"]}`);
+      }
+      this.loaded = true;
+      return;
     }
     this.id = this.$route.params["id"];
     switch (this.$route.query["action"]) {

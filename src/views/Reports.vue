@@ -7,7 +7,7 @@
       </v-card-title>
       <v-card-text>
         <v-row>
-          <v-col cols="12" sm="5" class="mx-auto text-center">
+          <v-col cols="12" md="5" class="mx-auto text-center">
             <video
               id="tvc"
               preload="auto"
@@ -27,27 +27,31 @@
               />
             </video>
           </v-col>
-          <v-col cols="12" sm="7">
-            <v-list three-line>
-              <template v-for="report in reports">
-                <v-list-item-content :key="report.id" v-if="report.deleted">
-                  <i class="text-grey text--accent-4">
-                    - This content has been deleted.
-                  </i>
-                </v-list-item-content>
-                <v-list-item-content :key="report.id" v-else>
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      {{ new Date(report.timestamp).toLocaleString() }}
-                    </v-list-item-title>
-                    <v-divider></v-divider>
-                    <v-list-item-subtitle>
-                      {{ report.message || report.text }}
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item-content>
-              </template>
-            </v-list>
+          <v-col cols="12" md="7">
+            <div class="text-right">
+              <code>Last updated at: {{ updated_at.toLocaleString() }}</code>
+            </div>
+            <template v-for="report in reports">
+              <v-list-item-content :key="report.id" v-if="report.deleted">
+                <i class="text-grey text--accent-4">
+                  - This content has been deleted.
+                </i>
+              </v-list-item-content>
+              <v-card
+                :key="report.id"
+                class="my-4"
+                v-else
+                :to="`/report/${report.id}`"
+              >
+                <v-card-subtitle>
+                  {{ new Date(report.timestamp).toLocaleString() }}
+                </v-card-subtitle>
+                <v-divider></v-divider>
+                <v-card-title>
+                  {{ report.message || report.text }}
+                </v-card-title>
+              </v-card>
+            </template>
           </v-col>
         </v-row>
       </v-card-text>
@@ -60,9 +64,14 @@ import ReporterCard from "@/components/ReporterCard.vue";
 import { mapActions, mapState } from "vuex";
 import DeviceStatus from "@/components/DeviceStatus.vue";
 
+const MAX_TIMEOUT = 30000;
+
+let _t;
+
 export default {
   data: () => ({
     loading: true,
+    updated_at: null,
   }),
   components: {
     ReporterCard,
@@ -70,11 +79,19 @@ export default {
   },
   name: "Home",
   computed: mapState("reports", ["reports"]),
-  methods: mapActions("reports", ["UPDATE_REPORTS"]),
+  methods: {
+    ...mapActions("reports", ["UPDATE_REPORTS"]),
+    update() {
+      _t && clearTimeout(_t);
+      _t = setTimeout(() => this.update(), MAX_TIMEOUT);
+      this.UPDATE_REPORTS({ url: this.$root.api }).then(() => {
+        this.updated_at = new Date();
+        this.loading = false;
+      });
+    },
+  },
   beforeMount() {
-    this.UPDATE_REPORTS({ url: this.$root.api }).then(() => {
-      this.loading = false;
-    });
+    this.update();
   },
 };
 </script>

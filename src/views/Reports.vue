@@ -6,91 +6,84 @@
         <device-status />
       </v-card-title>
       <v-card-text>
-        <v-row>
-          <v-col cols="12" md="5" class="mx-auto text-center">
-            <video
-              id="tvc"
-              preload="auto"
-              loop="loop"
-              muted="muted"
-              autoplay="autoplay"
-              width="100%"
-              title="NweOo SMS Reporter - TVC (1)"
+        <v-expand-transition>
+          <v-alert type="error" v-show="error">
+            {{ error }}
+          </v-alert>
+        </v-expand-transition>
+        <v-responsive class="overflow-y-auto">
+          <div class="text-right" v-if="updated_at">
+            <code>Last updated at: {{ updated_at.toLocaleString() }}</code>
+          </div>
+          <template v-if="loading">
+            <v-skeleton-loader
+              max-width="100%"
+              type="card-heading, divider, list-item-three-line"
+            />
+          </template>
+          <template v-for="report in reports" v-else>
+            <v-list-item-content
+              v-if="report.deleted"
+              :key="report.id"
+              class="py-2"
             >
-              <source
-                type="video/mp4"
-                src="https://firebasestorage.googleapis.com/v0/b/nwe-oo.appspot.com/o/public%2F2021%2F03%2Fnweoo-sms-reporter-720p.mp4?alt=media&amp;token=b2126306-01dc-4fb5-a5e9-74f5ac40db6d"
-              />
-              <source
-                type="video/mp4"
-                src="https://firebasestorage.googleapis.com/v0/b/nwe-oo.appspot.com/o/public%2F2021%2F03%2Fnweoo-sms-reporter-480p.mp4?alt=media&amp;token=73d09c30-bc8d-47d8-a642-b44834345af5"
-              />
-            </video>
-          </v-col>
-          <v-col cols="12" md="7">
-            <div class="text-right">
-              <code>Last updated at: {{ updated_at.toLocaleString() }}</code>
-            </div>
-            <template v-for="report in reports">
-              <v-list-item-content :key="report.id" v-if="report.deleted">
-                <i class="text-grey text--accent-4">
-                  - This content has been deleted.
-                </i>
-              </v-list-item-content>
-              <v-card
-                :key="report.id"
-                class="my-4"
-                v-else
-                :to="`/report/${report.id}`"
-              >
-                <v-card-subtitle>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ attr, on }">
+                  <i v-on="on" v-bind="attr" class="text-grey text--accent-4">
+                    - This content has been deleted.
+                  </i>
+                </template>
+                <span>
+                  {{ report.message }} -
                   {{ new Date(report.timestamp).toLocaleString() }}
-                </v-card-subtitle>
-                <v-divider></v-divider>
-                <v-card-title>
-                  {{ report.message || report.text }}
-                </v-card-title>
-              </v-card>
-            </template>
-          </v-col>
-        </v-row>
+                </span>
+              </v-tooltip>
+            </v-list-item-content>
+            <report-card v-else :key="report.id" :report="report"></report-card>
+          </template>
+        </v-responsive>
       </v-card-text>
     </v-card>
   </v-container>
 </template>
 
 <script>
-import ReporterCard from "@/components/ReporterCard.vue";
 import { mapActions, mapState } from "vuex";
 import DeviceStatus from "@/components/DeviceStatus.vue";
+import ReportCard from "@/components/ReportCard.vue";
 
-const MAX_TIMEOUT = 30000;
-
-let _t;
+const MAX_TIMEOUT = 30000; // 30 seconds
 
 export default {
   data: () => ({
+    error: null,
     loading: true,
-    updated_at: null,
+    updated_at: undefined,
   }),
   components: {
-    ReporterCard,
     DeviceStatus,
+    ReportCard,
   },
   name: "Home",
   computed: mapState("reports", ["reports"]),
   methods: {
     ...mapActions("reports", ["UPDATE_REPORTS"]),
     update() {
-      _t && clearTimeout(_t);
-      _t = setTimeout(() => this.update(), MAX_TIMEOUT);
-      this.UPDATE_REPORTS({ url: this.$root.api }).then(() => {
-        this.updated_at = new Date();
-        this.loading = false;
-      });
+      this.UPDATE_REPORTS({
+        url: this.$root.api,
+      })
+        .then(() => {
+          this.updated_at = new Date();
+          this.loading = false;
+        })
+        .catch((e) => {
+          this.loading = false;
+          this.error = e.message;
+        })
+        .finally(() => setTimeout(() => this.update(), MAX_TIMEOUT));
     },
   },
-  beforeMount() {
+  mounted() {
     this.update();
   },
 };

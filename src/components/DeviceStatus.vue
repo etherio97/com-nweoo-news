@@ -7,7 +7,7 @@
       </v-chip>
     </template>
     <span> {{ parseInt(battery_level) }}% </span>
-    ({{ is_charnging ? "charging" : "not charging" }})
+    <code>({{ new Date(last_synced).toLocaleString() }})</code>
   </v-tooltip>
 </template>
 

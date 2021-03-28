@@ -10,7 +10,7 @@
     </v-expand-transition>
 
     <v-expand-transition>
-      <v-stepper :value="step" v-show="loaded">
+      <v-stepper :value="step">
         <v-stepper-items>
           <v-stepper-content step="1">
             <v-card>
@@ -27,8 +27,9 @@
                 <v-btn
                   color="primary"
                   @click="$router.push(`/report/${id}`) && (step = 2)"
-                  >တိုင်ကြားရန်</v-btn
                 >
+                  တိုင်ကြားရန်
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-stepper-content>

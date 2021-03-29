@@ -1,7 +1,7 @@
 <template>
   <v-container
     class="mx-auto mt-10"
-    style="max-width: 500px; min-width: 320px; width: 100%"
+    style="max-width: 500px; min-width: 320px; width: 100%;"
   >
     <v-expand-transition>
       <v-alert type="error" v-show="disabled">
@@ -66,7 +66,7 @@
                       :src="`https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Fnweoo22222%2Fposts%2F${post_id}&width=386&show_text=true&appId=2927529797469638&height=482`"
                       width="100%"
                       height="500"
-                      style="border: none; overflow: hidden"
+                      style="border: none; overflow: hidden;"
                       scrolling="no"
                       frameborder="0"
                       allowfullscreen="true"
@@ -226,7 +226,7 @@ export default {
       this.error = null;
       this.status = "အတည်ပြုနေသည်။";
       return this.axios
-        .delete(`${this.$root.api}/report/${this.id}?phone=${this.phone}`)
+        .delete(`${this.$root.api}/reports/sms/${this.id}?phone=${this.phone}`)
         .then(() => (this.step = 6))
         .catch((e) => {
           let error = e.message;

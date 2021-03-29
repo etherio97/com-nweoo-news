@@ -1,16 +1,17 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import _ from "lodash";
 import routes from "./route";
 import goTo from "vuetify/es5/services/goto";
 
 let appName;
 
-const setTitle = (title) => {
+const setTitle = title => {
   if (typeof document === "undefined") return;
   const el = document.querySelector("title");
   appName = appName || el.textContent.trim();
-  el.textContent = `${title} | ${appName}`;
-}
+  el.textContent = `${_.startCase(title)} - ${appName}`;
+};
 
 const scrollBehavior = (from, to, pos) => {
   let s = 0;
@@ -26,19 +27,19 @@ Vue.use(VueRouter);
 
 Vue.mixin({
   beforeRouteEnter(to, from, next) {
-    setTitle(to['title'] || to['name'] || appName);
+    setTitle(to["title"] || to["name"] || appName);
     next();
-  },
+  }
 });
 
 routes.push({
   name: "NotFound",
   path: "*",
-  component: () => import("../views/errors/404.vue"),
+  component: () => import("../views/errors/404.vue")
 });
 
 export default new VueRouter({
   routes,
   scrollBehavior,
-  mode: "history",
+  mode: "history"
 });

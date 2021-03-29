@@ -2,25 +2,26 @@ export default [
   {
     name: "Home",
     path: "/",
-    component: () => import("../views/Reports.vue"),
-  }, {
-    name: "SMSReports",
+    component: () => import("../views/Reports.vue")
+  },
+  {
+    name: "Reports",
     path: "/reports",
-    component: () => import("../views/Reports.vue"),
+    component: () => import("../views/Reports.vue")
   },
   {
-    name: "Report",
+    name: "ReportPost",
     path: "/report",
-    component: () => import("../views/Report.vue"),
+    component: () => import("../views/Report.vue")
   },
   {
-    name: "ReportID",
+    name: "ReportPostID",
     path: "/report/:id",
-    component: () => import("../views/Report.vue"),
+    component: () => import("../views/Report.vue")
   },
   {
-    name: "SubmitOnlineReport",
+    name: "ReportOnline",
     path: "/new/reports",
-    component: () => import("../views/OnlineReport.vue"),
-  },
+    component: () => import("../views/OnlineReport.vue")
+  }
 ];

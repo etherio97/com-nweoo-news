@@ -1,19 +1,27 @@
 {
-    "database": {
-        "rules": "database.rules.json"
-    },
-    "hosting": {
-        "public": "dist",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/.github/**",
-            "**/node_modules/**",
-            "**/.src/**"
-        ],
-        "rewrites": [{
-            "source": "**",
-            "destination": "/index.html"
-        }]
-    }
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/.github/**",
+      "**/node_modules/**",
+      "**/.src/**"
+    ],
+    "redirects": [
+      {
+        "source": "/fb",
+        "destination": "https://facebook.com/nweoo22222"
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
 }

@@ -12,7 +12,8 @@ Vue.config.productionTip = false;
 const data = {
   loaded: false,
   user: null,
-  api: "https://api.nweoo.com"
+  api: "http://localhost:3000"
+  // api: "https://api.nweoo.com"
 };
 
 new Vue({

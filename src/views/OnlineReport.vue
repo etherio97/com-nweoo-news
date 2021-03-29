@@ -1,7 +1,7 @@
 <template>
   <v-container
     class="mx-auto mt-10"
-    style="max-width: 500px; min-width: 320px; width: 100%"
+    style="max-width: 500px; min-width: 320px; width: 100%;"
   >
     <v-form>
       <v-stepper :value="step">
@@ -53,9 +53,19 @@
                 />
                 <v-expand-transition>
                   <v-combobox
-                    v-model="city_village"
+                    v-model="city"
                     label="မြို့/နယ်"
-                    v-show="stage === 2"
+                    v-show="stage >= 2"
+                    outlined
+                    append-icon=""
+                    :items="cities.map((c) => startCase(c))"
+                  />
+                </v-expand-transition>
+                <v-expand-transition>
+                  <v-combobox
+                    v-model="district"
+                    label="ရပ်ကွက်/ကျေးရွာ (မဖြည့်လည်းရပါတယ်)"
+                    v-show="stage >= 3"
                     outlined
                     append-icon=""
                   />
@@ -63,7 +73,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="step++" :disabled="!regionState">
+                <v-btn
+                  color="primary"
+                  @click="step++"
+                  :disabled="!regionState || !city"
+                >
                   နောက်တဆင့်
                 </v-btn>
               </v-card-actions>
@@ -146,7 +160,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import _ from "lodash";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "OnlineReport",
@@ -156,7 +171,8 @@ export default {
     user: null,
     loading: true,
     regionState: "",
-    city_village: "",
+    city: "",
+    district: "",
     title: "",
     body: "",
     date: "",
@@ -189,11 +205,17 @@ export default {
   }),
 
   methods: {
+    startCase(value) {
+      return _.startCase(value);
+    },
     submit() {
       const data = {
         body: this.body,
-        regionState: this.regionState,
+        region_state: this.regionState,
+        city: this.city,
+        district: this.district,
         datetime: new Date(`${this.date} ${this.time} GMT+06:30`),
+        text: this.body,
       };
       this.error = "";
       this.loading = true;
@@ -211,6 +233,7 @@ export default {
   },
 
   computed: {
+    ...mapState("regionState", ["cities"]),
     ...mapGetters("regionState", ["divisions_mm"]),
     invalidDateTime() {
       const today = new Date();
@@ -222,6 +245,15 @@ export default {
   watch: {
     regionState(value) {
       this.stage = (this.divisions_mm.includes(value) && 2) || 1;
+      if (this.stage === 2) {
+        this.$store.dispatch("regionState/FETCH_CITIES", {
+          division_mm: this.regionState,
+          api: this.$root.api,
+        });
+      }
+    },
+    city(value) {
+      this.stage = (value.length && 3) || 2;
     },
   },
 

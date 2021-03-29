@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require("axios");
 
 export default {
   namespaced: true,
@@ -8,7 +8,7 @@ export default {
       "ရိုင်းစိုင်းသောစကားသုံးများ",
       "ပုပ်ခတ်ပြောဆိုထားသောစကားလုံးများ",
       "အကြောင်းအရာမသက်ဆိုင်ပါ",
-      "အခြား",
+      "အခြား"
     ],
     reports: []
   },
@@ -16,13 +16,14 @@ export default {
   mutations: {
     SET_REPORTS(state, payload) {
       state.reports = payload;
-    },
+    }
   },
 
   actions: {
     UPDATE_REPORTS({ commit }, payload) {
-      return axios(`${payload.url}/report?limit=20`)
-        .then(({ data }) => commit('SET_REPORTS', data.data));
-    },
+      return axios(`${payload.url}/report?limit=20`).then(({ data }) =>
+        commit("SET_REPORTS", data.data)
+      );
+    }
   }
-}
+};

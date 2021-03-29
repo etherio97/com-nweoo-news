@@ -1,36 +1,71 @@
+import axios from "axios";
+
 const divisions = [
-  { id: 1, name_mm: "ရန်ကုန်", name_en: "Yangon", type: "region", },
-  { id: 2, name_mm: "မန္တလေး", name_en: "Mandalay", type: "region", },
-  { id: 3, name_mm: "နေပြည်တော်", name_en: "Naypyitaw", type: null, },
-  { id: 4, name_mm: "တနင်္သာရီ", name_en: "Tanintharyi", type: "region", },
-  { id: 5, name_mm: "ဧရာဝတီ", name_en: "Ayeyarwady", type: "region", },
-  { id: 6, name_mm: "ပဲခူး", name_en: "Bago", type: "region", },
-  { id: 7, name_mm: "စစ်ကိုင်း", name_en: "Sagaing", type: "region", },
-  { id: 8, name_mm: "မကွေး", name_en: "Magwe", type: "region", },
-  { id: 9, name_mm: "ကချင်", name_en: "Kachin", type: "state", },
-  { id: 10, name_mm: "ကယား", name_en: "Kayar", type: "state", },
-  { id: 11, name_mm: "ကရင်", name_en: "Kayin", type: "state", },
-  { id: 12, name_mm: "ချင်း", name_en: "Chin", type: "state", },
-  { id: 13, name_mm: "မွန်", name_en: "Mon", type: "state", },
-  { id: 14, name_mm: "ရခိုင်", name_en: "Rakhine", type: "state", },
-  { id: 15, name_mm: "ရှမ်း", name_en: "Shan", type: "state", }];
+  { id: "yangon", name_mm: "ရန်ကုန်တိုင်းဒေသကြီး", name_en: "Yangon Region" },
+  {
+    id: "mandalay",
+    name_mm: "မန္တလေးတိုင်းဒေသကြီး",
+    name_en: "Mandalay Region"
+  },
+  { id: "naypyitaw", name_mm: "နေပြည်တော်", name_en: "Naypyitaw" },
+  {
+    id: "tanintharyi",
+    name_mm: "တနင်္သာရီတိုင်းဒေသကြီး",
+    name_en: "Tanintharyi Region"
+  },
+  {
+    id: "ayeyarwady",
+    name_mm: "ဧရာဝတီတိုင်းဒေသကြီး",
+    name_en: "Ayeyarwady Region"
+  },
+  { id: "bago", name_mm: "ပဲခူးတိုင်းဒေသကြီး", name_en: "Bago Region" },
+  {
+    id: "sagaing",
+    name_mm: "စစ်ကိုင်းတိုင်းဒေသကြီး",
+    name_en: "Sagaing Region"
+  },
+  { id: "magwe", name_mm: "မကွေးတိုင်းဒေသကြီး", name_en: "Magwe Region" },
+  { id: "kachin", name_mm: "ကချင်ပြည်နယ်", name_en: "Kachin State" },
+  { id: "kayar", name_mm: "ကယားပြည်နယ်", name_en: "Kayar State" },
+  { id: "kayin", name_mm: "ကရင်ပြည်နယ်", name_en: "Kayin State" },
+  { id: "chin", name_mm: "ချင်းပြည်နယ်", name_en: "Chin State" },
+  { id: "mon", name_mm: "မွန်ပြည်နယ်", name_en: "Mon State" },
+  { id: "rakhine", name_mm: "ရခိုင်ပြည်နယ်", name_en: "Rakhine State" },
+  { id: "shan", name_mm: "ရှမ်းပြည်နယ်", name_en: "Shan State" }
+];
 
 export default {
   namespaced: true,
 
   state: {
     divisions,
+    cities: []
+  },
+
+  mutations: {
+    SET_CITIES(state, payload) {
+      state.cities = payload;
+    }
+  },
+
+  actions: {
+    FETCH_CITIES({ commit }, payload) {
+      const { api, division_mm } = payload;
+      const c = divisions.find(c => c["name_mm"] == division_mm);
+      if (c) {
+        axios.get(`${api}/cities/${c.id}`).then(({ data }) => {
+          commit("SET_CITIES", data);
+        });
+      }
+    }
   },
 
   getters: {
     divisions_mm({ divisions }) {
-      return divisions.map(({
-        name_mm,
-        type
-      }) => `${name_mm}${type === 'region' && 'တိုင်းဒေသကြီး' || type === 'state' && 'ပြည်နယ်' || ''}`);
+      return divisions.map(({ name_mm }) => name_mm);
     },
     divisions_en({ divisions }) {
       return divisions.map(({ name_en }) => name_en);
-    },
+    }
   }
 };

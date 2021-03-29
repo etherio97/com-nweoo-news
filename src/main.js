@@ -12,15 +12,15 @@ Vue.config.productionTip = false;
 const data = {
   loaded: false,
   user: null,
-  api: 'https://developer.nweoo.com',
+  api: "https://api.nweoo.com"
 };
 
 new Vue({
   data,
   router,
-  render: (h) => {
+  render: h => {
     return h(App);
   },
   store,
-  vuetify,
+  vuetify
 }).$mount("#app");

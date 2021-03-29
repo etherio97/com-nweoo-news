@@ -228,11 +228,20 @@ export default {
       return this.axios
         .delete(`${this.$root.api}/report/${this.id}?phone=${this.phone}`)
         .then(() => (this.step = 6))
-        .catch(() =>
-          this.withError("ဖုန်းနံပါတ် (သို့) တစ်ခုခုမှားယွင်းနေသည်။", 4)
-        );
+        .catch((e) => {
+          let error = e.message;
+          if (
+            e.response &&
+            e.response["data"] &&
+            e.response["data"]["message"]
+          ) {
+            error = e.response["data"]["message"]["error"];
+          }
+          this.withError(error, 4);
+        });
     },
     submitReport() {
+      this.step = 2;
       return;
       this.step = 5;
       this.error = null;

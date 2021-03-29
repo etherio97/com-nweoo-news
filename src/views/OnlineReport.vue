@@ -151,7 +151,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "OnlineReport",
   data: () => ({
-    step: 3,
+    step: 1,
     error: null,
     user: null,
     loading: true,

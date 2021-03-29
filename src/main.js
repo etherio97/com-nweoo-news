@@ -12,9 +12,12 @@ Vue.config.productionTip = false;
 const data = {
   loaded: false,
   user: null,
-  api: "http://localhost:3000"
-  // api: "https://api.nweoo.com"
+  api: "https://api.nweoo.com"
 };
+
+if (process.env.NODE_ENV !== "production") {
+  data.api = "http://localhost:3000";
+}
 
 new Vue({
   data,

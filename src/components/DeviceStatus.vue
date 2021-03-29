@@ -7,7 +7,10 @@
       </v-chip>
     </template>
     <span> {{ parseInt(battery_level) }}% </span>
-    <code>({{ new Date(last_synced).toLocaleString() }})</code>
+    <code>
+      ( {{ is_charging ? "Charging" : "Not Charging" }}, Last Synced
+      {{ new Date(last_synced).toLocaleString() }})
+    </code>
   </v-tooltip>
 </template>
 
@@ -17,19 +20,15 @@ let _t;
 export default {
   name: "DeviceStatus",
   data: () => ({
+    is_online: null,
     last_synced: null,
-    is_charnging: null,
+    is_charging: null,
     battery_level: null,
   }),
   computed: {
     status() {
-      if (this.last_synced === null) {
-        return "connecting";
-      }
-      if (new Date() - new Date(this.last_synced) < 70000) {
-        return "online";
-      }
-      return "offline";
+      if (this.last_synced === null) return "connecting";
+      return this.is_online ? "online" : "offline";
     },
     color() {
       switch (this.status) {
@@ -50,9 +49,10 @@ export default {
       _t = setTimeout(() => this.fetchStatus(), 15000);
 
       return this.axios.get(`${this.$root.api}/status`).then(({ data }) => {
-        this.battery_level = data.battery_level;
-        this.is_charnging = data.is_charnging;
+        this.is_online = data.is_online;
         this.last_synced = data.last_synced;
+        this.is_charging = data.is_charging;
+        this.battery_level = data.battery_level;
       });
     },
   },

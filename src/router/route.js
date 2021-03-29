@@ -18,4 +18,9 @@ export default [
     path: "/report/:id",
     component: () => import("../views/Report.vue"),
   },
+  {
+    name: "SubmitOnlineReport",
+    path: "/new/reports",
+    component: () => import("../views/OnlineReport.vue"),
+  },
 ];

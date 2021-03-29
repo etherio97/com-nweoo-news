@@ -13,10 +13,10 @@ export default [
     visible: true,
   },
   {
-    title: "",
-    icon: "mdi-newspaper",
-    path: "/online-reports",
+    title: "အွန်လိုင်းစာပေးပို့ခြင်း",
+    icon: "mdi-send",
+    path: "/new/reports",
     group: 'ပေးပို့ချက်များ',
-    visible: false,
+    visible: true,
   }
 ];

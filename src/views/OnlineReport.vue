@@ -250,6 +250,8 @@ export default {
         this.$store.dispatch("regionState/FETCH_CITIES", {
           division_mm: this.regionState,
           api: this.$root.api,
+          times: this.$root.times,
+          ga: this.$root.ga,
         });
       }
     },

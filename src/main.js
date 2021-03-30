@@ -6,16 +6,20 @@ import vuetify from "./plugins/vuetify";
 import "./plugins/firebase";
 import "./plugins/axios";
 
+const cookies = {};
+
 Vue.config.productionTip = false;
 
 const data = {
   loaded: false,
   user: null,
-  api: "https://api.nweoo.com"
+  api: "https://api.nweoo.com",
+  ga: null,
+  times: 0
 };
 
 if (process.env.NODE_ENV !== "production") {
-  data.api = "http://localhost:3000";
+  // data.api = "http://localhost:3000";
 }
 
 new Vue({
@@ -27,3 +31,11 @@ new Vue({
   store,
   vuetify
 }).$mount("#app");
+
+if ("cookie" in document) {
+  document.cookie.split(";").forEach(c => {
+    let [n, ...v] = c.split("=");
+    cookies[n.trim()] = v.join("=");
+  });
+  if (cookies["_ga"]) data.ga = cookies["_ga"];
+}

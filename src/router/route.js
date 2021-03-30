@@ -23,5 +23,10 @@ export default [
     name: "ReportOnline",
     path: "/new/reports",
     component: () => import("../views/OnlineReport.vue")
+  },
+  {
+    name: "RegionSuggestion",
+    path: "/suggest/regions",
+    component: () => import("../views/suggest/Regions.vue")
   }
 ];

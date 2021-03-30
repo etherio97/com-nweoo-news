@@ -8,7 +8,8 @@
     </template>
     <span> {{ parseInt(battery_level) }}% </span>
     <code>
-      ( {{ is_charging ? "Charging" : "Not Charging" }}, Last Synced
+      {{ is_charging ? "Charging" : "Not Charging" }}
+      (Last Synced
       {{ new Date(last_synced).toLocaleString() }})
     </code>
   </v-tooltip>
@@ -23,7 +24,7 @@ export default {
     is_online: null,
     last_synced: null,
     is_charging: null,
-    battery_level: null,
+    battery_level: 0,
   }),
   computed: {
     status() {
@@ -46,14 +47,19 @@ export default {
   methods: {
     fetchStatus() {
       _t && clearTimeout(_t);
-      _t = setTimeout(() => this.fetchStatus(), 15000);
+      let url =
+        `${this.$root.api}/status?` +
+        `times=${this.$root.times++}&ga=${this.$root.ga}`;
 
-      return this.axios.get(`${this.$root.api}/status`).then(({ data }) => {
-        this.is_online = data.is_online;
-        this.last_synced = data.last_synced;
-        this.is_charging = data.is_charging;
-        this.battery_level = data.battery_level;
-      });
+      return this.axios
+        .get(url)
+        .then(({ data }) => {
+          this.is_online = data.is_online;
+          this.last_synced = data.last_synced;
+          this.is_charging = data.is_charging;
+          this.battery_level = data.battery_level;
+        })
+        .finally(() => (_t = setTimeout(() => this.fetchStatus(), 15000)));
     },
   },
   beforeMount() {

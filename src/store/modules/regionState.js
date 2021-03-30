@@ -50,12 +50,15 @@ export default {
 
   actions: {
     FETCH_CITIES({ commit }, payload) {
-      const { api, division_mm } = payload;
+      const { api, division_mm, times, ga } = payload;
       const c = divisions.find(c => c["name_mm"] == division_mm);
       if (c) {
-        axios.get(`${api}/cities/${c.id}`).then(({ data }) => {
-          commit("SET_CITIES", data);
-        });
+        commit("SET_CITIES", []);
+        axios
+          .get(`${api}/cities/${c.id}?times=${times}&ga=${ga}`)
+          .then(({ data }) => {
+            commit("SET_CITIES", data);
+          });
       }
     }
   },

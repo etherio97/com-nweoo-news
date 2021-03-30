@@ -18,5 +18,11 @@ export default [
     path: "/new/reports",
     group: "ပေးပို့ချက်များ",
     visible: true
+  },
+  {
+    title: "ကူညီဖြည့်ပေးပါ",
+    icon: "mdi-timeline-help",
+    path: "/suggest/regions",
+    visible: true
   }
 ];

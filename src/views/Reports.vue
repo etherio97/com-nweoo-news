@@ -52,7 +52,9 @@ import { mapActions, mapState } from "vuex";
 import DeviceStatus from "@/components/DeviceStatus.vue";
 import ReportCard from "@/components/ReportCard.vue";
 
-const MAX_TIMEOUT = 30000; // 30 seconds
+const MAX_TIMEOUT = 30000; // 30
+
+let _t;
 
 export default {
   data: () => ({
@@ -69,8 +71,13 @@ export default {
   methods: {
     ...mapActions("reports", ["UPDATE_REPORTS"]),
     update() {
+      if (this.$root.times > 100) {
+        return location.reload();
+      }
       this.UPDATE_REPORTS({
         url: this.$root.api,
+        times: this.$root.times++,
+        ga: this.$root.ga,
       })
         .then(() => {
           this.updated_at = new Date();
@@ -80,7 +87,10 @@ export default {
           this.loading = false;
           this.error = e.message;
         })
-        .finally(() => setTimeout(() => this.update(), MAX_TIMEOUT));
+        .finally(() => {
+          _t && clearTimeout(_t);
+          _t = setTimeout(() => this.update(), MAX_TIMEOUT);
+        });
     },
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
   <v-container
-    class="mx-auto mt-10"
+    class="mx-auto mt-10 mb-15"
     style="max-width: 500px; min-width: 320px; width: 100%;"
   >
     <v-form>
@@ -43,16 +43,21 @@
 
           <v-stepper-content step="2">
             <v-card>
-              <v-card-title> ဘယ်နေရာမှာဖြစ်တာလဲ </v-card-title>
+              <v-card-title>
+                <v-btn @click="step--" icon color="primary">
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                ဘယ်နေရာမှာဖြစ်တာလဲ
+              </v-card-title>
               <v-card-text>
-                <v-autocomplete
+                <v-select
                   :items="divisions_mm"
                   v-model="regionState"
                   label="တိုင်းဒေသကြီး/ပြည်နယ်"
                   outlined
                 />
                 <v-expand-transition>
-                  <v-combobox
+                  <v-autocomplete
                     v-model="city"
                     label="မြို့/နယ်"
                     v-show="stage >= 2"
@@ -62,12 +67,11 @@
                   />
                 </v-expand-transition>
                 <v-expand-transition>
-                  <v-combobox
+                  <v-text-field
                     v-model="district"
                     label="ရပ်ကွက်/ကျေးရွာ (မဖြည့်လည်းရပါတယ်)"
                     v-show="stage >= 3"
                     outlined
-                    append-icon=""
                   />
                 </v-expand-transition>
               </v-card-text>
@@ -86,7 +90,12 @@
 
           <v-stepper-content step="3">
             <v-card>
-              <v-card-title> ဘာတွေဖြစ်နေလဲ </v-card-title>
+              <v-card-title>
+                <v-btn @click="step--" icon color="primary">
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                ဘာတွေဖြစ်နေလဲ
+              </v-card-title>
               <v-card-text class="pb-0 mb-0">
                 <v-expand-transition>
                   <v-alert type="error" v-show="error">
@@ -111,35 +120,6 @@
                     />
                   </template>
                 </div>
-                <v-btn
-                  class="ma-2"
-                  color="red darken-1"
-                  dark
-                  @click="upload = 'photo'"
-                >
-                  ဓာတ်ပုံနှင့်တကွတင်ရန်
-                </v-btn>
-                <v-btn
-                  class="ma-2"
-                  color="red darken-1"
-                  dark
-                  @click="upload = 'video'"
-                >
-                  ဗီဒီယိုနှင့်တကွတင်ရန်
-                </v-btn>
-                <v-expand-transition>
-                  <v-file-input
-                    accept="video/*"
-                    v-show="upload === 'video'"
-                  ></v-file-input>
-                </v-expand-transition>
-                <v-expand-transition>
-                  <v-file-input
-                    accept="image/*"
-                    v-show="upload === 'photo'"
-                    multiple
-                  ></v-file-input>
-                </v-expand-transition>
               </v-card-text>
 
               <v-card-actions>
@@ -213,7 +193,7 @@ export default {
   }),
 
   methods: {
-    startCase(value) {
+    _(value) {
       return _.startCase(value);
     },
     submit() {
@@ -225,12 +205,14 @@ export default {
         datetime: new Date(`${this.date} ${this.time} GMT+06:30`).getTime(),
         text: this.body,
       };
-      console.log(data);
+      const url =
+        `${this.$root.api}/online-report?` +
+        `times=${this.$root.times++}&ga=${this.root._ga}`;
       this.error = "";
       this.loading = true;
       this.step++;
       this.axios
-        .post(`${this.$root.api}/online-report`, data)
+        .post(url, data)
         .then(() => this.step++)
         .catch((e) => {
           this.error =
@@ -250,24 +232,26 @@ export default {
       return update >= today;
     },
     citiesName() {
-      return this.cities.map((c) =>
-        this.startCase(c["name_mm"] || c["name_en"])
-      );
+      return this.cities.map((c) => this._(c["name_mm"] || c["name_en"]));
     },
   },
 
   watch: {
     regionState(value) {
+      this.city = "";
+      this.district = "";
       this.stage = (this.divisions_mm.includes(value) && 2) || 1;
-      if (this.stage === 2) {
+    },
+    city(value) {
+      this.stage = (value.length && 3) || 2;
+    },
+    stage(value) {
+      if (value === 2) {
         this.$store.dispatch("regionState/FETCH_CITIES", {
           division_mm: this.regionState,
           api: this.$root.api,
         });
       }
-    },
-    city(value) {
-      this.stage = (value.length && 3) || 2;
     },
   },
 
@@ -277,10 +261,12 @@ export default {
     let mn = dt.getMonth() + 1;
     let hr = dt.getHours();
     let me = dt.getMinutes();
+
     de < 9 && (de = "0" + de);
     mn < 9 && (mn = "0" + mn);
     hr < 9 && (hr = "0" + hr);
     me < 9 && (me = "0" + me);
+
     this.date = `${dt.getFullYear()}-${mn}-${de}`;
     this.time = `${hr}:${me}`;
     this.loading = false;

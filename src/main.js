@@ -5,7 +5,6 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "./plugins/firebase";
 import "./plugins/axios";
-import "./plugins/socket";
 
 Vue.config.productionTip = false;
 

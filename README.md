@@ -19,3 +19,13 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+###  Firebase Realtime Database [Queries]
+
+#### Range Queries
+
+`startAt`, `endAt`, and `equalTo`
+
+```js
+db.ref('...').orderByKey().startAt("abc_\uf8ff").get().then(...);
+```

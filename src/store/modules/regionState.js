@@ -24,7 +24,7 @@ const divisions = [
     name_mm: "စစ်ကိုင်းတိုင်းဒေသကြီး",
     name_en: "Sagaing Region"
   },
-  { id: "magwe", name_mm: "မကွေးတိုင်းဒေသကြီး", name_en: "Magwe Region" },
+  { id: "magway", name_mm: "မကွေးတိုင်းဒေသကြီး", name_en: "Magway Region" },
   { id: "kachin", name_mm: "ကချင်ပြည်နယ်", name_en: "Kachin State" },
   { id: "kayar", name_mm: "ကယားပြည်နယ်", name_en: "Kayar State" },
   { id: "kayin", name_mm: "ကရင်ပြည်နယ်", name_en: "Kayin State" },

@@ -2,7 +2,7 @@ export default [
   {
     name: "Home",
     path: "/",
-    component: () => import("../views/Reports.vue")
+    component: () => import("../views/Index.vue")
   },
   {
     name: "Reports",

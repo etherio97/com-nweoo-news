@@ -6,9 +6,9 @@
     <v-form>
       <v-stepper :value="step">
         <v-stepper-header>
-          <v-stepper-step step="1">ဘယ်အချိန်</v-stepper-step>
-          <v-stepper-step step="2">ဘယ်နေရာ</v-stepper-step>
-          <v-stepper-step step="3">ဘာတွေဖြစ်</v-stepper-step>
+          <v-stepper-step step="1">ဘယ်ချိန်</v-stepper-step>
+          <v-stepper-step step="2">ဘယ်မှာ</v-stepper-step>
+          <v-stepper-step step="3">ဘာဖြစ်</v-stepper-step>
         </v-stepper-header>
         <v-stepper-items>
           <v-stepper-content step="1">
@@ -58,7 +58,7 @@
                     v-show="stage >= 2"
                     outlined
                     append-icon=""
-                    :items="cities.map((c) => startCase(c))"
+                    :items="citiesName"
                   />
                 </v-expand-transition>
                 <v-expand-transition>
@@ -99,19 +99,49 @@
                   v-model="body"
                   outlined
                 />
+                <div class="px-3">
+                  <template v-for="(keyword, index) in keywords">
+                    <v-btn
+                      class="mx-2 my-1"
+                      :key="index"
+                      @click="body += keyword"
+                      v-text="keyword"
+                      small
+                      rounded
+                    />
+                  </template>
+                </div>
+                <v-btn
+                  class="ma-2"
+                  color="red darken-1"
+                  dark
+                  @click="upload = 'photo'"
+                >
+                  ဓာတ်ပုံနှင့်တကွတင်ရန်
+                </v-btn>
+                <v-btn
+                  class="ma-2"
+                  color="red darken-1"
+                  dark
+                  @click="upload = 'video'"
+                >
+                  ဗီဒီယိုနှင့်တကွတင်ရန်
+                </v-btn>
+                <v-expand-transition>
+                  <v-file-input
+                    accept="video/*"
+                    v-show="upload === 'video'"
+                  ></v-file-input>
+                </v-expand-transition>
+                <v-expand-transition>
+                  <v-file-input
+                    accept="image/*"
+                    v-show="upload === 'photo'"
+                    multiple
+                  ></v-file-input>
+                </v-expand-transition>
               </v-card-text>
-              <div class="px-3">
-                <template v-for="(keyword, index) in keywords">
-                  <v-btn
-                    class="mx-2 my-1"
-                    :key="index"
-                    @click="body += keyword"
-                    v-text="keyword"
-                    small
-                    rounded
-                  />
-                </template>
-              </div>
+
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
@@ -178,30 +208,8 @@ export default {
     date: "",
     time: "",
     stage: 1,
-    keywords: [
-      "ပစ်ခတ်",
-      "ဖြိုခွင်း",
-      "ဖမ်းစီး",
-      "ရိုက်နှက်",
-      "စစ်သား",
-      "ရဲ",
-      "နဲ့",
-      "စစ်",
-      "တပ်",
-      "ကား",
-      "တွေ",
-      "ကျည်",
-      "ထိ",
-      "သေ",
-      "သွား",
-      "ပါ",
-      "တယ်",
-      "ဝင်",
-      "ရောက်",
-      "လာ",
-      "ပြီ",
-      "လို့",
-    ],
+    keywords: [],
+    upload: "",
   }),
 
   methods: {
@@ -214,9 +222,10 @@ export default {
         region_state: this.regionState,
         city: this.city,
         district: this.district,
-        datetime: new Date(`${this.date} ${this.time} GMT+06:30`),
+        datetime: new Date(`${this.date} ${this.time} GMT+06:30`).getTime(),
         text: this.body,
       };
+      console.log(data);
       this.error = "";
       this.loading = true;
       this.step++;
@@ -240,6 +249,11 @@ export default {
       const update = new Date(`${this.date} ${this.time} GMT+06:30`);
       return update >= today;
     },
+    citiesName() {
+      return this.cities.map((c) =>
+        this.startCase(c["name_mm"] || c["name_en"])
+      );
+    },
   },
 
   watch: {
@@ -259,11 +273,21 @@ export default {
 
   beforeMount() {
     const dt = new Date();
-    let mm = dt.getMonth() + 1;
-    mm < 9 && (mm = "0" + mm);
-    this.date = `${dt.getFullYear()}-${mm}-${dt.getDate()}`;
-    this.time = `${dt.getHours()}:${dt.getMinutes()}`;
+    let de = dt.getDate();
+    let mn = dt.getMonth() + 1;
+    let hr = dt.getHours();
+    let me = dt.getMinutes();
+    de < 9 && (de = "0" + de);
+    mn < 9 && (mn = "0" + mn);
+    hr < 9 && (hr = "0" + hr);
+    me < 9 && (me = "0" + me);
+    this.date = `${dt.getFullYear()}-${mn}-${de}`;
+    this.time = `${hr}:${me}`;
     this.loading = false;
+
+    this.axios.get(this.$root.api + "/trends").then(({ data }) => {
+      this.keywords = data;
+    });
   },
 };
 </script>

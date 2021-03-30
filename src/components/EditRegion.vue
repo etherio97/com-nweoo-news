@@ -34,19 +34,28 @@
       </v-row>
     </td>
     <td>
-      <v-btn @click="edit = !edit" text icon small>
-        <v-icon class="ml-2" v-if="loading" v-text="''" />
-        <v-icon
-          class="ml-2"
-          v-text="edit ? 'mdi-content-save' : 'mdi-pencil'"
-          v-else
-        />
+      <v-btn class="ml-1" @click="edit = !edit" text icon small color="primary">
+        <v-icon v-if="loading" v-text="''" />
+        <v-icon v-text="edit ? 'mdi-content-save' : 'mdi-pencil'" v-else />
+      </v-btn>
+      <v-btn
+        v-if="edit"
+        class="ml-1"
+        text
+        icon
+        small
+        color="error"
+        @click="cancel"
+      >
+        <v-icon>mdi-cancel</v-icon>
       </v-btn>
     </td>
   </tr>
 </template>
 
 <script>
+let cancel;
+
 export default {
   name: "EditRegion",
   props: {
@@ -72,9 +81,17 @@ export default {
     loading: false,
   }),
 
+  methods: {
+    cancel() {
+      cancel = true;
+      this.edit = false;
+    },
+  },
+
   watch: {
     edit(value) {
       if (value === false) {
+        if (cancel) return (cancel = false);
         this.loading = true;
         this.axios
           .patch(

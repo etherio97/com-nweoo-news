@@ -109,10 +109,10 @@ tr th {
 }
 
 tr th.en {
-  width: 35%;
+  width: 30%;
 }
 
 tr th.edit {
-  width: 5%;
+  width: 10%;
 }
 </style>

@@ -28,5 +28,10 @@ export default [
     name: "RegionSuggestion",
     path: "/suggest/regions",
     component: () => import("../views/suggest/Regions.vue")
+  },
+  {
+    name: "News",
+    path: "/news",
+    component: () => import("../views/news/Articles.vue")
   }
 ];

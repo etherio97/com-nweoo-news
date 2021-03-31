@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
+import "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJfrR7N4V6JfzWBHCcK94QB5KwjNuim5Q",
@@ -10,7 +11,7 @@ const firebaseConfig = {
   measurementId: "G-3F1JBYP13M",
   messagingSenderId: "685553468611",
   projectId: "nwe-oo",
-  storageBucket: "nwe-oo.appspot.com",
+  storageBucket: "nwe-oo.appspot.com"
 };
 
 firebase.initializeApp(firebaseConfig);

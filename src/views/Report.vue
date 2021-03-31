@@ -222,7 +222,7 @@ export default {
 
       const url =
         `${this.$root.api}/reports/sms/${this.id}?phone=${this.phone}` +
-        `times=${this.$root.times++}&ga=${this.root._ga}`;
+        `times=${this.$root.times++}&ga=${this.$root._ga}`;
 
       return this.axios
         .delete(url)

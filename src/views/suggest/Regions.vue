@@ -49,7 +49,15 @@
           </tbody>
           <tbody v-else>
             <edit-region
-              v-for="city in cities"
+              v-for="city in incompleted_cities"
+              :key="city.id"
+              :id="city.id"
+              :name_en="_(city.name_en)"
+              :name_mm="city.name_mm"
+              :name_zg="city.name_zg"
+            ></edit-region>
+            <edit-region
+              v-for="city in completed_cities"
               :key="city.id"
               :id="city.id"
               :name_en="_(city.name_en)"
@@ -68,7 +76,14 @@ import _ from "lodash";
 import EditRegion from "@/components/EditRegion.vue";
 import { mapState } from "vuex";
 
-const completed = ["yangon", "mandalay", "naypyitaw"];
+const completed = [
+  "yangon",
+  "mandalay",
+  "naypyitaw",
+  "tanintharyi",
+  "ayeyarwady",
+  "kayar",
+];
 
 export default {
   name: "Regions",
@@ -95,6 +110,12 @@ export default {
 
   computed: {
     ...mapState("regionState", ["divisions"]),
+    completed_cities() {
+      return this.cities.filter(({ name_mm }) => Boolean(name_mm));
+    },
+    incompleted_cities() {
+      return this.cities.filter(({ name_mm }) => !name_mm);
+    },
   },
 
   watch: {
@@ -123,18 +144,11 @@ export default {
   },
 
   mounted() {
-<<<<<<< HEAD
     this.divisions.forEach(({ id, name_mm }) => {
       if (completed.includes(id)) {
         return;
       }
       this.regionStates.push(name_mm);
-=======
-    this.divisions_mm.forEach(division => {
-      if (! division.match(/(ရန်ကုန်|မန္တ‌လေး|ပဲခူး|နေ‌ပြည်တော်|ဧရာဝတီ|မွန်)/gmi)) {
-         this.regionStates.push(division);
-      }
->>>>>>> 42885c27b655609f8b8bd713edd7aa4700818150
     });
     this.dialog = true;
   },

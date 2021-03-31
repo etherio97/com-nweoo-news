@@ -28,8 +28,9 @@
           lang="zg"
           v-model="value_zg"
           :disabled="!edit"
-          label="Zawgyi"
+          :label="`Zawgyi${name_zg ? '' : ' (auto converted)'}`"
           :loading="loading"
+          @input="auto_convert = false"
         ></v-text-field>
       </v-row>
     </td>
@@ -54,6 +55,8 @@
 </template>
 
 <script>
+import { uni2zg } from "@/functions/rabbit";
+
 let cancel;
 
 export default {
@@ -79,6 +82,7 @@ export default {
     value_mm: "",
     value_zg: "",
     loading: false,
+    auto_convert: true,
   }),
 
   methods: {
@@ -89,9 +93,19 @@ export default {
   },
 
   watch: {
+    value_mm(value) {
+      if (!this.auto_convert) return;
+      this.value_zg = uni2zg(value);
+    },
     edit(value) {
       if (value === false) {
-        if (cancel) return (cancel = false);
+        if (cancel) {
+          this.value_en = this.name_en;
+          this.value_mm = this.name_mm;
+          this.value_zg = this.name_zg;
+          cancel = false;
+          return;
+        }
         this.loading = true;
         this.axios
           .patch(
@@ -102,6 +116,12 @@ export default {
               name_zg: this.value_zg,
             }
           )
+          .then(() => {
+            this.name_en = this.value_en;
+            this.name_mm = this.value_mm;
+            this.name_zg = this.value_zg;
+            this.auto_convert = true;
+          })
           .finally(() => {
             this.loading = false;
           });
@@ -113,6 +133,7 @@ export default {
     this.value_en = this.name_en;
     this.value_mm = this.name_mm;
     this.value_zg = this.name_zg;
+    this.auto_convert = true;
   },
 };
 </script>

@@ -18,6 +18,11 @@
     <v-card :loading="loading">
       <v-card-actions>
         <v-spacer></v-spacer>
+        <v-checkbox
+          style="width: 120px;"
+          v-model="displayAll"
+          label="အကုန်ပြပါ"
+        ></v-checkbox>
         <v-select
           style="max-width: 300px;"
           :items="regionStates"
@@ -56,14 +61,16 @@
               :name_mm="city.name_mm"
               :name_zg="city.name_zg"
             ></edit-region>
-            <edit-region
-              v-for="city in completed_cities"
-              :key="city.id"
-              :id="city.id"
-              :name_en="_(city.name_en)"
-              :name_mm="city.name_mm"
-              :name_zg="city.name_zg"
-            ></edit-region>
+            <template v-if="displayAll">
+              <edit-region
+                v-for="city in completed_cities"
+                :key="city.id"
+                :id="city.id"
+                :name_en="_(city.name_en)"
+                :name_mm="city.name_mm"
+                :name_zg="city.name_zg"
+              ></edit-region>
+            </template>
           </tbody>
         </v-simple-table>
       </v-card-text>
@@ -83,6 +90,11 @@ const completed = [
   "tanintharyi",
   "ayeyarwady",
   "kayar",
+  "mon",
+  "rakhine",
+  "kayin",
+  "shan",
+  "magway",
 ];
 
 export default {
@@ -100,6 +112,7 @@ export default {
     regionStates: [],
     region_state: "",
     regionStates: [],
+    displayAll: false,
   }),
 
   methods: {

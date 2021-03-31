@@ -66,7 +66,7 @@
 <script>
 import _ from "lodash";
 import EditRegion from "@/components/EditRegion.vue";
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 
 const completed = ["yangon", "mandalay", "naypyitaw"];
 
@@ -84,6 +84,7 @@ export default {
     cities: [],
     regionStates: [],
     region_state: "",
+    regionStates: [],
   }),
 
   methods: {
@@ -122,11 +123,18 @@ export default {
   },
 
   mounted() {
+<<<<<<< HEAD
     this.divisions.forEach(({ id, name_mm }) => {
       if (completed.includes(id)) {
         return;
       }
       this.regionStates.push(name_mm);
+=======
+    this.divisions_mm.forEach(division => {
+      if (! division.match(/(ရန်ကုန်|မန္တ‌လေး|ပဲခူး|နေ‌ပြည်တော်|ဧရာဝတီ|မွန်)/gmi)) {
+         this.regionStates.push(division);
+      }
+>>>>>>> 42885c27b655609f8b8bd713edd7aa4700818150
     });
     this.dialog = true;
   },

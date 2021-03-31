@@ -227,8 +227,13 @@ export default {
       this.status = "လုပ်ဆောင်နေပါတယ်";
 
       const url =
+<<<<<<< HEAD
         `${this.$root.api}/report/${this.id}?phone=${this.phone}` +
         `&times=${this.$root.times++}&ga=${this.$root.ga}`;
+=======
+        `${this.$root.api}/reports/sms/${this.id}?phone=${this.phone}` +
+        `&times=${this.$root.times++}&ga=${this.$root._ga}`;
+>>>>>>> 42885c27b655609f8b8bd713edd7aa4700818150
 
       return this.axios
         .delete(url)

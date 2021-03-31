@@ -8,7 +8,7 @@
         <v-card-text>
           <v-select
             v-model="region_state"
-            :items="divisions_mm"
+            :items="divisions"
             label="တိုင်း/ပြည်နယ်"
           />
         </v-card-text>
@@ -59,6 +59,7 @@ export default {
     error: false,
     cities: [],
     region_state: "",
+    divisions: [],
   }),
 
   methods: {
@@ -98,6 +99,11 @@ export default {
   },
 
   mounted() {
+    this.divisions_mm.forEach(division => {
+      if (! division.match(/(ရန်ကုန်|မန္တ‌လေး|ပဲခူး|နေ‌ပြည်တော်|ဧရာဝတီ|မွန်)/gmi)) {
+         this.divisions.push(division);
+      }
+    });
     this.dialog = true;
   },
 };

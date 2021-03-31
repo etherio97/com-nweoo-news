@@ -22,7 +22,7 @@ export default {
   actions: {
     UPDATE_REPORTS({ commit }, payload) {
       return axios(
-        `${payload.url}/report?limit=20&times=${payload.times}&ga=${payload.ga}`
+        `${payload.url}/report?times=${payload.times}&limit=20&ga=${payload.ga}`
       ).then(({ data }) => commit("SET_REPORTS", data.data));
     }
   }

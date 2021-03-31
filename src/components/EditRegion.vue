@@ -36,10 +36,10 @@
     <td>
       <v-btn class="ml-1" @click="edit = !edit" text icon small color="primary">
         <v-icon v-if="loading" v-text="''" />
-        <v-icon v-text="edit ? 'mdi-content-save' : 'mdi-pencil'" v-else />
+        <v-icon v-else v-text="edit ? 'mdi-content-save' : 'mdi-pencil'" />
       </v-btn>
       <v-btn
-        v-if="edit"
+        v-show="edit"
         class="ml-1"
         text
         icon

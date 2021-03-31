@@ -21,6 +21,7 @@ let _t;
 export default {
   name: "DeviceStatus",
   data: () => ({
+    error: null,
     is_online: null,
     last_synced: null,
     is_charging: null,
@@ -28,7 +29,7 @@ export default {
   }),
   computed: {
     status() {
-      if (this.last_synced === null) return "connecting";
+      if (this.last_synced === null || this.error) return "connecting";
       return this.is_online ? "online" : "offline";
     },
     color() {
@@ -46,18 +47,25 @@ export default {
   },
   methods: {
     fetchStatus() {
-      _t && clearTimeout(_t);
       let url =
         `${this.$root.api}/status?` +
         `times=${this.$root.times++}&ga=${this.$root.ga}`;
 
+      if (!window.navigator.onLine) {
+        return (_t = setTimeout(() => this.fetchStatus(), 15000));
+      }
+
       return this.axios
         .get(url)
         .then(({ data }) => {
+          this.error = null;
           this.is_online = data.is_online;
           this.last_synced = data.last_synced;
           this.is_charging = data.is_charging;
           this.battery_level = data.battery_level;
+        })
+        .catch((e) => {
+          this.error = true;
         })
         .finally(() => (_t = setTimeout(() => this.fetchStatus(), 15000)));
     },
@@ -66,7 +74,7 @@ export default {
     this.fetchStatus();
   },
   beforeDestroy() {
-    clearTimeout(_t);
+    _t && clearTimeout(_t);
   },
 };
 </script>

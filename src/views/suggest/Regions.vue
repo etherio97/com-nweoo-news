@@ -8,7 +8,7 @@
         <v-card-text>
           <v-select
             v-model="region_state"
-            :items="divisions_mm"
+            :items="regionStates"
             label="တိုင်း/ပြည်နယ်"
           />
         </v-card-text>
@@ -16,8 +16,18 @@
     </v-dialog>
 
     <v-card :loading="loading">
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-select
+          style="max-width: 300px;"
+          :items="regionStates"
+          v-model="region_state"
+          label="တိုင်း/ပြည်နယ်"
+          outlined
+        ></v-select>
+      </v-card-actions>
       <v-card-text>
-        <v-simple-table>
+        <v-simple-table class="mt-4">
           <thead>
             <tr>
               <th class="en">အင်္ဂလိပ်</th>
@@ -25,7 +35,19 @@
               <th class="edit"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="error">
+            <tr>
+              <td colspan="4">
+                <p class="pa-4 grey--text text-body-2">
+                  လုပ်ဆောင်မှုမအောင်မြင်ပါ။
+                </p>
+                <v-btn @click="$router.go()" color="primary" class="ma-2">
+                  ပြန်လည်ကြိုးစာကြည့်ပါ
+                </v-btn>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
             <edit-region
               v-for="city in cities"
               :key="city.id"
@@ -46,6 +68,8 @@ import _ from "lodash";
 import EditRegion from "@/components/EditRegion.vue";
 import { mapGetters, mapState } from "vuex";
 
+const completed = ["yangon", "mandalay", "naypyitaw"];
+
 export default {
   name: "Regions",
 
@@ -58,6 +82,7 @@ export default {
     loading: false,
     error: false,
     cities: [],
+    regionStates: [],
     region_state: "",
   }),
 
@@ -69,7 +94,6 @@ export default {
 
   computed: {
     ...mapState("regionState", ["divisions"]),
-    ...mapGetters("regionState", ["divisions_mm"]),
   },
 
   watch: {
@@ -98,6 +122,12 @@ export default {
   },
 
   mounted() {
+    this.divisions.forEach(({ id, name_mm }) => {
+      if (completed.includes(id)) {
+        return;
+      }
+      this.regionStates.push(name_mm);
+    });
     this.dialog = true;
   },
 };

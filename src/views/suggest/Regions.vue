@@ -8,7 +8,7 @@
         <v-card-text>
           <v-select
             v-model="region_state"
-            :items="divisions_mm"
+            :items="regionStates"
             label="တိုင်း/ပြည်နယ်"
           />
         </v-card-text>
@@ -16,8 +16,23 @@
     </v-dialog>
 
     <v-card :loading="loading">
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-checkbox
+          style="width: 120px;"
+          v-model="displayAll"
+          label="အကုန်ပြပါ"
+        ></v-checkbox>
+        <v-select
+          style="max-width: 300px;"
+          :items="regionStates"
+          v-model="region_state"
+          label="တိုင်း/ပြည်နယ်"
+          outlined
+        ></v-select>
+      </v-card-actions>
       <v-card-text>
-        <v-simple-table>
+        <v-simple-table class="mt-4">
           <thead>
             <tr>
               <th class="en">အင်္ဂလိပ်</th>
@@ -25,15 +40,37 @@
               <th class="edit"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="error">
+            <tr>
+              <td colspan="4">
+                <p class="pa-4 grey--text text-body-2">
+                  လုပ်ဆောင်မှုမအောင်မြင်ပါ။
+                </p>
+                <v-btn @click="$router.go()" color="primary" class="ma-2">
+                  ပြန်လည်ကြိုးစာကြည့်ပါ
+                </v-btn>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
             <edit-region
-              v-for="city in cities"
+              v-for="city in incompleted_cities"
               :key="city.id"
               :id="city.id"
               :name_en="_(city.name_en)"
               :name_mm="city.name_mm"
               :name_zg="city.name_zg"
             ></edit-region>
+            <template v-if="displayAll">
+              <edit-region
+                v-for="city in completed_cities"
+                :key="city.id"
+                :id="city.id"
+                :name_en="_(city.name_en)"
+                :name_mm="city.name_mm"
+                :name_zg="city.name_zg"
+              ></edit-region>
+            </template>
           </tbody>
         </v-simple-table>
       </v-card-text>
@@ -44,7 +81,21 @@
 <script>
 import _ from "lodash";
 import EditRegion from "@/components/EditRegion.vue";
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
+
+const completed = [
+  "yangon",
+  "mandalay",
+  "naypyitaw",
+  "tanintharyi",
+  "ayeyarwady",
+  "kayar",
+  "mon",
+  "rakhine",
+  "kayin",
+  "shan",
+  "magway",
+];
 
 export default {
   name: "Regions",
@@ -58,7 +109,10 @@ export default {
     loading: false,
     error: false,
     cities: [],
+    regionStates: [],
     region_state: "",
+    regionStates: [],
+    displayAll: false,
   }),
 
   methods: {
@@ -69,7 +123,12 @@ export default {
 
   computed: {
     ...mapState("regionState", ["divisions"]),
-    ...mapGetters("regionState", ["divisions_mm"]),
+    completed_cities() {
+      return this.cities.filter(({ name_mm }) => Boolean(name_mm));
+    },
+    incompleted_cities() {
+      return this.cities.filter(({ name_mm }) => !name_mm);
+    },
   },
 
   watch: {
@@ -98,6 +157,12 @@ export default {
   },
 
   mounted() {
+    this.divisions.forEach(({ id, name_mm }) => {
+      if (completed.includes(id)) {
+        return;
+      }
+      this.regionStates.push(name_mm);
+    });
     this.dialog = true;
   },
 };
@@ -109,10 +174,10 @@ tr th {
 }
 
 tr th.en {
-  width: 35%;
+  width: 30%;
 }
 
 tr th.edit {
-  width: 5%;
+  width: 10%;
 }
 </style>

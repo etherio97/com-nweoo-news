@@ -2,12 +2,12 @@ export default [
   {
     name: "Home",
     path: "/",
-    component: () => import("../views/Reports.vue")
+    component: () => import("../views/news/Articles.vue")
   },
   {
     name: "Reports",
     path: "/reports",
-    component: () => import("../views/Reports.vue")
+    component: () => import("../views/reports/SMSReports.vue")
   },
   {
     name: "ReportPost",
@@ -28,5 +28,10 @@ export default [
     name: "RegionSuggestion",
     path: "/suggest/regions",
     component: () => import("../views/suggest/Regions.vue")
+  },
+  {
+    name: "News",
+    path: "/news",
+    component: () => import("../views/news/Articles.vue")
   }
 ];

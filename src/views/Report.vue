@@ -44,7 +44,13 @@
             <v-card-text class="mt-5 pb-4">
               <v-row justify="space-between">
                 <v-col cols="12" sm="6">
-                  <v-btn block color="primary" dark large @click="step = 3">
+                  <v-btn
+                    block
+                    color="primary"
+                    dark
+                    large
+                    @click="(error = null) | (step = 3)"
+                  >
                     ပယ်ဖျက်ရန်တောင်းဆိုခြင်း
                   </v-btn>
                 </v-col>
@@ -55,7 +61,7 @@
                     color="red darken-2"
                     large
                     :disabled="disabled"
-                    @click="step = 4"
+                    @click="(error = null) | (step = 4)"
                   >
                     ချက်ချင်းပယ်ဖျက်ခြင်း
                   </v-btn>
@@ -218,11 +224,11 @@ export default {
     instantDelete() {
       this.step = 5;
       this.error = null;
-      this.status = "အတည်ပြုနေသည်။";
+      this.status = "လုပ်ဆောင်နေပါတယ်";
 
       const url =
-        `${this.$root.api}/reports/sms/${this.id}?phone=${this.phone}` +
-        `times=${this.$root.times++}&ga=${this.root._ga}`;
+        `${this.$root.api}/report/${this.id}?phone=${this.phone}` +
+        `&times=${this.$root.times++}&ga=${this.$root.ga}`;
 
       return this.axios
         .delete(url)
@@ -244,7 +250,7 @@ export default {
       return;
       this.step = 5;
       this.error = null;
-      this.status = "တိုင်ကြားနေသည်။";
+      this.status = "လုပ်ဆောင်နေပါတယ်";
       const report = {
         reason: this.reason,
         otherReson: this.otherReason,
@@ -254,7 +260,7 @@ export default {
         .then(({ data }) => {
           this.step = 6;
         })
-        .catch((e) => this.withError("တစ်ခုခုမှားယွင်းနေသည်။", 3));
+        .catch((e) => this.withError("လုပ်ဆောင်မှုမအောင်မြင်ပါ", 3));
     },
     withError(error, step) {
       this.step = step || 2;
@@ -304,9 +310,8 @@ export default {
             this.step = 6;
           }
         })
-        .catch(() => {
-          this.disabled = true;
-        });
+        .catch(() => (this.disabled = true))
+        .finally(() => (this.loaded = true));
     }
   },
 };

@@ -64,7 +64,7 @@ import { mapActions, mapState } from "vuex";
 import DeviceStatus from "@/components/DeviceStatus.vue";
 import ReportCard from "@/components/ReportCard.vue";
 
-const MAX_TIMEOUT = 30000; // 30
+const MAX_TIMEOUT = 30000; // 30s
 
 let _t;
 
@@ -83,8 +83,12 @@ export default {
   methods: {
     ...mapActions("reports", ["UPDATE_REPORTS"]),
     update() {
-      if (this.$root.times > 100) {
-        return location.reload();
+      if (this.$root.times > 500) {
+        return;
+      }
+      if (!window.navigator.onLine) {
+        this.error = "အင်တာနက်ကွန်နက်ရှင်မရှိပါ";
+        return (_t = setTimeout(() => this.update(), MAX_TIMEOUT));
       }
       this.UPDATE_REPORTS({
         url: this.$root.api,
@@ -93,31 +97,21 @@ export default {
       })
         .then(() => {
           this.updated_at = new Date();
+          this.error = null;
           this.loading = false;
         })
         .catch((e) => {
           this.loading = false;
           this.error = e.message;
         })
-        .finally(() => {
-          _t && clearTimeout(_t);
-          _t = setTimeout(() => this.update(), MAX_TIMEOUT);
-        });
+        .finally(() => (_t = setTimeout(() => this.update(), MAX_TIMEOUT)));
     },
   },
   mounted() {
     this.update();
   },
+  beforeDestroy() {
+    _t && clearTimeout(_t);
+  },
 };
 </script>
-
-<style scoped>
-.reports {
-  /* background-color: var(--color-orange-neutral); */
-}
-
-video#tvc {
-  max-width: 100%;
-  min-width: 320px;
-}
-</style>

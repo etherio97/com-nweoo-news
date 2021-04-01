@@ -1,50 +1,62 @@
 <template>
-  <v-container>
-    <v-card elevation="0">
-      <v-card-title>
-        SMS Reports
-        <device-status />
-      </v-card-title>
-      <v-card-text>
-        <v-expand-transition>
-          <v-alert type="error" v-show="error">
-            {{ error }}
-          </v-alert>
-        </v-expand-transition>
-        <v-responsive class="overflow-y-auto">
+  <section class="reports">
+    <v-container>
+      <v-card elevation="0" color="transparent">
+        <v-card-title class="text-h5">
+          SMS Reports
+          <device-status />
+        </v-card-title>
+
+        <v-card-text>
+          <v-expand-transition>
+            <v-alert type="error" v-show="error">
+              {{ error }}
+            </v-alert>
+          </v-expand-transition>
+
           <div class="text-right" v-if="updated_at">
             <code>Last updated at: {{ updated_at.toLocaleString() }}</code>
           </div>
-          <template v-if="loading">
-            <v-skeleton-loader
-              max-width="100%"
-              type="card-heading, divider, list-item-three-line"
-            />
-          </template>
-          <template v-for="report in reports" v-else>
-            <v-list-item-content
-              v-if="report.deleted"
-              :key="report.id"
-              class="py-2"
-            >
-              <v-tooltip bottom>
-                <template v-slot:activator="{ attr, on }">
-                  <i v-on="on" v-bind="attr" class="text-grey text--accent-4">
-                    - This content has been deleted.
-                  </i>
-                </template>
-                <span>
-                  {{ report.message }} -
-                  {{ new Date(report.timestamp).toLocaleString() }}
-                </span>
-              </v-tooltip>
-            </v-list-item-content>
-            <report-card v-else :key="report.id" :report="report"></report-card>
-          </template>
-        </v-responsive>
-      </v-card-text>
-    </v-card>
-  </v-container>
+
+          <div>
+            <template v-if="loading">
+              <v-skeleton-loader
+                max-width="100%"
+                type="card-heading, divider, list-item-three-line"
+              />
+            </template>
+
+            <template v-for="report in reports" v-else>
+              <v-list-item-content
+                v-if="report.deleted"
+                :key="report.id"
+                class="my-4"
+              >
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ attr, on }">
+                    <i v-on="on" v-bind="attr" class="text-grey text--accent-4">
+                      - This content has been deleted.
+                    </i>
+                  </template>
+
+                  <span>
+                    {{ report.message }} -
+                    {{ new Date(report.timestamp).toLocaleString() }}
+                  </span>
+                </v-tooltip>
+              </v-list-item-content>
+
+              <report-card
+                v-else
+                :key="report.id"
+                :report="report"
+              ></report-card>
+            </template>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-container>
+  </section>
 </template>
 
 <script>
@@ -100,6 +112,10 @@ export default {
 </script>
 
 <style scoped>
+.reports {
+  /* background-color: var(--color-orange-neutral); */
+}
+
 video#tvc {
   max-width: 100%;
   min-width: 320px;

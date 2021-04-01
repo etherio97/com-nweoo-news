@@ -29,7 +29,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/scss/abstract/variables.scss";
+@import "@/assets/scss/base/base.scss";
+
 a {
   text-decoration: none;
 }

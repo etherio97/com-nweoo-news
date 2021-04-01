@@ -14,7 +14,7 @@
         alt="NweOo Logo"
         class="shrink mr-10"
         contain
-        src="../assets/nweoo-logo.png"
+        src="../assets/images/nweoo-logo.png"
         transition="scale-transition"
         width="40"
       />

@@ -1,20 +1,18 @@
 <template>
   <v-navigation-drawer app v-model="drawer" :mini-variant="mini" permanent>
-    <v-list-item>
-      <v-list-item-title style="max-width: 40px">
-        <v-img src="../assets/nweoo-logo.png"></v-img>
+    <v-list-item class="sidebar__logo">
+      <v-list-item-title class="sidebar__logo__img">
+        <v-img src="../assets/images/nweoo-logo.png"></v-img>
       </v-list-item-title>
-      <v-list-item-subtitle class="pl-3 subtitle-1 font-weight-bold">
+      <v-list-item-subtitle class="sidebar__logo__brand">
         နွေဦးတော်လှန်ရေး
       </v-list-item-subtitle>
     </v-list-item>
 
     <v-divider></v-divider>
 
-    <v-list-item>
-      <v-btn icon @click="mini = !mini">
-        <v-icon>{{ mini ? "mdi-chevron-right" : "mdi-chevron-left" }}</v-icon>
-      </v-btn>
+    <v-list-item @click="mini = !mini">
+      <v-icon>{{ mini ? "mdi-chevron-right" : "mdi-chevron-left" }}</v-icon>
       <v-spacer></v-spacer>
       <v-btn icon v-show="logged">
         <v-icon>mdi-logout</v-icon>
@@ -33,7 +31,7 @@
 
     <v-divider></v-divider>
 
-    <v-list dense>
+    <v-list class="sidebar__menu">
       <template v-for="menu in items">
         <v-list-item :key="menu.title" :to="menu.path" v-if="menu.visible" link>
           <v-list-item-icon>
@@ -74,3 +72,7 @@ export default {
   }),
 };
 </script>
+
+<style lang="scss">
+@import "@/assets/scss/components/sidebar.scss";
+</style>

@@ -22,6 +22,7 @@
         </v-expand-transition>
         <v-col v-for="article of articles" :key="article.id" cols="12" md="6">
           <article-card
+            :source="article.source"
             :content="article.content"
             :image="article.image"
             :link="article.link"

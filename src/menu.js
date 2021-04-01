@@ -7,25 +7,25 @@ export default [
   },
   {
     title: "သတင်းများ",
-    icon: "mdi-newspaper",
+    icon: "mdi-newspaper-variant",
     path: "/",
     visible: true
   },
   {
     title: "ပေးပို့ချက်များ",
-    icon: "mdi-newspaper",
+    icon: "mdi-message-text",
     path: "/reports",
     visible: true
   },
   {
     title: "အွန်လိုင်းစာပေးပို့ခြင်း",
-    icon: "mdi-send",
+    icon: "mdi-desktop-mac-dashboard",
     path: "/new/reports",
     visible: true
   },
   {
     title: "ကူညီဖြည့်ပေးပါ",
-    icon: "mdi-timeline-help",
+    icon: "mdi-hand-heart",
     path: "/suggest/regions",
     visible: true
   }

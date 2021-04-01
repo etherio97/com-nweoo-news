@@ -2,13 +2,15 @@
   <v-tooltip bottom>
     <template v-slot:activator="{ attr, on }">
       <v-chip class="mx-2" v-on="on" v-bind="attr" small dark>
-        <v-icon :color="color" small class="mr-2">mdi-server</v-icon>
+        <v-icon :color="color" small class="mr-2">
+          {{ is_charging ? "mdi-cellphone" : "mdi-cellphone-off" }}
+        </v-icon>
         {{ status }}
       </v-chip>
     </template>
     <span> {{ parseInt(battery_level) }}% </span>
     <code>
-      {{ is_charging ? "Charging" : "Not Charging" }}
+      {{ is_charging ? "charging" : "discharging" }}
       (Last Synced
       {{ new Date(last_synced).toLocaleString() }})
     </code>

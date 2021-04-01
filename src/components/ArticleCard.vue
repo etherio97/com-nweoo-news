@@ -1,23 +1,19 @@
 <template>
-  <v-card class="articleCard">
+  <v-card>
     <v-img v-show="image" :src="image"></v-img>
-
     <v-card-title>
       {{ title }}
     </v-card-title>
-
     <v-card-subtitle>
       {{ new Date(datetime).toLocaleString() }} -
-      <a :href="'https://burmese.dvb.no'" target="_blank">{{ source }}</a>
+      <a :href="sourceUrl" target="_blank">{{ source }}</a>
     </v-card-subtitle>
-
     <v-card-text>
-      {{ readmore ? content : content.substr(0, 300) + "..." }}
-      <a @click="readmore = !readmore">{{
-        readmore ? "" : "ပိုမိုဖတ်ရှုရန်"
-      }}</a>
+      {{ readmore ? content : body }}
+      <a v-show="textWrap && !readmore" @click="readmore = true">
+        ပိုမိုဖတ်ရှုရန်
+      </a>
     </v-card-text>
-
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="primary" :href="link" target="_blank" text>
@@ -28,15 +24,34 @@
 </template>
 
 <script>
+const newsMedia = {
+  RFA: "https://www.rfa.org/burmese",
+  DVB: "https://burmese.dvb.no",
+};
+
 export default {
   name: "ArticleCard",
-  props: ["title", "image", "content", "link", "datetime", "source"],
+  props: {
+    title: { required: true, type: String },
+    image: { type: String },
+    content: { required: true, type: String },
+    link: { required: true, type: String },
+    datetime: { required: true, type: String },
+    source: { required: true, type: String },
+  },
   data: () => ({
     readmore: false,
   }),
+  computed: {
+    sourceUrl() {
+      return newsMedia[this.source] || "#";
+    },
+    body() {
+      return this.textWrap ? this.content.substr(0, 255) + "..." : this.content;
+    },
+    textWrap() {
+      return this.content.length > 255;
+    },
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/assets/scss/components/articleCard.scss";
-</style>

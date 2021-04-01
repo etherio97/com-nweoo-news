@@ -17,6 +17,10 @@
     ],
     "rewrites": [
       {
+        "source": "/images/:match",
+        "destination": "https://storage.googleapis.com/nwe-oo.appspot.com/:match"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

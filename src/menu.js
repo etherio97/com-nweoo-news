@@ -3,19 +3,19 @@ export default [
     title: "မူလစာမျက်နှာ",
     icon: "mdi-home",
     path: "/",
-    visible: true
+    visible: false
   },
   {
     title: "သတင်းများ",
     icon: "mdi-newspaper",
-    path: "/news",
+    path: "/",
     visible: true
   },
   {
     title: "ပေးပို့ချက်များ",
     icon: "mdi-newspaper",
     path: "/reports",
-    visible: false
+    visible: true
   },
   {
     title: "အွန်လိုင်းစာပေးပို့ခြင်း",

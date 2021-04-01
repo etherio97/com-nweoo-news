@@ -2,12 +2,12 @@ export default [
   {
     name: "Home",
     path: "/",
-    component: () => import("../views/Reports.vue")
+    component: () => import("../views/news/Articles.vue")
   },
   {
     name: "Reports",
     path: "/reports",
-    component: () => import("../views/Reports.vue")
+    component: () => import("../views/reports/SMSReports.vue")
   },
   {
     name: "ReportPost",

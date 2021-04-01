@@ -52,7 +52,7 @@ import { mapActions, mapState } from "vuex";
 import DeviceStatus from "@/components/DeviceStatus.vue";
 import ReportCard from "@/components/ReportCard.vue";
 
-const MAX_TIMEOUT = 30000; // 30
+const MAX_TIMEOUT = 30000; // 30s
 
 let _t;
 

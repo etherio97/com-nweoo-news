@@ -14,7 +14,7 @@
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
           icon
-          href="mailto:nweoo22222@yahoo.com"
+          href="mailto:nweoo22222@yandex.com"
           target="_blank"
         >
           <v-icon size="24px">mdi-email</v-icon>

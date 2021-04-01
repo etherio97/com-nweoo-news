@@ -1,16 +1,17 @@
 <template>
   <v-container
     class="mx-auto mt-10 mb-15"
-    style="max-width: 500px; min-width: 320px; width: 100%;"
+    style="max-width: 500px; min-width: 320px; width: 100%"
   >
     <v-form>
-      <v-stepper :value="step">
-        <v-stepper-header>
+      <v-stepper :value="step" class="onlineReportStepper">
+        <v-stepper-header class="onlineReportStepper__header">
           <v-stepper-step step="1">ဘယ်ချိန်</v-stepper-step>
           <v-stepper-step step="2">ဘယ်မှာ</v-stepper-step>
           <v-stepper-step step="3">ဘာဖြစ်</v-stepper-step>
         </v-stepper-header>
-        <v-stepper-items>
+
+        <v-stepper-items class="onlineReportStepper__body">
           <v-stepper-content step="1">
             <v-card>
               <v-card-title> ဘယ်အချိန် </v-card-title>
@@ -279,3 +280,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/components/onlineReportStepper.scss";
+</style>

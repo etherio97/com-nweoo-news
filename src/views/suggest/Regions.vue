@@ -1,10 +1,8 @@
 <template>
-  <v-container class="mb-15">
+  <v-container class="mt-10 mb-15">
     <v-dialog v-model="dialog" max-width="500" persistent>
       <v-card>
-        <v-card-title>
-          တိုင်း/ပြည်နယ်ရွေးချယ်ပေးပါ
-        </v-card-title>
+        <v-card-title> တိုင်း/ပြည်နယ်ရွေးချယ်ပေးပါ </v-card-title>
         <v-card-text>
           <v-select
             v-model="region_state"
@@ -15,22 +13,23 @@
       </v-card>
     </v-dialog>
 
-    <v-card :loading="loading">
-      <v-card-actions>
+    <v-card :loading="loading" class="suggestCard">
+      <v-card-actions class="suggestCard__header">
         <v-spacer></v-spacer>
         <v-checkbox
-          style="width: 120px;"
+          style="width: 120px"
           v-model="displayAll"
           label="အကုန်ပြပါ"
         ></v-checkbox>
         <v-select
-          style="max-width: 300px;"
+          style="max-width: 300px"
           :items="regionStates"
           v-model="region_state"
           label="တိုင်း/ပြည်နယ်"
           outlined
         ></v-select>
       </v-card-actions>
+
       <v-card-text>
         <v-simple-table class="mt-4">
           <thead>
@@ -168,7 +167,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/scss/components/suggestCard.scss";
+
 tr th {
   width: 60%;
 }

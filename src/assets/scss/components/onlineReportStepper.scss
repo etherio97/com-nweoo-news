@@ -1,0 +1,15 @@
+.onlineReportStepper {
+  box-shadow: none;
+  overflow: unset;
+
+  &__header {
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow) !important;
+    margin-bottom: 1rem;
+  }
+
+  &__body {
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow) !important;
+  }
+}

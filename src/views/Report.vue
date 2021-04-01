@@ -1,7 +1,7 @@
 <template>
   <v-container
     class="mx-auto mt-10 mb-15"
-    style="max-width: 500px; min-width: 320px; width: 100%;"
+    style="max-width: 500px; min-width: 320px; width: 100%"
   >
     <v-expand-transition>
       <v-alert type="error" v-show="disabled">
@@ -9,7 +9,7 @@
       </v-alert>
     </v-expand-transition>
 
-    <v-stepper :value="step">
+    <v-stepper :value="step" class="reportCard">
       <v-stepper-items>
         <v-stepper-content step="1">
           <v-card>
@@ -71,7 +71,7 @@
                     :src="`https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Fnweoo22222%2Fposts%2F${post_id}&width=386&show_text=true&appId=2927529797469638&height=482`"
                     width="100%"
                     height="500"
-                    style="border: none; overflow: hidden;"
+                    style="border: none; overflow: hidden"
                     scrolling="no"
                     frameborder="0"
                     allowfullscreen="true"
@@ -316,3 +316,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/components/reportCard";
+</style>

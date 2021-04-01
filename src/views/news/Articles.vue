@@ -4,6 +4,7 @@
       <v-col cols="12">
         <h2>သတင်းများ</h2>
       </v-col>
+
       <template v-if="loading">
         <v-col v-for="n of [1, 2, 3]" :key="n" cols="12" md="6">
           <v-skeleton-loader
@@ -12,6 +13,7 @@
           />
         </v-col>
       </template>
+
       <template v-else>
         <v-expand-transition>
           <v-col cols="12" v-show="error">
@@ -20,7 +22,14 @@
             </v-alert>
           </v-col>
         </v-expand-transition>
-        <v-col v-for="article of articles" :key="article.id" cols="12" md="6">
+
+        <v-col
+          v-for="article of articles"
+          :key="article.id"
+          cols="12"
+          md="6"
+          lg="4"
+        >
           <article-card
             :source="article.source"
             :content="article.content"

@@ -3,7 +3,7 @@
     <v-container>
       <v-card elevation="0" color="transparent">
         <v-card-title class="text-h5">
-          SMS Reports
+          SMS မှ တဆင့် ပေးပို့ချက်များ
           <device-status />
         </v-card-title>
 
@@ -83,17 +83,8 @@ export default {
   methods: {
     ...mapActions("reports", ["UPDATE_REPORTS"]),
     update() {
-      if (this.$root.times > 500) {
-        return;
-      }
-      if (!window.navigator.onLine) {
-        this.error = "အင်တာနက်ကွန်နက်ရှင်မရှိပါ";
-        return (_t = setTimeout(() => this.update(), MAX_TIMEOUT));
-      }
       this.UPDATE_REPORTS({
         url: this.$root.api,
-        times: this.$root.times++,
-        ga: this.$root.ga,
       })
         .then(() => {
           this.updated_at = new Date();
@@ -103,15 +94,11 @@ export default {
         .catch((e) => {
           this.loading = false;
           this.error = e.message;
-        })
-        .finally(() => (_t = setTimeout(() => this.update(), MAX_TIMEOUT)));
+        });
     },
   },
   mounted() {
     this.update();
-  },
-  beforeDestroy() {
-    _t && clearTimeout(_t);
   },
 };
 </script>

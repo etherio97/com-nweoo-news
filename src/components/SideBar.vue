@@ -70,6 +70,22 @@ export default {
     drawer: false,
     mini: true,
   }),
+
+  watch: {
+    mini(value) {
+      if ("localStorage" in window) {
+        value
+          ? window.localStorage.setItem("_sidebar_open", "1")
+          : window.localStorage.setItem("_sidebar_open", "");
+      }
+    },
+  },
+
+  beforeMount() {
+    if ("localStorage" in window) {
+      this.mini = window.localStorage.getItem("_sidebar_open") || false;
+    }
+  },
 };
 </script>
 

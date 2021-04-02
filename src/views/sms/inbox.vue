@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mb-15">
     <v-card class="mx-auto" elevation="0">
       <v-card-title> SMS [{{ mode }}] </v-card-title>
       <v-card-actions>
@@ -25,12 +25,17 @@
         </v-btn>
       </v-card-actions>
       <v-card-text>
+        <v-expand-transition>
+          <v-alert v-show="error" type="error">
+            {{ error }}
+          </v-alert>
+        </v-expand-transition>
         <v-simple-table>
           <thead>
             <tr>
-              <th>Phone No.</th>
+              <th id="phone">Phone No.</th>
               <th>Message</th>
-              <th>Date</th>
+              <th id="datetime">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -52,20 +57,37 @@ export default {
     mode: null,
     limit: 10,
     messages: [],
+    loading: false,
+    error: null,
   }),
   watch: {
     mode(value) {
-      if (sessionStorage.getItem("_token")) {
-        this.axios(
-          `https://nwe-oo-default-rtdb.firebaseio.com/v1/sms-${value}.json?orderBy="$key"&limitToLast=${this.limit}`
-        ).then(({ data }) => {
+      this.error = null;
+      this.messages = [];
+      this.axios(
+        `${this.$root.api}/sms/${value}?token=${this.token}&limit=${this.limit}`
+      )
+        .then(({ data: { data } }) => {
           this.messages = Object.values(data).reverse();
-        });
-      }
+        })
+        .catch((e) => (this.error = e.message))
+        .finally(() => (this.loading = false));
     },
   },
   beforeMount() {
+    let token = sessionStorage.getItem("_token");
     this.mode = "inbox";
+    this.token = token ? atob(token) : null;
   },
 };
 </script>
+
+<style scoped>
+th#phone {
+  width: 160px;
+}
+
+th#datetime {
+  width: 180px;
+}
+</style>

@@ -1,6 +1,9 @@
 <template>
   <v-card class="articleCard">
-    <v-img v-show="image" :src="image"></v-img>
+    <template v-if="video"> Show video </template>
+    <template v-else>
+      <v-img v-show="image" :src="image"></v-img>
+    </template>
 
     <v-card-title>
       {{ title }}
@@ -30,7 +33,7 @@
 <script>
 export default {
   name: "ArticleCard",
-  props: ["title", "image", "content", "link", "datetime", "source"],
+  props: ["title", "image", "video", "content", "link", "datetime", "source"],
   data: () => ({
     readmore: false,
   }),

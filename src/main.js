@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import "./plugins/firebase";
+import firebase from "./plugins/firebase";
 import "./plugins/axios";
 
 const cookies = {};
@@ -13,9 +13,7 @@ Vue.config.productionTip = false;
 const data = {
   loaded: false,
   user: null,
-  api: "https://api.nweoo.com",
-  ga: null,
-  times: 0
+  api: "https://api.nweoo.com"
 };
 
 if (process.env.NODE_ENV !== "production") {
@@ -32,10 +30,6 @@ new Vue({
   vuetify
 }).$mount("#app");
 
-if ("cookie" in document) {
-  document.cookie.split(";").forEach(c => {
-    let [n, ...v] = c.split("=");
-    cookies[n.trim()] = v.join("=");
-  });
-  if (cookies["_ga"]) data.ga = cookies["_ga"];
-}
+firebase.auth().onAuthStateChanged(user => {
+  data.user = user;
+});

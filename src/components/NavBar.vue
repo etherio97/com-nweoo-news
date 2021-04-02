@@ -10,7 +10,7 @@
       temporary
       hide-overlay
     >
-      <template v-slot:prepend v-if="logged">
+      <!-- <template v-slot:prepend v-if="logged">
         <v-list-item two-line to="/profile">
           <v-list-item-avatar>
             <v-img v-if="user && user.photoURL" :src="user.photoURL" />
@@ -23,7 +23,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
-      </template>
+      </template> -->
 
       <v-list nav dense>
         <v-list-item-group active-class="secondary--text text--accent-4">
@@ -39,24 +39,15 @@
       </v-list>
 
       <template v-slot:append>
-        <v-list-item class="mb-10">
-          <v-btn v-if="logged" color="secondary darken-1" block>Log Out</v-btn>
-          <v-btn
-            v-else
-            text
-            outlined
-            color="secondary darken-1"
-            block
-            to="/login"
-            >အကောင့်သို့ဝင်ရန်</v-btn
-          >
-        </v-list-item>
+        <log-in></log-in>
       </template>
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
+import LogIn from "./LogIn.vue";
+
 export default {
   name: "NavBar",
   props: {
@@ -64,24 +55,14 @@ export default {
       type: Array,
       required: true,
     },
-    user: {
-      type: Object,
-      required: true,
-    },
-    logged: {
-      type: Boolean,
-      required: true,
-    },
+  },
+
+  components: {
+    LogIn,
   },
 
   data: () => ({
     drawer: false,
   }),
-
-  methods: {
-    signOut() {
-      //
-    },
-  },
 };
 </script>

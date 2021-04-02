@@ -15,6 +15,8 @@
 </template>
 
 <script>
+const URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+
 export default {
   name: "ReportCard",
   props: ["report"],
@@ -24,9 +26,8 @@ export default {
   computed: {
     message() {
       let message = this.report.message;
-      let urls = message.match(/((?:https?:\/\/|www\.)[\w\d\.\-\?\%\/\&]+)/gim);
+      let urls = message.match(URL_PATTERN);
       if (urls) {
-        console.log(urls);
         message = message.replace(
           new RegExp(`${urls[0]}`, "gim"),
           `<a href="${urls[0]}" class="text-decoration-underline" target="_blank">${urls[0]}</a>`

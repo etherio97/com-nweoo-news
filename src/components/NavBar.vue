@@ -10,10 +10,10 @@
       temporary
       hide-overlay
     >
-      <!-- <template v-slot:prepend v-if="logged">
-        <v-list-item two-line to="/profile">
+      <template v-slot:prepend v-if="loggedIn">
+        <v-list-item two-line>
           <v-list-item-avatar>
-            <v-img v-if="user && user.photoURL" :src="user.photoURL" />
+            <v-img v-if="user.photoURL" :src="user.photoURL" />
             <v-icon v-else large>mdi-account</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
@@ -23,7 +23,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
-      </template> -->
+      </template>
 
       <v-list nav dense>
         <v-list-item-group active-class="secondary--text text--accent-4">
@@ -64,5 +64,14 @@ export default {
   data: () => ({
     drawer: false,
   }),
+
+  computed: {
+    loggedIn() {
+      return Boolean(this.user["uid"]);
+    },
+    user() {
+      return this.$root.user || {};
+    },
+  },
 };
 </script>

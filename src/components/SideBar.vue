@@ -1,25 +1,37 @@
 <template>
   <v-navigation-drawer app v-model="drawer" :mini-variant="mini" permanent>
-    <router-link to="/">
-      <v-list-item class="sidebar__logo">
-        <v-list-item-title class="sidebar__logo__img">
-          <v-img src="../assets/images/nweoo-logo.png" />
-        </v-list-item-title>
-        <v-list-item-subtitle class="sidebar__logo__brand">
-          နွေဦးတော်လှန်ရေး
-        </v-list-item-subtitle>
-      </v-list-item>
-    </router-link>
+    <template v-slot:prepend>
+      <router-link to="/">
+        <v-list-item class="sidebar__logo">
+          <v-list-item-title class="sidebar__logo__img">
+            <v-img src="../assets/images/nweoo-logo.png" />
+          </v-list-item-title>
+          <v-list-item-subtitle class="sidebar__logo__brand">
+            နွေဦးတော်လှန်ရေး
+          </v-list-item-subtitle>
+        </v-list-item>
+      </router-link>
+    </template>
 
     <v-divider></v-divider>
 
     <v-list-item @click="mini = !mini">
       <v-icon>{{ mini ? "mdi-chevron-right" : "mdi-chevron-left" }}</v-icon>
-      <v-spacer></v-spacer>
-      <v-btn icon v-show="logged">
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
     </v-list-item>
+    <v-divider></v-divider>
+
+    <v-list-item two-line v-if="loggedIn">
+      <v-list-item-avatar>
+        <v-img v-if="user.photoURL" :src="user.photoURL" />
+        <v-icon v-else large>mdi-account</v-icon>
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <v-list-item-subtitle class="ml-2 mt-1">
+          {{ user.displayName || user.email || user.phoneNumber }}
+        </v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider v-if="loggedIn"></v-divider>
 
     <v-list-item v-if="logged" to="/profile" link>
       <v-list-item-avatar class="ml-n1">
@@ -97,6 +109,15 @@ export default {
     if ("localStorage" in window) {
       this.mini = window.localStorage.getItem("_sidebar_open") || false;
     }
+  },
+
+  computed: {
+    loggedIn() {
+      return Boolean(this.user["uid"]);
+    },
+    user() {
+      return this.$root.user || {};
+    },
   },
 };
 </script>

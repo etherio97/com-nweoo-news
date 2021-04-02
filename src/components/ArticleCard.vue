@@ -9,7 +9,7 @@
       <a :href="sourceUrl" target="_blank">{{ source }}</a>
     </v-card-subtitle>
     <v-card-text>
-      {{ readmore ? content : body }}
+      <span v-html="readmore ? content.replace(/\n/gim, '<br>') : body"></span>
       <a v-show="textWrap && !readmore" @click="readmore = true">
         ပိုမိုဖတ်ရှုရန်
       </a>

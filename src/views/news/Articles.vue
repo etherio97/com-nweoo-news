@@ -24,7 +24,7 @@
         </v-expand-transition>
 
         <v-col
-          v-for="article of articles"
+          v-for="article of items"
           :key="article.id"
           cols="12"
           md="6"
@@ -46,6 +46,7 @@
 
 <script>
 import ArticleCard from "@/components/ArticleCard.vue";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "NewsArticles",
@@ -55,14 +56,12 @@ export default {
   data: () => ({
     loading: true,
     error: null,
-    articles: [],
   }),
-  beforeMount() {
-    this.axios(`${this.$root.api}/articles`)
-      .then(({ data }) => {
-        this.articles = data.reverse();
-      })
-      .catch((e) => (this.error = e.message))
+  methods: mapActions("articles", ["FETCH_ARTICLES"]),
+  computed: mapState("articles", ["items"]),
+  mounted() {
+    this.FETCH_ARTICLES({ url: this.$root.api })
+      .catch(() => (this.error = true))
       .finally(() => (this.loading = false));
   },
 };

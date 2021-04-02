@@ -18,6 +18,12 @@ export default [
     visible: true
   },
   {
+    title: "စာတိုပို့ရန်",
+    icon: "mdi-message-outline",
+    path: "/sms/send",
+    visible: true
+  },
+  {
     title: "အွန်လိုင်းစာပေးပို့ခြင်း",
     icon: "mdi-desktop-mac-dashboard",
     path: "/new/reports",

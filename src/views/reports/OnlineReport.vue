@@ -1,7 +1,7 @@
 <template>
   <v-container
     class="mx-auto mt-10 mb-15"
-    style="max-width: 500px; min-width: 320px; width: 100%"
+    style="max-width: 500px; min-width: 320px; width: 100%;"
   >
     <v-form>
       <v-stepper :value="step" class="onlineReportStepper">
@@ -251,8 +251,6 @@ export default {
         this.$store.dispatch("regionState/FETCH_CITIES", {
           division_mm: this.regionState,
           api: this.$root.api,
-          times: this.$root.times,
-          ga: this.$root.ga,
         });
       }
     },

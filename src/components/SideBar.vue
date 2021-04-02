@@ -1,13 +1,15 @@
 <template>
   <v-navigation-drawer app v-model="drawer" :mini-variant="mini" permanent>
-    <v-list-item class="sidebar__logo">
-      <v-list-item-title class="sidebar__logo__img">
-        <v-img src="../assets/images/nweoo-logo.png"></v-img>
-      </v-list-item-title>
-      <v-list-item-subtitle class="sidebar__logo__brand">
-        နွေဦးတော်လှန်ရေး
-      </v-list-item-subtitle>
-    </v-list-item>
+    <router-link to="/">
+      <v-list-item class="sidebar__logo">
+        <v-list-item-title class="sidebar__logo__img">
+          <v-img src="../assets/images/nweoo-logo.png" />
+        </v-list-item-title>
+        <v-list-item-subtitle class="sidebar__logo__brand">
+          နွေဦးတော်လှန်ရေး
+        </v-list-item-subtitle>
+      </v-list-item>
+    </router-link>
 
     <v-divider></v-divider>
 
@@ -44,10 +46,16 @@
         </v-list-item>
       </template>
     </v-list>
+
+    <template v-slot:append>
+      <log-in></log-in>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script>
+import LogIn from "./LogIn.vue";
+
 export default {
   name: "SideBar",
 
@@ -70,6 +78,10 @@ export default {
     drawer: false,
     mini: true,
   }),
+
+  components: {
+    LogIn,
+  },
 
   watch: {
     mini(value) {

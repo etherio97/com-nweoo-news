@@ -2,15 +2,22 @@
   <v-dialog v-model="dialog" width="500" :persistent="loading">
     <template v-slot:activator="{ attr, on }">
       <v-list-item class="mb-10">
-        <v-btn v-if="logged" @click="signOut" color="secondary darken-1" block
-          >Log Out</v-btn
+        <v-btn
+          v-if="logged"
+          @click="signOut"
+          color="primary"
+          depressed
+          block
+          outlined
+          >အကောင့်မှထွက်ရန်</v-btn
         >
         <v-btn
           v-else
           text
           outlined
+          depressed
           block
-          color="secondary darken-1"
+          color="primary"
           v-on="on"
           v-bind="attr"
           >အကောင့်သို့ဝင်ရန်</v-btn
@@ -19,13 +26,17 @@
     </template>
     <v-form @submit.prevent="signInWithEmailAndPassword">
       <v-card :loading="loading">
-        <v-card-title class="font-weight-black">Log In</v-card-title>
+        <v-card-title class="font-weight-black"></v-card-title>
         <v-card-text>
+          <v-expand-transition>
+            <v-alert v-show="error" type="error">{{ error }}</v-alert>
+          </v-expand-transition>
           <v-text-field
             label="Username"
             v-model="username"
             prepend-inner-icon="mdi-account"
             outlined
+            ref="usn"
           />
           <v-text-field
             label="Password"
@@ -34,13 +45,11 @@
             prepend-inner-icon="mdi-lock"
             outlined
           />
-          <v-expand-transition>
-            <v-alert v-show="error" type="error">{{ error }}</v-alert>
-          </v-expand-transition>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
+            depressed
             type="submit"
             color="primary"
             class="px-5 font-weight-bold"
@@ -66,6 +75,16 @@ export default {
     loading: false,
     dialog: false,
   }),
+  watch: {
+    dialog(value) {
+      if (value) {
+        setTimeout(
+          () => this.$refs.usn.$el.querySelector("input").focus(),
+          320
+        );
+      }
+    },
+  },
   methods: {
     signOut() {
       const auth = firebase.auth();
@@ -86,12 +105,14 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((user) => {
           this.$root.user = user;
-          this.$router.go();
         })
         .catch((e) => {
           this.error = e.message;
         })
-        .finally(() => (this.loading = true));
+        .finally(() => {
+          this.loading = false;
+          this.dialog = false;
+        });
     },
   },
   computed: {

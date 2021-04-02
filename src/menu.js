@@ -28,11 +28,5 @@ export default [
     icon: "mdi-desktop-mac-dashboard",
     path: "/new/reports",
     visible: true
-  },
-  {
-    title: "ကူညီဖြည့်ပေးပါ",
-    icon: "mdi-hand-heart",
-    path: "/suggest/regions",
-    visible: true
   }
 ];

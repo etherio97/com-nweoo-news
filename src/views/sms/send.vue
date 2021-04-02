@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card elevation="1" class="mx-auto" max-width="500px" :loading="loading">
+    <v-card elevation="0" class="mx-auto" max-width="500px" :loading="loading">
       <v-card-title>
         Send SMS
       </v-card-title>

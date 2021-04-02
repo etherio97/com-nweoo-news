@@ -12,7 +12,7 @@
     <v-stepper :value="step" class="reportCard">
       <v-stepper-items>
         <v-stepper-content step="1">
-          <v-card>
+          <v-card elevation="0">
             <v-card-title>တိုင်ကြားလိုသော Post ID ကိုထည့်ပါ။</v-card-title>
             <v-card-text>
               <v-text-field
@@ -34,7 +34,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-card>
+          <v-card elevation="0">
             <v-card-title>
               <v-chip color="secondary" class="mr-2">
                 စာစုအမှတ် #{{ id }}
@@ -84,7 +84,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <v-card>
+          <v-card elevation="0">
             <v-card-title>
               <v-btn @click="step = 2" icon color="primary">
                 <v-icon>mdi-chevron-left</v-icon>
@@ -129,7 +129,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="4">
-          <v-card>
+          <v-card elevation="0">
             <v-card-title>
               <v-btn @click="step = 2" icon color="primary">
                 <v-icon>mdi-chevron-left</v-icon>
@@ -164,7 +164,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="5">
-          <v-card>
+          <v-card elevation="0">
             <v-card-text class="text-center">
               <v-progress-circular
                 size="64"
@@ -176,7 +176,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="6">
-          <v-card>
+          <v-card elevation="0">
             <v-card-text class="text-center">
               <v-progress-circular color="success" size="64" value="100">
                 <v-icon>mdi-check</v-icon>

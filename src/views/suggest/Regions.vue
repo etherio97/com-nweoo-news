@@ -17,12 +17,12 @@
       <v-card-actions class="suggestCard__header">
         <v-spacer></v-spacer>
         <v-checkbox
-          style="width: 120px"
+          style="width: 120px;"
           v-model="displayAll"
           label="အကုန်ပြပါ"
         ></v-checkbox>
         <v-select
-          style="max-width: 300px"
+          style="max-width: 300px;"
           :items="regionStates"
           v-model="region_state"
           label="တိုင်း/ပြည်နယ်"
@@ -153,6 +153,10 @@ export default {
           this.loading = false;
         });
     },
+  },
+
+  beforeRouteEnter() {
+    this.$router.push("/");
   },
 
   mounted() {

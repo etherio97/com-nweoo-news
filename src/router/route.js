@@ -43,5 +43,15 @@ export default [
     name: "SMSInbox",
     path: "/sms/inbox",
     component: () => import("../views/sms/inbox.vue")
+  },
+  {
+    name: "SMSOutbox",
+    path: "/sms/outbox",
+    component: () => import("../views/sms/inbox.vue")
+  },
+  {
+    name: "VideoNews",
+    path: "/news/videos",
+    component: () => import("../views/news/Videos.vue")
   }
 ];

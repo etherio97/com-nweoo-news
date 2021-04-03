@@ -15,13 +15,13 @@ export default {
 
   actions: {
     FETCH_ARTICLES({ commit }, payload) {
-      const { url } = payload;
-      return axios
-        .get(`${url}/articles?limit=20`)
-        .then(({ data }) => commit(
-          "SET_ARTICLES", 
-          data.sort((a, b) => new Date(b.datetime) - new Date(a.datetime)))
-        );
+      const { api } = payload;
+      return axios.get(`${api}/articles?limit=20`).then(({ data }) =>
+        commit(
+          "SET_ARTICLES",
+          data.sort((a, b) => new Date(b.datetime) - new Date(a.datetime))
+        )
+      );
     }
   }
 };

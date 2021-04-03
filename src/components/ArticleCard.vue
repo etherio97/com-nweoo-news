@@ -1,6 +1,11 @@
 <template>
   <v-card>
-    <v-img v-show="image" :src="image"></v-img>
+    <v-img
+      v-if="image"
+      aspect-ratio="1.7778"
+      :lazy-src="imageDefault"
+      :src="image"
+    />
     <v-card-title>
       {{ title }}
     </v-card-title>
@@ -16,7 +21,13 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" :href="link" target="_blank" text>
+      <v-btn
+        color="primary"
+        rel="noreferrer noopener"
+        :href="link"
+        target="_blank"
+        text
+      >
         အပြည့်အစုံကြည့်ရန်
       </v-btn>
     </v-card-actions>
@@ -24,6 +35,8 @@
 </template>
 
 <script>
+import imageDefault from "@/assets/images/image.jpg";
+
 const URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 const newsMedia = {
   RFA: "https://www.rfa.org/burmese",
@@ -40,6 +53,7 @@ export default {
     source: { required: true, type: String },
   },
   data: () => ({
+    imageDefault,
     readmore: false,
   }),
   computed: {
@@ -55,7 +69,7 @@ export default {
       if (urls) {
         content = content.replace(
           new RegExp(`${urls[0]}`, "gim"),
-          `<a href="${urls[0]}" class="text-decoration-underline" target="_blank">${urls[0]}</a>`
+          `<a href="${urls[0]}" class="text-decoration-underline" rel="noreferrer noopener" target="_blank">${urls[0]}</a>`
         );
       }
       return content;

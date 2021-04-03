@@ -156,7 +156,7 @@ export default {
   },
 
   beforeRouteEnter() {
-    this.$router.push("/");
+    window.location.replace("/");
   },
 
   mounted() {

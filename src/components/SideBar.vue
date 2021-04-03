@@ -33,7 +33,7 @@
     </v-list-item>
     <v-divider v-if="loggedIn"></v-divider>
 
-    <v-list-item v-if="logged" to="/profile" link>
+    <v-list-item v-if="loggedIn" to="/profile" link>
       <v-list-item-avatar class="ml-n1">
         <v-img v-if="user.photoURL" :src="user.photoURL"></v-img>
         <v-icon v-else>mdi-account</v-icon>
@@ -59,7 +59,7 @@
       </template>
     </v-list>
 
-    <template v-slot:append>
+    <template v-slot:append v-if="!mini">
       <log-in></log-in>
     </template>
   </v-navigation-drawer>
@@ -74,14 +74,6 @@ export default {
   props: {
     items: {
       type: Array,
-      required: true,
-    },
-    user: {
-      type: Object,
-      required: true,
-    },
-    logged: {
-      type: Boolean,
       required: true,
     },
   },
@@ -107,7 +99,9 @@ export default {
 
   beforeMount() {
     if ("localStorage" in window) {
-      this.mini = window.localStorage.getItem("_sidebar_open") || false;
+      this.mini = Boolean(
+        window.localStorage.getItem("_sidebar_open") || false
+      );
     }
   },
 

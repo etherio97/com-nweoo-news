@@ -30,7 +30,7 @@ export default {
       if (urls) {
         message = message.replace(
           new RegExp(`${urls[0]}`, "gim"),
-          `<a href="${urls[0]}" class="text-decoration-underline" target="_blank">${urls[0]}</a>`
+          `<a href="${urls[0]}" class="text-decoration-underline" rel="noreferrer noopener" target="_blank">${urls[0]}</a>`
         );
       }
       return message;

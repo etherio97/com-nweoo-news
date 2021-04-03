@@ -18,7 +18,10 @@ export default {
       const { url } = payload;
       return axios
         .get(`${url}/articles?limit=20`)
-        .then(({ data }) => commit("SET_ARTICLES", data.reverse()));
+        .then(({ data }) => commit(
+          "SET_ARTICLES", 
+          data.sort((a, b) => new Date(b.datetime) - new Date(a.datetime)))
+        );
     }
   }
 };

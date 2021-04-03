@@ -20,8 +20,9 @@
             <v-alert type="error">
               {{ error }}
               <v-btn
+                text
                 class="ma-2 font-weight-medium"
-                color="primary"
+                color="secondary"
                 @click="$router.go()"
               >
                 ပြန်လည်ကြိုးစားကြည့်ပါ

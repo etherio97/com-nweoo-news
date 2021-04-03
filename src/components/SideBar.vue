@@ -20,20 +20,7 @@
     </v-list-item>
     <v-divider></v-divider>
 
-    <v-list-item two-line v-if="loggedIn">
-      <v-list-item-avatar>
-        <v-img v-if="user.photoURL" :src="user.photoURL" />
-        <v-icon v-else large>mdi-account</v-icon>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-subtitle class="ml-2 mt-1">
-          {{ user.displayName || user.email || user.phoneNumber }}
-        </v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-    <v-divider v-if="loggedIn"></v-divider>
-
-    <v-list-item v-if="loggedIn" to="/profile" link>
+    <v-list-item v-if="loggedIn">
       <v-list-item-avatar class="ml-n1">
         <v-img v-if="user.photoURL" :src="user.photoURL"></v-img>
         <v-icon v-else>mdi-account</v-icon>

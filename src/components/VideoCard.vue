@@ -1,22 +1,13 @@
 <template>
   <v-card>
-    <video
-      v-if="viewing"
-      :src="video"
-      :poster="image"
+    <video-player
+      class="vjs-custom-skin"
+      :playsinline="true"
+      :options="playerOptions"
       width="100%"
       height="auto"
       controls
-    ></video>
-    <v-img
-      v-else
-      id="video-cover"
-      @click="viewing = true"
-      aspect-ratio="1.7778"
-      lazy-src="../assets/images/image.jpg"
-      :src="image"
-      :alt="title"
-    />
+    ></video-player>
     <v-card-title>
       {{ title }}
     </v-card-title>
@@ -53,10 +44,16 @@
 </template>
 
 <script>
+import VideoPlayer from "vue-video-player-vjs";
+import "video.js/dist/video-js.css";
+
 const URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 export default {
   name: "VideoCard",
+  components: {
+    VideoPlayer,
+  },
   props: {
     id: {
       type: String,
@@ -84,20 +81,29 @@ export default {
     },
   },
   data: () => ({
-    viewing: false,
     readmore: false,
-  }),
-  watch: {
-    viewing(value) {
-      if (value) {
-        setTimeout(() => {
-          const vdo = document.querySelector("video");
-          if (!vdo) return;
-          vdo.addEventListener("canplaythrough", () => vdo.play());
-        }, 800);
-      }
+    playerOptions: {
+      autoplay: false,
+      controls: true,
+      preload: "auto",
+      fluid: true,
+      aspectRatio: "16:9",
+      notSupportedMessage: "",
+      sources: [
+        {
+          withCredentials: false,
+          type: null,
+          src: null,
+        },
+      ],
+      controlBar: {
+        timeDivider: false,
+        remainingTimeDisplay: false,
+        currentTimeDisplay: true,
+        durationDisplay: true,
+      },
     },
-  },
+  }),
   computed: {
     html() {
       let description = this.description.replace(/\n/gim, "<br>");
@@ -116,21 +122,15 @@ export default {
     textWrap() {
       return this.description.length > 255;
     },
-    video() {
-      return `${this.$root.api}/news/player?source=${btoa(this.source)}`;
+    poster() {
+      return this.thumbnails[5].uri;
     },
-    image() {
-      // let i = Math.floor(Math.random() * this.thumbnails.length);
-      return `${this.$root.api}/news/image?source=${btoa(
-        this.thumbnails[5].uri
-      )}`;
-    },
+  },
+
+  beforeMount() {
+    this.playerOptions.sources[0].title = this.title;
+    this.playerOptions.sources[0].type = "video/mp4";
+    this.playerOptions.sources[0].src = this.source;
   },
 };
 </script>
-
-<style scoped>
-#video-cover {
-  cursor: pointer;
-}
-</style>

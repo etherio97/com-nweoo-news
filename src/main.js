@@ -6,8 +6,6 @@ import vuetify from "./plugins/vuetify";
 import firebase from "./plugins/firebase";
 import "./plugins/axios";
 
-const cookies = {};
-
 Vue.config.productionTip = false;
 
 const data = {

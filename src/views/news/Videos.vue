@@ -18,6 +18,7 @@
             <v-alert type="error">
               {{ error }}
               <v-btn
+                text
                 class="ma-2 font-weight-medium"
                 color="secondary"
                 @click="$router.go()"
@@ -28,7 +29,7 @@
           </v-col>
         </v-expand-transition>
 
-        <v-col v-for="video in items" :key="video.id" cols="12" sm="6" lg="4">
+        <v-col v-for="video in items" :key="video.id" cols="12" sm="6" xl="4">
           <video-card
             :id="video.id"
             :created_time="video.created_time"

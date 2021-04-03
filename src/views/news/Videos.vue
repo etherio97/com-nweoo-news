@@ -5,7 +5,7 @@
         <h2>ဗီဒီယိုသတင်းများ</h2>
       </v-col>
       <template v-if="loading">
-        <v-col v-for="n in [1, 2, 3]" :key="n" cols="6" lg="4">
+        <v-col v-for="n in [1, 2, 3]" :key="n" cols="12" sm="6" lg="4">
           <v-skeleton-loader
             max-width="100%"
             type="image, card-heading, divider, list-item-three-line"
@@ -19,7 +19,7 @@
               {{ error }}
               <v-btn
                 class="ma-2 font-weight-medium"
-                color="primary"
+                color="secondary"
                 @click="$router.go()"
               >
                 ပြန်လည်ကြိုးစားကြည့်ပါ
@@ -28,7 +28,7 @@
           </v-col>
         </v-expand-transition>
 
-        <v-col v-for="video in items" :key="video.id" cols="6" lg="4">
+        <v-col v-for="video in items" :key="video.id" cols="12" sm="6" lg="4">
           <video-card
             :id="video.id"
             :created_time="video.created_time"

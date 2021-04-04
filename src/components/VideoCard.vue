@@ -131,7 +131,7 @@ export default {
     let matched = this.source.match(/^https:\/\/(.+)\.xx\.fbcdn\.net/);
     if (matched) {
       let uri = new URL(this.source);
-      uri.host = "cdn-nweoo-com.vercel.app";
+      uri.host = "cdn.nweoo.com";
       switch (matched[1]) {
         case "external-iad3-1":
           uri.pathname = "/e" + uri.pathname;

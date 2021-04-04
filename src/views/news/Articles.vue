@@ -31,21 +31,14 @@
           </v-col>
         </v-expand-transition>
 
-        <v-col
-          v-for="article of items"
-          :key="article.id"
-          cols="12"
-          md="6"
-          lg="4"
-        >
-          <article-card
-            :source="article.source"
-            :content="article.content"
-            :image="article.image"
-            :link="article.link"
-            :title="article.title"
-            :datetime="article.datetime"
-          ></article-card>
+        <v-col v-for="article of items" :key="article.id" cols="12" lg="6">
+          <article-card-feed
+            :permalink_url="article.permalink_url"
+            :attachments="article.attachments"
+            :message="article.message"
+            :tags="article.message_tags"
+            :image="article.picture_full"
+          ></article-card-feed>
         </v-col>
       </template>
     </v-row>
@@ -53,21 +46,25 @@
 </template>
 
 <script>
-import ArticleCard from "@/components/ArticleCard.vue";
 import { mapActions, mapState } from "vuex";
+import ArticleCardFeed from "@/components/ArticleCardFeed.vue";
 
 export default {
   name: "NewsArticles",
   components: {
-    ArticleCard,
+    ArticleCardFeed,
   },
   data: () => ({
     loading: true,
     error: null,
+    items: [],
   }),
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
-  computed: mapState("articles", ["items"]),
+  // computed: mapState("articles", ["items"]),
   beforeMount() {
+    this.items = require("@/assets/articles.json")["data"];
+    this.loading = false;
+    return;
     this.FETCH_ARTICLES(this.$root)
       .catch((e) => (this.error = e.message))
       .finally(() => (this.loading = false));

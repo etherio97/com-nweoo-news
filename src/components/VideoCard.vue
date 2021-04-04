@@ -47,7 +47,7 @@
 import VideoPlayer from "vue-video-player-vjs";
 import "video.js/dist/video-js.css";
 
-const URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+const URL_PATTERN = /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm;
 
 export default {
   name: "VideoCard",
@@ -128,9 +128,26 @@ export default {
   },
 
   beforeMount() {
-    this.playerOptions.sources[0].title = this.title;
-    this.playerOptions.sources[0].type = "video/mp4";
-    this.playerOptions.sources[0].src = this.source;
+    let matched = this.source.match(/^https:\/\/(.+)\.xx\.fbcdn\.net/);
+    if (matched) {
+      let uri = new URL(this.source);
+      uri.host = "cdn-nweoo-com.vercel.app";
+      switch (matched[1]) {
+        case "external-iad3-1":
+          uri.pathname = "/e" + uri.pathname;
+          break;
+        case "scontent-iad3-1":
+          uri.pathname = "/s" + uri.pathname;
+          break;
+        case "video-iad3-1":
+          uri.pathname = "/v" + uri.pathname;
+          break;
+      }
+      console.log(uri.toString());
+      this.playerOptions.sources[0].title = this.title;
+      this.playerOptions.sources[0].type = "video/mp4";
+      this.playerOptions.sources[0].src = uri.toString();
+    }
   },
 };
 </script>

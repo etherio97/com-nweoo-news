@@ -15,7 +15,6 @@ export default {
 
   actions: {
     FETCH_ARTICLES({ commit }, payload) {
-      const { api } = payload;
       return axios.get(`${api}/articles?limit=20`).then(({ data }) =>
         commit(
           "SET_ARTICLES",

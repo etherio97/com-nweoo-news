@@ -5,7 +5,7 @@
         <h2>ဗီဒီယိုသတင်းများ</h2>
       </v-col>
       <template v-if="loading">
-        <v-col v-for="n in [1, 2, 3]" :key="n" cols="12" sm="6" lg="4">
+        <v-col v-for="n in [1, 2, 3]" :key="n" cols="12" sm="6" xl="4">
           <v-skeleton-loader
             max-width="100%"
             type="image, card-heading, divider, list-item-three-line"

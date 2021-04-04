@@ -24,6 +24,7 @@
                 class="ma-2 font-weight-medium"
                 color="secondary"
                 @click="$router.go()"
+                dark
               >
                 ပြန်လည်ကြိုးစားကြည့်ပါ
               </v-btn>
@@ -32,13 +33,16 @@
         </v-expand-transition>
 
         <v-col v-for="article of items" :key="article.id" cols="12" lg="6">
-          <article-card-feed
-            :permalink_url="article.permalink_url"
-            :attachments="article.attachments"
-            :message="article.message"
-            :tags="article.message_tags"
-            :image="article.picture_full"
-          ></article-card-feed>
+          <article-card
+            :id="article.id"
+            :title="article.title"
+            :content="article.content"
+            :datetime="article.datetime"
+            :image="article.image"
+            :link="article.link"
+            :post_id="article.post_id"
+            :source="article.source"
+          ></article-card>
         </v-col>
       </template>
     </v-row>
@@ -47,25 +51,21 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import ArticleCardFeed from "@/components/ArticleCardFeed.vue";
+import ArticleCard from "@/components/ArticleCard.vue";
 
 export default {
   name: "NewsArticles",
   components: {
-    ArticleCardFeed,
+    ArticleCard,
   },
   data: () => ({
     loading: true,
     error: null,
-    items: [],
   }),
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
-  // computed: mapState("articles", ["items"]),
+  computed: mapState("articles", ["items"]),
   beforeMount() {
-    this.items = require("@/assets/articles.json")["data"];
-    this.loading = false;
-    return;
-    this.FETCH_ARTICLES(this.$root)
+    this.FETCH_ARTICLES({ api: this.$root.api })
       .catch((e) => (this.error = e.message))
       .finally(() => (this.loading = false));
   },

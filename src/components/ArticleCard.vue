@@ -3,7 +3,7 @@
     <v-img
       v-if="image"
       aspect-ratio="1.7778"
-      :lazy-src="imageDefault"
+      lazy-src="@/assets/images/image.jpg"
       :src="image"
     />
     <v-card-title>
@@ -35,9 +35,7 @@
 </template>
 
 <script>
-import imageDefault from "@/assets/images/image.jpg";
-
-const URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+import { parseUrl } from "@/functions/formatter";
 const newsMedia = {
   RFA: "https://www.rfa.org/burmese",
   DVB: "https://burmese.dvb.no",
@@ -53,7 +51,6 @@ export default {
     source: { required: true, type: String },
   },
   data: () => ({
-    imageDefault,
     readmore: false,
   }),
   computed: {
@@ -65,14 +62,7 @@ export default {
     },
     html() {
       let content = this.content.replace(/\n/gim, "<br>");
-      let urls = content.match(URL_PATTERN);
-      if (urls) {
-        content = content.replace(
-          new RegExp(`${urls[0]}`, "gim"),
-          `<a href="${urls[0]}" class="text-decoration-underline" rel="noreferrer noopener" target="_blank">${urls[0]}</a>`
-        );
-      }
-      return content;
+      return parseUrl(content);
     },
     textWrap() {
       return this.content.length > 255;

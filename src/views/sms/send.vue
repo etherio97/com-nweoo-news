@@ -4,6 +4,11 @@
       <v-card-title>
         Send SMS
       </v-card-title>
+      <v-card-subtitle v-if="loggedIn">
+        <v-btn color="primary darken-1">
+          <v-icon class="mr-2">mdi-mail</v-icon> Inbox
+        </v-btn>
+      </v-card-subtitle>
       <v-card-text>
         <v-expand-transition>
           <v-alert v-show="error" type="error">
@@ -84,6 +89,12 @@ export default {
   watch: {
     token(value) {
       sessionStorage.setItem("_token", btoa(value));
+    },
+  },
+
+  computed: {
+    loggedIn() {
+      return Boolean(this.$root.user?.uid);
     },
   },
 

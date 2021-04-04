@@ -15,7 +15,7 @@ export default {
 
   actions: {
     FETCH_ARTICLES({ commit }, payload) {
-      return axios.get(`${api}/articles?limit=20`).then(({ data }) =>
+      return axios.get(`${payload.api}/articles?limit=20`).then(({ data }) =>
         commit(
           "SET_ARTICLES",
           data.sort((a, b) => new Date(b.datetime) - new Date(a.datetime))

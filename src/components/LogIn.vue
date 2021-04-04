@@ -37,6 +37,7 @@
             prepend-inner-icon="mdi-account"
             outlined
             ref="usn"
+            autocapitalize="off"
           />
           <v-text-field
             label="Password"

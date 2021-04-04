@@ -45,9 +45,8 @@
 
 <script>
 import VideoPlayer from "vue-video-player-vjs";
+import { parseUrl } from "@/functions/formatter";
 import "video.js/dist/video-js.css";
-
-const URL_PATTERN = /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm;
 
 export default {
   name: "VideoCard",
@@ -107,14 +106,7 @@ export default {
   computed: {
     html() {
       let description = this.description.replace(/\n/gim, "<br>");
-      let urls = description.match(URL_PATTERN);
-      if (urls) {
-        description = description.replace(
-          new RegExp(`${urls[0]}`, "gim"),
-          `<a href="${urls[0]}" class="text-decoration-underline" rel="noreferrer noopener" target="_blank">${urls[0]}</a>`
-        );
-      }
-      return description;
+      return parseUrl(description);
     },
     wrap() {
       return this.textWrap ? this.html.substr(0, 255) + "..." : this.html;

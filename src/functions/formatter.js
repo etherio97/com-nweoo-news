@@ -6,6 +6,7 @@ export function matchUrl(context) {
 
 export function parseUrl(context, matched = null) {
   if (!matched) matched = matchUrl(context);
+  if (!matched) return context;
   let m = matched[0];
   if (m) {
     if (m[m.length - 1] === ".") {

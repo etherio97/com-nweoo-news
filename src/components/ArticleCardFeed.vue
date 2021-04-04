@@ -32,7 +32,7 @@
 
 <script>
 import imageDefault from "@/assets/images/image.jpg";
-import { parseTags, parseUrl } from "@/functions/fomatter";
+import { parseTags, parseUrl } from "@/functions/formatter";
 
 export default {
   name: "ArticleCardFeed",

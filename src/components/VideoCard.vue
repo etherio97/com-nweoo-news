@@ -81,6 +81,7 @@ export default {
   },
   data: () => ({
     readmore: false,
+    _source: '',
     playerOptions: {
       autoplay: false,
       controls: true,
@@ -121,18 +122,17 @@ export default {
 
   beforeMount() {
     let matched = this.source.match(/^https:\/\/(.+)\.xx\.fbcdn\.net/);
+    let uri = new URL(this.source);
     if (matched) {
-      let uri = new URL(this.source);
-      uri.host = "cdn.nweoo.com";
       switch (matched[1]) {
         case "external-iad3-1":
-          uri.pathname = "/e" + uri.pathname;
+          uri = "https://cdn.nweoo.com/e" + uri.pathname;
           break;
         case "scontent-iad3-1":
-          uri.pathname = "/s" + uri.pathname;
+          uri = "https://cdn.nweoo.com/s" + uri.pathname;
           break;
         case "video-iad3-1":
-          uri.pathname = "/v" + uri.pathname;
+          uri = "https://cdn.nweoo.com/v" + uri.pathname;
           break;
       }
       this.playerOptions.sources[0].title = this.title;

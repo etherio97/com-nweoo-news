@@ -96,11 +96,9 @@ export default {
         title: this.title,
         duration: this.duration,
         src: this.src,
-        timestamp: firebase.database.ServerValue.TIMESTAMP,
       };
-      const ref = firebase.database().ref("/v1/voicemails");
-      ref
-        .push(data)
+      this.axios
+        .post(`${this.$root.api}/voicemails`, data)
         .then(() => this.$router.push("/admin/voicemails"))
         .catch((e) => {
           this.error = e.message;

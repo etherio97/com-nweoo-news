@@ -53,5 +53,15 @@ export default [
     name: "VideoNews",
     path: "/news/videos",
     component: () => import("../views/news/Videos.vue")
+  },
+  {
+    name: "Voicemail",
+    path: "/admin/voicemails",
+    component: () => import("../views/admin/voicemails.vue")
+  },
+  {
+    name: "AddVoicemail",
+    path: "/admin/add-voicemail",
+    component: () => import("../views/admin/create.vue")
   }
 ];

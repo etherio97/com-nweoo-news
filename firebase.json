@@ -1,4 +1,10 @@
 {
+  "database": {
+    "rules": "./database.rules.json"
+  },
+  "storage": {
+    "rules": "./storage.rules"
+  },
   "hosting": {
     "public": "dist",
     "ignore": [
@@ -6,7 +12,7 @@
       "**/.*",
       "**/.github/**",
       "**/node_modules/**",
-      "**/.src/**"
+      "**/src/**"
     ],
     "redirects": [
       {

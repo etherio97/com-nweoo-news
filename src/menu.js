@@ -28,5 +28,11 @@ export default [
     icon: "mdi-desktop-mac-dashboard",
     path: "/new/reports",
     visible: true
+  },
+  {
+    title: "Voicemails",
+    icon: "mdi-voicemail",
+    path: "/admin/voicemails",
+    visible: ["admin"]
   }
 ];

@@ -2,13 +2,18 @@
   <v-container>
     <v-card elevation="0" class="mx-auto" max-width="500px" :loading="loading">
       <v-card-title>
-        Send SMS
+        <v-row justify="space-between">
+          <v-col>
+            Send SMS
+          </v-col>
+          <v-col class="text-right">
+            <v-btn color="blue darken-1" dark text small to="/sms/inbox">
+              <v-icon class="mr-2">mdi-mail</v-icon> Inbox
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-card-title>
-      <v-card-subtitle v-if="loggedIn">
-        <v-btn color="primary darken-1">
-          <v-icon class="mr-2">mdi-mail</v-icon> Inbox
-        </v-btn>
-      </v-card-subtitle>
+
       <v-card-text>
         <v-expand-transition>
           <v-alert v-show="error" type="error">
@@ -67,8 +72,8 @@ export default {
     error: null,
     loading: false,
     token: "",
-    slot: "0",
-    slots: ["0", "1"],
+    slot: "auto (recommended)",
+    slots: ["auto (recommended)", "0", "1"],
   }),
 
   methods: {

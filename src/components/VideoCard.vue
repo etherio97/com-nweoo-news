@@ -135,7 +135,6 @@ export default {
           uri.pathname = "/v" + uri.pathname;
           break;
       }
-      console.log(uri.toString());
       this.playerOptions.sources[0].title = this.title;
       this.playerOptions.sources[0].type = "video/mp4";
       this.playerOptions.sources[0].src = uri.toString();

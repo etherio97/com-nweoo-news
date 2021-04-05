@@ -18,7 +18,7 @@
             accept="audio/mp3"
             :rules="[rules.required]"
             :disabled="uploaded || uploading"
-            append-icon="mdi-upload"
+            :append-icon="file ? 'mdi-upload' : ''"
             @click:append="upload"
             :loading="!uploaded && uploading"
           />
@@ -46,6 +46,7 @@
             color="primary"
             depressed
             :loading="loading"
+            :disabled="!uploaded"
             dark
           >
             <v-icon class="mr-2">mdi-content-save</v-icon>
@@ -59,6 +60,7 @@
 
 <script>
 import { zg2uni } from "@/functions/rabbit";
+import _ from "lodash";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/storage";
@@ -114,11 +116,11 @@ export default {
         .ref("/public/voicemail/recordings")
         .child(this.file.name);
       const upload = ref.put(this.file);
+      this.title = _.startCase(this.file.name.replace(/\.mp3$/, ""));
       this.uploading = true;
       upload.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
-        ({ bytesTransferred, totalBytes, state }) => {
-          console.log(state);
+        ({ bytesTransferred, totalBytes }) => {
           let percentage = (bytesTransferred / totalBytes) * 100;
           this.percentage = parseFloat(percentage.toFixed(2));
         }

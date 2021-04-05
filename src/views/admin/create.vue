@@ -35,8 +35,8 @@
             label="ကြာမြင့်ချိန် (စက္ကန့်)"
             hint="eg. 14.43232"
             v-model="duration"
-            readonly
             outlined
+            :readonly="uploaded"
           />
         </v-card-text>
         <v-card-actions>
@@ -70,7 +70,7 @@ export default {
   data: () => ({
     error: null,
     title: "",
-    duration: 0,
+    duration: "",
     file: null,
     src: null,
     rules: {
@@ -142,5 +142,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

@@ -81,7 +81,7 @@ export default {
         .refFromURL(item.src)
         .delete()
         .then(() =>
-          this.axios.delete(`${this.$root.api}/voicemails`).then(() => {
+          this.axios.delete(`${this.$root.api}/voicemails/${id}`).then(() => {
             this.items[this.id] = undefined;
             delete this.items[this.id];
           })

@@ -5,7 +5,13 @@
         <v-row>
           <h2>Voicemails</h2>
           <v-spacer></v-spacer>
-          <v-btn color="primary" icon outlined to="/admin/add-voicemail">
+          <v-btn
+            color="primary"
+            icon
+            outlined
+            to="/admin/add-voicemail"
+            v-show="loggedIn"
+          >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-row>
@@ -21,7 +27,7 @@
             </tr>
           </thead>
           <tbody>
-            <template v-if="items.length">
+            <template v-if="Object.keys(items).length">
               <tr v-for="(voicemail, id) in items" :key="id">
                 <td>{{ new Date(voicemail.timestamp).toLocaleString() }}</td>
                 <td>
@@ -35,7 +41,12 @@
                 </td>
                 <td>{{ voicemail.duration.toFixed(2) }}s</td>
                 <td>
-                  <v-btn icon color="error" @click="remove(id)">
+                  <v-btn
+                    v-show="loggedIn"
+                    icon
+                    color="error"
+                    @click="remove(id)"
+                  >
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </td>
@@ -55,7 +66,6 @@
 
 <script>
 import firebase from "firebase/app";
-import "firebase/database";
 import "firebase/storage";
 
 export default {
@@ -71,30 +81,17 @@ export default {
         .refFromURL(item.src)
         .delete()
         .then(() =>
-          firebase
-            .database()
-            .ref(`/v1/voicemails/${id}`)
-            .remove()
-            .then(() => {
-              this.items[id] = undefined;
-              delete this.items[id];
-            })
+          this.axios.delete(`${this.$root.api}/voicemails`).then(() => {
+            this.items[this.id] = undefined;
+            delete this.items[this.id];
+          })
         );
     },
   },
-  mounted() {
-    if (!this.loggedIn) {
-      return this.$router.back(-1, "/");
-    }
-    firebase
-      .database()
-      .ref("/v1/voicemails")
-      .orderByChild("timestamp")
-      .limitToLast(10)
-      .get()
-      .then((snap) => {
-        this.items = snap.val() || {};
-      });
+  beforeMount() {
+    this.axios(`${this.$root.api}/voicemails`)
+      .then(({ data }) => (this.items = data))
+      .catch((e) => (this.error = e.message));
   },
   computed: {
     loggedIn() {

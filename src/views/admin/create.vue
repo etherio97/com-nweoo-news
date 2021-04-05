@@ -101,7 +101,7 @@ export default {
       const ref = firebase.database().ref("/v1/voicemails");
       ref
         .push(data)
-        .then(() => this.$router.push("/admin/voicemail"))
+        .then(() => this.$router.push("/admin/voicemails"))
         .catch((e) => {
           this.error = e.message;
         })

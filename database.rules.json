@@ -11,8 +11,7 @@
       },
       "voicemails": {
         ".indexOn": "timestamp",
-        ".read": true,
-        ".write": true
+        ".read": true
       }
     }
   }

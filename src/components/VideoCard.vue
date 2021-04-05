@@ -81,7 +81,7 @@ export default {
   },
   data: () => ({
     readmore: false,
-    _source: '',
+    _source: "",
     playerOptions: {
       autoplay: false,
       controls: true,
@@ -121,20 +121,21 @@ export default {
   },
 
   beforeMount() {
-    let matched = this.source.match(/^https:\/\/(.+)\.xx\.fbcdn\.net/);
+    let matched = this.source.match(/^https:\/\/(.+)-.+-.+\.xx\.fbcdn\.net/);
     let uri = new URL(this.source);
     if (matched) {
       switch (matched[1]) {
-        case "external-iad3-1":
-          uri = "https://cdn.nweoo.com/e" + uri.pathname;
+        case "external":
+          uri = "https://cdn.nweoo.com/e" + uri.pathname + uri.search;
           break;
-        case "scontent-iad3-1":
-          uri = "https://cdn.nweoo.com/s" + uri.pathname;
+        case "scontent":
+          uri = "https://cdn.nweoo.com/s" + uri.pathname + uri.search;
           break;
-        case "video-iad3-1":
-          uri = "https://cdn.nweoo.com/v" + uri.pathname;
+        case "video":
+          uri = "https://cdn.nweoo.com/v" + uri.pathname + uri.search;
           break;
       }
+      console.log(uri.toString());
       this.playerOptions.sources[0].title = this.title;
       this.playerOptions.sources[0].type = "video/mp4";
       this.playerOptions.sources[0].src = uri.toString();

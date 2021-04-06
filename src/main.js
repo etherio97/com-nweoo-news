@@ -3,8 +3,18 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+// import VueVideoPlayer from 'vue-video-player'
 import "./plugins/firebase";
 import "./plugins/axios";
+
+// Global CSS
+// import 'video.js/dist/video-js.css'
+
+
+// Vue.use(VueVideoPlayer, /* {
+//   options: global default options,
+//   events: global videojs events
+// } */)
 
 const cookies = {};
 

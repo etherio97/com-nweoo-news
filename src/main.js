@@ -12,7 +12,7 @@ const data = {
   loaded: false,
   user: null,
   api: "https://api.nweoo.com",
-  network_mode: sessionStorage.getItem("network_mode") || "rtdb"
+  network_mode: localStorage.getItem("network_mode") || "rtdb"
 };
 
 if (process.env.NODE_ENV !== "production") {

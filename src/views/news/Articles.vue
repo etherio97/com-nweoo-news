@@ -5,7 +5,7 @@
         <h2 class="py-4">သတင်းများ</h2>
       </v-col>
 
-      <template v-if="loading">
+      <template v-if="!error && !items.length">
         <v-col v-for="n of [1, 2, 3]" :key="n" cols="12" md="6">
           <v-skeleton-loader
             max-width="100%"
@@ -13,7 +13,6 @@
           />
         </v-col>
       </template>
-
       <template v-else>
         <v-expand-transition>
           <v-col cols="12" v-show="error">
@@ -39,11 +38,10 @@
             :content="article.content"
             :datetime="article.datetime"
             :image="article.image"
-            :video="article.video"
             :link="article.link"
             :post_id="article.post_id"
             :source="article.source"
-          ></article-card>
+          />
         </v-col>
       </template>
     </v-row>
@@ -62,26 +60,12 @@ export default {
   data: () => ({
     loading: true,
     error: null,
-    dummyArticle: {
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed error excepturi, quis illum saepe fugiat at nobis explicabo maxime architecto!",
-      datetime: "2021-04-01T10:10:58.443Z",
-      id: "1",
-      image:
-        "https://www.myanmargraphic.com/wp-content/uploads/2021/02/Burma-Spring-Revolution-830x466.png",
-      video: "https://youtu.be/691VmUszg8g",
-      link: "https://www.myanmargraphic.com/burma-spring-revolution/",
-      post_id: "1",
-      source: "RFA",
-      title: "Myanmar Spring Revolution",
-    },
   }),
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
   computed: mapState("articles", ["items"]),
   beforeMount() {
     this.FETCH_ARTICLES()
-      .catch((e) => (this.error = e.message))
-      .finally(() => (this.loading = false));
+      .catch((e) => (this.error = e.message));
   },
 };
 </script>

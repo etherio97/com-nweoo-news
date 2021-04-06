@@ -3,7 +3,8 @@
     <div class="ticker-wrap" :style="`top:${top};`">
       <div class="ticker" ref="ticker">
         <div class="ticker__item" v-for="(headline, i) in headlines" :key="i">
-          {{ headline.title }}
+          <span class="font-weight-bold">{{ headline.title }}</span> -
+          {{ headline.source }}
         </div>
       </div>
     </div>
@@ -26,9 +27,9 @@ export default {
     resync() {
       const el = this.$refs.ticker;
       if (!el) return;
-      const ms = 15280 * this.headlines.length;
-      el.style.animationDuration = el.style.webkitAnimationDuration = `${ms}ms`;
-      // el.style.animationPlayState = "running";
+      const duration = 15.2 * this.headlines.length;
+      el.style.animationDuration = el.style.webkitAnimationDuration = `${duration}s`;
+      el.style.animationPlayState = "running";
     },
   },
 
@@ -98,8 +99,8 @@ export default {
     animation-timing-function: linear;
     -webkit-animation-name: ticker;
     animation-name: ticker;
-    -webkit-animation-duration: 30s;
-    animation-duration: 30s;
+    -webkit-animation-duration: 150s;
+    animation-duration: 150s;
     animation-play-state: running;
 
     &__item {

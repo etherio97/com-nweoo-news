@@ -35,12 +35,12 @@ export default {
       const ref = firebase
         .database()
         .ref("/v1/articles")
-        .orderByKey()
+        .orderByChild("timestamp")
         .limitToLast(20);
 
       ref.on("child_added", snap => {
         const data = snap.toJSON();
-        data.key = snap.key;
+        data.key = snap.ref.key;
         commit("PUSH_ARTICLE", data);
       });
 
@@ -54,13 +54,13 @@ export default {
       const ref = firebase
         .database()
         .ref("/v1/_articles")
-        .orderByKey()
+        .orderByChild("timestamp")
         .limitToLast(10);
 
       ref.on("child_added", snap => {
         const data = snap.toJSON();
         commit("PUSH_HEADLINE", {
-          key: snap.key,
+          key: snap.ref.key,
           title: data.title,
           source: data.source
         });

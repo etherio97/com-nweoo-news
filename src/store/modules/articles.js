@@ -1,24 +1,75 @@
 import axios from "axios";
+import firebase from "firebase/app";
 
 export default {
   namespaced: true,
 
   state: {
-    items: []
+    items: [],
+    headlines: []
   },
 
   mutations: {
     SET_ARTICLES(state, payload) {
       state.items = payload;
+    },
+    PUSH_ARTICLE(state, payload) {
+      state.items.unshift(payload);
+    },
+    DELETE_ARTICLE(state, payload) {
+      state.items = state.items.filter(({ key }) => key != payload);
+    },
+    SET_HEADLINES(state, payload) {
+      state.headlines = payload;
+    },
+    PUSH_HEADLINE(state, payload) {
+      state.headlines.unshift(payload);
+    },
+    DELETE_HEADLINE(state, payload) {
+      state.headlines = state.headlines.filter(({ key }) => key != payload);
     }
   },
 
   actions: {
-    FETCH_ARTICLES({ commit }, payload) {
-      const { url } = payload;
-      return axios
-        .get(`${url}/articles?limit=20`)
-        .then(({ data }) => commit("SET_ARTICLES", data.reverse()));
+    FETCH_ARTICLES({ commit }) {
+      const ref = firebase
+        .database()
+        .ref("/v1/articles")
+        .orderByChild("timestamp")
+        .limitToLast(20);
+
+      ref.on("child_added", snap => {
+        const data = snap.toJSON();
+        data.key = snap.ref.key;
+        commit("PUSH_ARTICLE", data);
+      });
+
+      ref.on("child_removed", snap => {
+        const key = snap.ref.key;
+        commit("DELETE_ARTICLE", key);
+      });
+    },
+
+    FETCH_HEADLINES({ commit }) {
+      const ref = firebase
+        .database()
+        .ref("/v1/_articles")
+        .orderByChild("timestamp")
+        .limitToLast(10);
+
+      ref.on("child_added", snap => {
+        const data = snap.toJSON();
+        commit("PUSH_HEADLINE", {
+          key: snap.ref.key,
+          title: data.title,
+          source: data.source
+        });
+      });
+
+      ref.on("child_removed", snap => {
+        const key = snap.ref.key;
+        commit("DELETE_HEADLINE", key);
+      });
     }
   }
 };

@@ -1,39 +1,37 @@
 <template>
   <v-card class="articleCard">
-    <div class="articleCard__mediaWrapper">
-      <template v-if="video">
-        <video-player
-          class="video-player-box articleCard__media"
-          ref="videoPlayer"
-          :options="playerConfig"
-          :poster="image"
-          :playsinline="true"
-          @ready="playerReadied"
-          data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
-        >
-        </video-player>
-      </template>
-      <template v-else>
-        <img :src="image" :alt="title" class="articleCard__media" />
-      </template>
-    </div>
+    <v-img
+      v-if="image"
+      aspect-ratio="1.7778"
+      lazy-src="@/assets/images/image.jpg"
+      :src="image"
+    />
 
-    <v-card-title>
+    <v-card-title class="mb-1">
       {{ title }}
     </v-card-title>
+
     <v-card-subtitle>
       {{ new Date(datetime).toLocaleString() }} -
       <a :href="sourceUrl" target="_blank">{{ source }}</a>
     </v-card-subtitle>
-    <v-card-text>
-      <span v-html="readmore ? content.replace(/\n/gim, '<br>') : body"></span>
-      <a v-show="textWrap && !readmore" @click="readmore = true">
+
+    <v-card-text @click="readmore = !readmore">
+      <span v-html="readmore ? html : wrap"></span>
+      <a v-show="textWrap && !readmore" href="javascript:void(0)">
         ပိုမိုဖတ်ရှုရန်
       </a>
     </v-card-text>
+
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" :href="link" target="_blank" text>
+      <v-btn
+        color="primary"
+        rel="noreferrer noopener"
+        :href="link"
+        target="_blank"
+        text
+      >
         အပြည့်အစုံကြည့်ရန်
       </v-btn>
     </v-card-actions>
@@ -41,15 +39,11 @@
 </template>
 
 <script>
-import "video.js/dist/video-js.css";
-import { videoPlayer } from "vue-video-player";
-import "videojs-youtube";
-
+import { parseUrl } from "@/functions/formatter";
 const newsMedia = {
   RFA: "https://www.rfa.org/burmese",
   DVB: "https://burmese.dvb.no",
 };
-
 export default {
   name: "ArticleCard",
   props: {
@@ -61,39 +55,25 @@ export default {
     datetime: { required: true, type: String },
     source: { required: true, type: String },
   },
-  components: {
-    videoPlayer,
-  },
   data: () => ({
     readmore: false,
-    player: null,
-    playerConfig: {
-      autoplay: false,
-      aspectRatio: "5:3",
-    },
   }),
   computed: {
     sourceUrl() {
       return newsMedia[this.source] || "#";
     },
-    body() {
+    wrap() {
       return this.textWrap ? this.content.substr(0, 255) + "..." : this.content;
+    },
+    html() {
+      let content = this.content.replace(/\n\n/gim, "<br>");
+      return parseUrl(content);
     },
     textWrap() {
       return this.content.length > 255;
     },
   },
-  methods: {
-    playerReadied() {
-      this.player = this.$refs.videoPlayer.player;
-      this.player.poster(this.image);
-      // this.player.src({
-      //   type: "video/youtube",
-      //   src: this.video,
-      // });
-      // this.player.src(this.video);
-    },
-  },
+  methods: {},
 };
 </script>
 <style lang="scss" scoped>

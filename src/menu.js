@@ -1,14 +1,14 @@
 export default [
   {
-    title: "မူလစာမျက်နှာ",
-    icon: "mdi-home",
-    path: "/",
-    visible: false
-  },
-  {
     title: "သတင်းများ",
     icon: "mdi-newspaper-variant",
     path: "/",
+    visible: true
+  },
+  {
+    title: "ဗီဒီယိုသတင်းများ",
+    icon: "mdi-video",
+    path: "/news/videos",
     visible: true
   },
   {
@@ -30,9 +30,9 @@ export default [
     visible: true
   },
   {
-    title: "ကူညီဖြည့်ပေးပါ",
-    icon: "mdi-hand-heart",
-    path: "/suggest/regions",
-    visible: true
+    title: "Voicemails",
+    icon: "mdi-voicemail",
+    path: "/admin/voicemails",
+    visible: false
   }
 ];

@@ -1,6 +1,6 @@
 <template>
   <section class="reports">
-    <v-container>
+    <v-container class="mt-4">
       <v-card elevation="0" color="transparent">
         <v-card-title class="text-h5">
           SMS မှ တဆင့် ပေးပို့ချက်များ

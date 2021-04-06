@@ -1,25 +1,26 @@
 <template>
   <v-navigation-drawer app v-model="drawer" :mini-variant="mini" permanent>
-    <v-list-item class="sidebar__logo">
-      <v-list-item-title class="sidebar__logo__img">
-        <v-img src="../assets/images/nweoo-logo.png"></v-img>
-      </v-list-item-title>
-      <v-list-item-subtitle class="sidebar__logo__brand">
-        နွေဦးတော်လှန်ရေး
-      </v-list-item-subtitle>
-    </v-list-item>
+    <template v-slot:prepend>
+      <router-link to="/">
+        <v-list-item class="sidebar__logo">
+          <v-list-item-title class="sidebar__logo__img">
+            <v-img src="../assets/images/nweoo-logo.png" />
+          </v-list-item-title>
+          <v-list-item-subtitle class="sidebar__logo__brand">
+            နွေဦးတော်လှန်ရေး
+          </v-list-item-subtitle>
+        </v-list-item>
+      </router-link>
+    </template>
 
     <v-divider></v-divider>
 
     <v-list-item @click="mini = !mini">
       <v-icon>{{ mini ? "mdi-chevron-right" : "mdi-chevron-left" }}</v-icon>
-      <v-spacer></v-spacer>
-      <v-btn icon v-show="logged">
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
     </v-list-item>
+    <v-divider></v-divider>
 
-    <v-list-item v-if="logged" to="/profile" link>
+    <v-list-item v-if="loggedIn">
       <v-list-item-avatar class="ml-n1">
         <v-img v-if="user.photoURL" :src="user.photoURL"></v-img>
         <v-icon v-else>mdi-account</v-icon>
@@ -44,10 +45,16 @@
         </v-list-item>
       </template>
     </v-list>
+
+    <template v-slot:append v-if="!mini">
+      <log-in></log-in>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script>
+import LogIn from "./LogIn.vue";
+
 export default {
   name: "SideBar",
 
@@ -56,20 +63,16 @@ export default {
       type: Array,
       required: true,
     },
-    user: {
-      type: Object,
-      required: true,
-    },
-    logged: {
-      type: Boolean,
-      required: true,
-    },
   },
 
   data: () => ({
     drawer: false,
     mini: true,
   }),
+
+  components: {
+    LogIn,
+  },
 
   watch: {
     mini(value) {
@@ -83,8 +86,19 @@ export default {
 
   beforeMount() {
     if ("localStorage" in window) {
-      this.mini = window.localStorage.getItem("_sidebar_open") || false;
+      this.mini = Boolean(
+        window.localStorage.getItem("_sidebar_open") || false
+      );
     }
+  },
+
+  computed: {
+    loggedIn() {
+      return Boolean(this.user["uid"]);
+    },
+    user() {
+      return this.$root.user || {};
+    },
   },
 };
 </script>

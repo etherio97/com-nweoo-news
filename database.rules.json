@@ -2,13 +2,24 @@
   "rules": {
     "v0": {
       "public": {
-        ".read": true,
-        ".write": true
+        ".read": true
       }
     },
     "v1": {
+      "_articles": {
+        ".indexOn": "timestamp",
+        ".read": true
+      },
+      "articles": {
+        ".indexOn": "timestamp",
+        ".read": true
+      },
       "sms-reports": {
         ".indexOn": "timestamp"
+      },
+      "voicemails": {
+        ".indexOn": "timestamp",
+        ".read": true
       }
     }
   }

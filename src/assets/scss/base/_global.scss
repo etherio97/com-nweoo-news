@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .v-list .v-list-item--active {
   color: var(--color-orange-light);
 }

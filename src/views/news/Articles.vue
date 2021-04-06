@@ -2,7 +2,7 @@
   <v-container class="mt-4 mb-15">
     <v-row>
       <v-col cols="12">
-        <h2>သတင်းများ</h2>
+        <h2 class="py-4">သတင်းများ</h2>
       </v-col>
 
       <template v-if="loading">
@@ -19,37 +19,30 @@
           <v-col cols="12" v-show="error">
             <v-alert type="error">
               {{ error }}
+              <v-btn
+                text
+                class="ma-2 font-weight-medium"
+                color="secondary"
+                @click="$router.go()"
+                dark
+              >
+                ပြန်လည်ကြိုးစားကြည့်ပါ
+              </v-btn>
             </v-alert>
           </v-col>
         </v-expand-transition>
 
-        <v-col cols="12" md="6" lg="4">
+        <v-col v-for="article of items" :key="article.id" cols="12" lg="6">
           <article-card
-            :source="dummyArticle.source"
-            :content="dummyArticle.content"
-            :image="dummyArticle.image"
-            :video="dummyArticle.video"
-            :link="dummyArticle.link"
-            :title="dummyArticle.title"
-            :datetime="dummyArticle.datetime"
-          ></article-card>
-        </v-col>
-
-        <v-col
-          v-for="article of items"
-          :key="article.id"
-          cols="12"
-          md="6"
-          lg="4"
-        >
-          <article-card
-            :source="article.source"
+            :id="article.id"
+            :title="article.title"
             :content="article.content"
+            :datetime="article.datetime"
             :image="article.image"
             :video="article.video"
             :link="article.link"
-            :title="article.title"
-            :datetime="article.datetime"
+            :post_id="article.post_id"
+            :source="article.source"
           ></article-card>
         </v-col>
       </template>
@@ -58,8 +51,8 @@
 </template>
 
 <script>
-import ArticleCard from "@/components/ArticleCard.vue";
 import { mapActions, mapState } from "vuex";
+import ArticleCard from "@/components/ArticleCard.vue";
 
 export default {
   name: "NewsArticles",
@@ -85,9 +78,9 @@ export default {
   }),
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
   computed: mapState("articles", ["items"]),
-  mounted() {
-    this.FETCH_ARTICLES({ url: this.$root.api })
-      .catch(() => (this.error = true))
+  beforeMount() {
+    this.FETCH_ARTICLES()
+      .catch((e) => (this.error = e.message))
       .finally(() => (this.loading = false));
   },
 };

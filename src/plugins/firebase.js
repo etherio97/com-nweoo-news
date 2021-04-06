@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
-import "firebase/analytics";
 import "firebase/auth";
+import "firebase/database";
+import "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJfrR7N4V6JfzWBHCcK94QB5KwjNuim5Q",
@@ -14,6 +15,12 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+if (false) {
+  console.log("Automatically connecting Firebase SDKs to running emulators:");
+  firebase.database().useEmulator("localhost", "3300");
+  firebase.auth().useEmulator("http://localhost:9009");
+}
 
 if (process.env.NODE_ENV === "production") {
   firebase.analytics();

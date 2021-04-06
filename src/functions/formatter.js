@@ -7,8 +7,7 @@ export function matchUrl(context) {
 export function parseUrl(context, matched = null) {
   if (!matched) matched = matchUrl(context);
   if (!matched) return context;
-  let m = matched[0];
-  if (m) {
+  for (let m of matched) {
     if (m[m.length - 1] === ".") {
       m = m.slice(0, -1);
     }

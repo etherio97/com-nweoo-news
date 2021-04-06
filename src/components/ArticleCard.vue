@@ -13,9 +13,9 @@
       {{ new Date(datetime).toLocaleString() }} -
       <a :href="sourceUrl" target="_blank">{{ source }}</a>
     </v-card-subtitle>
-    <v-card-text>
+    <v-card-text @click="readmore = !readmore">
       <span v-html="readmore ? html : wrap"></span>
-      <a v-show="textWrap && !readmore" @click="readmore = true">
+      <a v-show="textWrap && !readmore" href="javascript:void(0)">
         ပိုမိုဖတ်ရှုရန်
       </a>
     </v-card-text>
@@ -61,7 +61,7 @@ export default {
       return this.textWrap ? this.content.substr(0, 255) + "..." : this.content;
     },
     html() {
-      let content = this.content.replace(/\n/gim, "<br>");
+      let content = this.content.replace(/\n\n/gim, "<br>");
       return parseUrl(content);
     },
     textWrap() {

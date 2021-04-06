@@ -33,6 +33,6 @@ export default [
     title: "Voicemails",
     icon: "mdi-voicemail",
     path: "/admin/voicemails",
-    visible: ["admin"]
+    visible: false
   }
 ];

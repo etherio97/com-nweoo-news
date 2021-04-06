@@ -65,7 +65,7 @@ export default {
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
   computed: mapState("articles", ["items"]),
   beforeMount() {
-    this.FETCH_ARTICLES({ api: this.$root.api })
+    this.FETCH_ARTICLES()
       .catch((e) => (this.error = e.message))
       .finally(() => (this.loading = false));
   },

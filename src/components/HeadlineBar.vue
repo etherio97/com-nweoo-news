@@ -1,11 +1,13 @@
 <template>
-  <v-menu-transition v-if="headlines.length" color="red darken-4" dark>
+  <v-menu-transition color="red darken-4" dark>
     <div class="ticker-wrap" :style="`top:${top};`">
       <div class="ticker" ref="ticker">
-        <div class="ticker__item" v-for="(headline, i) in headlines" :key="i">
-          <span class="font-weight-bold">{{ headline.title }}</span> -
-          {{ headline.source }}
-        </div>
+        <template v-if="headlines.length">
+          <div class="ticker__item" v-for="(headline, i) in headlines" :key="i">
+            <span class="font-weight-bold">{{ headline.title }}</span> -
+            {{ headline.source }}
+          </div>
+        </template>
       </div>
     </div>
   </v-menu-transition>
@@ -29,16 +31,21 @@ export default {
       if (!el) return;
       const duration = 15.2 * this.headlines.length;
       el.style.animationDuration = el.style.webkitAnimationDuration = `${duration}s`;
-      el.style.animationPlayState = "running";
+      el.style.animationPlayState = el.style.webkitAnimationPlayState = "running";
     },
   },
 
   computed: mapState("articles", ["headlines"]),
 
+  watch: {
+    headlines(value) {
+      this.resync();
+    }
+  },
+
   mounted() {
     this.FETCH_HEADLINES().finally(() => {
-      this.loading = false;
-      setTimeout(() => this.resync(), 800);
+      this.resync();
     });
   },
 };
@@ -95,8 +102,9 @@ export default {
     animation-timing-function: linear;
     -webkit-animation-name: ticker;
     animation-name: ticker;
-    -webkit-animation-duration: 150s;
-    animation-duration: 150s;
+    -webkit-animation-duration: 30s;
+    animation-duration: 30s;
+    -webkit-animation-play-state: running;
     animation-play-state: running;
 
     &__item {

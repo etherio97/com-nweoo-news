@@ -11,7 +11,8 @@ Vue.config.productionTip = false;
 const data = {
   loaded: false,
   user: null,
-  api: "https://api.nweoo.com"
+  api: "https://api.nweoo.com",
+  network_mode: sessionStorage.getItem("network_mode") || "rtdb"
 };
 
 if (process.env.NODE_ENV !== "production") {

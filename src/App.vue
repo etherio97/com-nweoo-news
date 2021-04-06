@@ -1,15 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      color="secondary"
-      elevate-on-scroll
-      hide-on-scroll
-      dark
-      dense
-      app
-      fixed
-      v-if="appBarVisible"
-    >
+    <v-app-bar color="secondary" dark dense app fixed v-if="appBarVisible">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <headline-bar></headline-bar>
 
@@ -71,14 +62,14 @@
       </router-link>
       <v-spacer></v-spacer>
     </v-app-bar>
-    <side-bar :items="menu" :can="can" v-else></side-bar>
+    <side-bar :items="menu" :can="can" v-else />
 
-    <v-main class="mt-4 mb-15">
-      <headline-bar v-if="!appBarVisible" top="0"></headline-bar>
-      <router-view :key="$route.path"></router-view>
+    <v-main class="mt-5 mb-15 mx-2">
+      <headline-bar v-if="!appBarVisible" top="0" />
+      <router-view :key="$route.path" />
     </v-main>
 
-    <app-footer></app-footer>
+    <app-footer />
   </v-app>
 </template>
 

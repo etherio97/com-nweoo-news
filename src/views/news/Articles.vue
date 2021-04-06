@@ -1,10 +1,22 @@
 <template>
-  <v-container class="mt-4 mb-15">
-    <v-row>
-      <v-col cols="12">
-        <h2 class="py-4">သတင်းများ</h2>
-      </v-col>
+  <v-container class="mt-5">
+    <v-row class="px-2" justify="space-between">
+      <h2>သတင်းဆောင်ပါးများ</h2>
+      <template v-if="usingRTDB">
+        <v-btn small text @click="useAPI" color="red darken-3" rounded>
+          <v-icon class="mr-1" small>mdi-radiobox-marked</v-icon>
+          Live
+        </v-btn>
+      </template>
+      <template v-else>
+        <v-btn small text @click="useRTDB" color="grey lighten-2" rounded>
+          <v-icon class="mr-1" small>mdi-radiobox-marked</v-icon>
+          Live
+        </v-btn>
+      </template>
+    </v-row>
 
+    <v-row>
       <template v-if="!error && !items.length">
         <v-col v-for="n of [1, 2, 3]" :key="n" cols="12" md="6">
           <v-skeleton-loader
@@ -61,11 +73,27 @@ export default {
     loading: true,
     error: null,
   }),
-  methods: mapActions("articles", ["FETCH_ARTICLES"]),
-  computed: mapState("articles", ["items"]),
+  methods: {
+    ...mapActions("articles", ["FETCH_ARTICLES"]),
+    useAPI() {
+      localStorage.setItem("network_mode", "api");
+      this.$router.go();
+    },
+    useRTDB() {
+      localStorage.setItem("network_mode", "rtdb");
+      this.$router.go();
+    },
+  },
+  computed: {
+    ...mapState("articles", ["items"]),
+    usingRTDB() {
+      return this.$root.network_mode === "rtdb";
+    },
+  },
   beforeMount() {
-    this.FETCH_ARTICLES()
-      .catch((e) => (this.error = e.message));
+    this.FETCH_ARTICLES(this.$root)
+      .catch((e) => (this.error = e.message))
+      .finally(() => (this.loading = false));
   },
 };
 </script>

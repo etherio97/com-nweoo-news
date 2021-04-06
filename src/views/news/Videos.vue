@@ -1,8 +1,8 @@
 <template>
-  <v-container class="mt-4 mb-15">
+  <v-container class="mt-5">
     <v-row>
       <v-col cols="12">
-        <h2 class="py-4">ဗီဒီယိုသတင်းများ</h2>
+        <h2 class="py-4">ရုပ်သံသတင်းများ</h2>
       </v-col>
 
       <template v-if="loading">

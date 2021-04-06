@@ -4,8 +4,7 @@
       <div class="ticker" ref="ticker">
         <template v-if="headlines.length">
           <div class="ticker__item" v-for="(headline, i) in headlines" :key="i">
-            <span class="font-weight-bold">{{ headline.title }}</span> -
-            {{ headline.source }}
+            <span class="font-weight-bold">{{ headline.title }}</span>
           </div>
         </template>
       </div>
@@ -31,22 +30,21 @@ export default {
       if (!el) return;
       const duration = 15.2 * this.headlines.length;
       el.style.animationDuration = el.style.webkitAnimationDuration = `${duration}s`;
-      el.style.animationPlayState = el.style.webkitAnimationPlayState = "running";
+      el.style.animationPlayState = el.style.webkitAnimationPlayState =
+        "running";
     },
   },
 
   computed: mapState("articles", ["headlines"]),
 
   watch: {
-    headlines(value) {
+    headlines() {
       this.resync();
-    }
+    },
   },
 
-  mounted() {
-    this.FETCH_HEADLINES().finally(() => {
-      this.resync();
-    });
+  beforeMount() {
+    this.FETCH_HEADLINES(this.$root);
   },
 };
 </script>
@@ -104,8 +102,10 @@ export default {
     animation-name: ticker;
     -webkit-animation-duration: 30s;
     animation-duration: 30s;
-    -webkit-animation-play-state: running;
-    animation-play-state: running;
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
 
     &__item {
       display: inline-block;

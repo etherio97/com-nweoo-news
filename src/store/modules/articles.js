@@ -14,62 +14,58 @@ export default {
       state.items = payload;
     },
     PUSH_ARTICLE(state, payload) {
+      if (state.items.findIndex(({ id }) => id == payload.id) > -1) {
+        return;
+      }
       state.items.unshift(payload);
-    },
-    DELETE_ARTICLE(state, payload) {
-      state.items = state.items.filter(({ key }) => key != payload);
     },
     SET_HEADLINES(state, payload) {
       state.headlines = payload;
     },
     PUSH_HEADLINE(state, payload) {
+      if (state.headlines.findIndex(({ id }) => id == payload.id) > -1) {
+        return;
+      }
       state.headlines.unshift(payload);
-    },
-    DELETE_HEADLINE(state, payload) {
-      state.headlines = state.headlines.filter(({ key }) => key != payload);
     }
   },
 
   actions: {
-    FETCH_ARTICLES({ commit }) {
-      const ref = firebase
+    FETCH_ARTICLES({ commit }, payload) {
+      if (payload.network_mode === "api") {
+        return axios
+          .get(`${payload.api}/articles?limit=20`)
+          .then(({ data }) => commit("SET_ARTICLES", data));
+      }
+      return firebase
         .database()
         .ref("/v1/articles")
         .orderByChild("timestamp")
-        .limitToLast(20);
-
-      ref.on("child_added", snap => {
-        const data = snap.toJSON();
-        data.key = snap.ref.key;
-        commit("PUSH_ARTICLE", data);
-      });
-
-      ref.on("child_removed", snap => {
-        const key = snap.ref.key;
-        commit("DELETE_ARTICLE", key);
-      });
+        .limitToLast(20)
+        .on("child_added", snap => {
+          const data = snap.toJSON();
+          commit("PUSH_ARTICLE", data);
+        });
     },
 
-    FETCH_HEADLINES({ commit }) {
-      const ref = firebase
+    FETCH_HEADLINES({ commit }, payload) {
+      if (payload.network_mode === "api") {
+        return axios
+          .get(`${payload.api}/news/headlines?limit=10`)
+          .then(({ data }) => commit("SET_HEADLINES", Object.values(data)));
+      }
+      return firebase
         .database()
         .ref("/v1/_articles")
-        .orderByChild("timestamp")
-        .limitToLast(10);
-
-      ref.on("child_added", snap => {
-        const data = snap.toJSON();
-        commit("PUSH_HEADLINE", {
-          key: snap.ref.key,
-          title: data.title,
-          source: data.source
+        .orderByKey()
+        .limitToLast(10)
+        .on("child_added", snap => {
+          const data = snap.toJSON();
+          commit("PUSH_HEADLINE", {
+            title: data.title,
+            source: data.source
+          });
         });
-      });
-
-      ref.on("child_removed", snap => {
-        const key = snap.ref.key;
-        commit("DELETE_HEADLINE", key);
-      });
     }
   }
 };

@@ -1,12 +1,12 @@
 export default [
   {
-    title: "သတင်းများ",
+    title: "သတင်းဆောင်ပါးများ",
     icon: "mdi-newspaper-variant",
     path: "/",
     visible: true
   },
   {
-    title: "ဗီဒီယိုသတင်းများ",
+    title: "ရုပ်သံသတင်းများ",
     icon: "mdi-video",
     path: "/news/videos",
     visible: true

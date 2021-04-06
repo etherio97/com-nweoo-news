@@ -19,7 +19,7 @@
     <v-card-text @click="readmore = !readmore">
       <span v-html="readmore ? html : wrap"></span>
       <a v-show="textWrap && !readmore" href="javascript:void(0)">
-        ပိုမိုဖတ်ရှုရန်
+        ပိုမိုဖတ်ရန်
       </a>
     </v-card-text>
 
@@ -27,12 +27,13 @@
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
+        class="font-weight-bold"
         rel="noreferrer noopener"
         :href="link"
         target="_blank"
         text
       >
-        အပြည့်အစုံကြည့်ရန်
+        မူရင်းသတင်းသို့
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -49,7 +50,6 @@ export default {
   props: {
     title: { required: true, type: String },
     image: { type: String },
-    video: { type: String },
     content: { required: true, type: String },
     link: { required: true, type: String },
     datetime: { required: true, type: String },
@@ -76,6 +76,7 @@ export default {
   methods: {},
 };
 </script>
+
 <style lang="scss" scoped>
 @import "@/assets/scss/components/articleCard.scss";
 </style>

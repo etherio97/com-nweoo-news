@@ -10,22 +10,10 @@ export default {
   },
 
   mutations: {
-    SET_ARTICLES(state, payload) {
-      state.items = payload;
-    },
     PUSH_ARTICLE(state, payload) {
-      if (state.items.findIndex(({ id }) => id == payload.id) > -1) {
-        return;
-      }
       state.items.unshift(payload);
     },
-    SET_HEADLINES(state, payload) {
-      state.headlines = payload;
-    },
     PUSH_HEADLINE(state, payload) {
-      if (state.headlines.findIndex(({ id }) => id == payload.id) > -1) {
-        return;
-      }
       state.headlines.unshift(payload);
     }
   },
@@ -35,7 +23,11 @@ export default {
       if (payload.network_mode === "api") {
         return axios
           .get(`${payload.api}/articles?limit=20`)
-          .then(({ data }) => commit("SET_ARTICLES", data));
+          .then(({ data }) =>
+            Object.values(data).forEach(article =>
+              commit("PUSH_ARTICLE", article)
+            )
+          );
       }
       return firebase
         .database()
@@ -43,8 +35,7 @@ export default {
         .orderByChild("timestamp")
         .limitToLast(20)
         .on("child_added", snap => {
-          const data = snap.toJSON();
-          commit("PUSH_ARTICLE", data);
+          commit("PUSH_ARTICLE", snap.toJSON());
         });
     },
 
@@ -52,19 +43,20 @@ export default {
       if (payload.network_mode === "api") {
         return axios
           .get(`${payload.api}/news/headlines?limit=10`)
-          .then(({ data }) => commit("SET_HEADLINES", Object.values(data)));
+          .then(({ data }) =>
+            Object.values(data).forEach(headline =>
+              commit("PUSH_HEADLINE", headline)
+            )
+          );
       }
       return firebase
         .database()
         .ref("/v1/_articles")
-        .orderByKey()
+        .orderByChild("timestamp")
         .limitToLast(10)
         .on("child_added", snap => {
-          const data = snap.toJSON();
-          commit("PUSH_HEADLINE", {
-            title: data.title,
-            source: data.source
-          });
+          const { title, source } = snap.toJSON();
+          commit("PUSH_HEADLINE", { title, source });
         });
     }
   }

@@ -17,7 +17,29 @@
     </v-row>
 
     <v-row>
-      <template v-if="!error && !items.length">
+      <v-expand-transition>
+        <v-col cols="12" v-show="error">
+          <v-alert type="error">
+            {{ error }}
+            <v-btn
+              text
+              class="ma-2 font-weight-medium"
+              color="secondary"
+              @click="$router.go()"
+              dark
+            >
+              ပြန်လည်ကြိုးစားကြည့်ပါ
+            </v-btn>
+          </v-alert>
+        </v-col>
+      </v-expand-transition>
+
+      <template v-if="!items.length">
+        <v-col cols="12">
+          <v-alert type="warning" v-show="$root.network_mode === 'rtdb'">
+            ​VPN မရှိပါက ​Live ကို ပိတ်ပြီးအသုံးပြုပေးပါ။
+          </v-alert>
+        </v-col>
         <v-col v-for="n of [1, 2, 3]" :key="n" cols="12" md="6">
           <v-skeleton-loader
             max-width="100%"
@@ -26,24 +48,7 @@
         </v-col>
       </template>
       <template v-else>
-        <v-expand-transition>
-          <v-col cols="12" v-show="error">
-            <v-alert type="error">
-              {{ error }}
-              <v-btn
-                text
-                class="ma-2 font-weight-medium"
-                color="secondary"
-                @click="$router.go()"
-                dark
-              >
-                ပြန်လည်ကြိုးစားကြည့်ပါ
-              </v-btn>
-            </v-alert>
-          </v-col>
-        </v-expand-transition>
-
-        <v-col v-for="article of items" :key="article.id" cols="12" lg="6">
+        <v-col v-for="article of items" :key="article.id" cols="12" md="6">
           <article-card
             :id="article.id"
             :title="article.title"

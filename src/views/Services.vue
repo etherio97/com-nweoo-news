@@ -9,8 +9,12 @@
         </v-alert>
       </v-col>
       <v-col cols="12" sm="6">
-        <v-card>
-          <v-card-title>သတင်းများပေးပို့နိုင်ခြင်း</v-card-title>
+        <v-card elevation="12">
+          <v-img
+            src="@/assets/images/smsreporter-cover.jpg"
+            height="360px"
+          ></v-img>
+          <v-card-title>သတင်းများပေးပို့ခြင်း</v-card-title>
           <v-card-subtitle>
             <a href="#" class="blue--text">
               #NweOoSMSReporter
@@ -39,8 +43,9 @@
         </v-card>
       </v-col>
       <v-col cols="12" sm="6">
-        <v-card>
-          <v-card-title>သတင်းများရယူနိုင်ခြင်း</v-card-title>
+        <v-card elevation="12">
+          <v-img src="@/assets/images/smsbot-cover.jpg" height="360px"></v-img>
+          <v-card-title>သတင်းများရယူခြင်း</v-card-title>
           <v-card-subtitle>
             <a href="#" class="blue--text">
               #NweOoSMSBot
@@ -54,7 +59,6 @@
               လို့ပို့ပြီးသတင်းများရယူနိုင်ပါတယ်။
               <i>**​Telenor များသာရပါတယ်။**</i>
             </p>
-            <br />
             <p>
               သတင်းတစ်ခါရယူရင် နောက်ဆုံးရသတင်းခေါင်းစဥ် (၅) ခုပြန်ပို့ပါတယ်။ SMS
               ဖြင့်ပို့ရတာဖြစ်တာအတွက် အချိန်ကြာမြင့်တတ်သလို
@@ -64,11 +68,6 @@
               <strong><code>reset</code></strong> လို့ပို့ပြီး
               သတင်းခေါင်းစဥ်တွေကို အစကနေပြန်လည်ရယူနိုင်ပါတယ်။ reset ချတဲ့အခါ
               အစကနေပြန်ပို့တာကြောင့် သတင်းတွေထပ်နိုင်ပါတယ်။
-            </p>
-            <p>
-              ညနေ ၇ နာရီနောက်ပိုင်းဟာ လိုင်းကျပ်တာကြောင့် SMS ပို့တဲ့အခါ
-              အခက်အခဲရှိပါတယ်။ ဒါကြောင့် သတင်းတွေရောက်မလာတဲ့အခါ
-              နာရီပိုင်းခြားပြီးမှ ပြန်လည်ပို့ဆောင်ပေးကြပါ။
             </p>
             <p>
               တခြားနံပါတ်နဲ့ ပြန်ပို့ပေးတဲ့အခါ အဲဒီနံပါတ်တွေကို မပို့ဘဲ

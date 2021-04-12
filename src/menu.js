@@ -13,7 +13,7 @@ export default [
   },
   {
     title: "ပေးပို့ချက်များ",
-    icon: "mdi-message-text",
+    icon: " mdi-library-books",
     path: "/reports",
     visible: true
   },

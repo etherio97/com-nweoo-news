@@ -18,21 +18,15 @@ export default [
     visible: true
   },
   {
-    title: "စာတိုပို့ရန်",
-    icon: "mdi-message-outline",
-    path: "/sms/send",
+    title: "ဝန်ဆောင်မှုများ",
+    icon: "mdi-account-multiple",
+    path: "/services",
     visible: true
   },
   {
-    title: "အွန်လိုင်းစာပေးပို့ခြင်း",
+    title: "Online Reporter",
     icon: "mdi-desktop-mac-dashboard",
     path: "/new/reports",
-    visible: true
-  },
-  {
-    title: "Voicemails",
-    icon: "mdi-voicemail",
-    path: "/admin/voicemails",
     visible: false
   }
 ];

@@ -20,34 +20,9 @@ export default [
     component: () => import("../views/reports/Report.vue")
   },
   {
-    name: "ReportOnline",
-    path: "/new/reports",
-    component: () => import("../views/reports/OnlineReport.vue")
-  },
-  {
-    name: "RegionSuggestion",
-    path: "/suggest/regions",
-    component: () => import("../views/suggest/Regions.vue")
-  },
-  {
     name: "News",
     path: "/news",
     component: () => import("../views/news/Articles.vue")
-  },
-  {
-    name: "SendSMS",
-    path: "/sms/send",
-    component: () => import("../views/sms/send.vue")
-  },
-  {
-    name: "SMSInbox",
-    path: "/sms/inbox",
-    component: () => import("../views/sms/inbox.vue")
-  },
-  {
-    name: "SMSOutbox",
-    path: "/sms/outbox",
-    component: () => import("../views/sms/inbox.vue")
   },
   {
     name: "VideoNews",
@@ -55,13 +30,13 @@ export default [
     component: () => import("../views/news/Videos.vue")
   },
   {
-    name: "Voicemail",
-    path: "/admin/voicemails",
-    component: () => import("../views/admin/voicemails.vue")
+    name: "Services",
+    path: "/services",
+    component: () => import("../views/Services.vue")
   },
   {
-    name: "AddVoicemail",
-    path: "/admin/add-voicemail",
-    component: () => import("../views/admin/create.vue")
+    name: "SMSNews",
+    path: "/sms",
+    component: () => import("../views/sms/faq.vue")
   }
 ];

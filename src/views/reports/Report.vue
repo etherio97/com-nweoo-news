@@ -293,6 +293,9 @@ export default {
       default:
         this.step = this.id && 2;
     }
+    if (this.$route.query["phone"]) {
+      this.phone = this.$route.query["phone"];
+    }
     if (this.id) {
       this.axios(`${this.$root.api}/report/${this.id}`)
         .then(({ data: { status, data } }) => {

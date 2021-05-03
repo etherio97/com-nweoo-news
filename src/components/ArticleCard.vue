@@ -12,7 +12,7 @@
     </v-card-title>
 
     <v-card-subtitle>
-      {{ new Date(datetime).toLocaleString() }} -
+      {{ new Date(timestamp).toLocaleString() }} -
       <a :href="sourceUrl" target="_blank">{{ source }}</a>
     </v-card-subtitle>
 
@@ -41,10 +41,12 @@
 
 <script>
 import { parseUrl } from "@/functions/formatter";
+
 const newsMedia = {
   RFA: "https://www.rfa.org/burmese",
   DVB: "https://burmese.dvb.no",
 };
+
 export default {
   name: "ArticleCard",
   props: {
@@ -52,7 +54,7 @@ export default {
     image: { type: String },
     content: { required: true, type: String },
     link: { required: true, type: String },
-    datetime: { required: true, type: String },
+    timestamp: { required: false, type: Number },
     source: { required: true, type: String },
   },
   data: () => ({
@@ -66,7 +68,7 @@ export default {
       return this.textWrap ? this.content.substr(0, 255) + "..." : this.content;
     },
     html() {
-      let content = this.content.replace(/\n\n/gim, "<br>");
+      let content = this.content.replace(/\n\n?/gim, "<br>");
       return parseUrl(content);
     },
     textWrap() {

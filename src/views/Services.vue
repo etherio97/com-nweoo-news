@@ -1,29 +1,43 @@
 <template>
   <v-container class="mt-10">
+    <v-dialog v-model="selected">
+      <v-card>
+        <v-card-subtitle>
+          <v-row class="pa-4">
+            <h2 class="pt-2">{{ selectedTitle }}</h2>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="selected = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-row>
+          <v-divider></v-divider>
+        </v-card-subtitle>
+        <v-card-text>
+          <v-img :src="selectedImage"></v-img>
+          <div class="mt-4" v-html="selectedDescription"></div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <v-row>
       <v-col cols="12">
-        <h2>SMS Service</h2>
-        <v-alert type="info">
-          Facebook, Messenger က တဆင့်ရယူနိုင်ပါတယ်။ နှစ်ခုစလုံး ပို့ရမဲ့
-          ဖုန်းနံပါတ်က အတူတူပါပဲ။
-        </v-alert>
+        <h2>စာတိုဝန်ဆောင်မှု</h2>
+        <h3 class="grey--text">SMS Services</h3>
       </v-col>
       <v-col cols="12" sm="6">
-        <v-card elevation="12">
-          <v-img
-            src="@/assets/images/smsreporter-cover.jpg"
-            height="360px"
-          ></v-img>
+        <v-card elevation="12" @click="viewSMSReporter">
+          <v-img :src="SMSReporter" height="360px"></v-img>
           <v-card-title>သတင်းများပေးပို့ခြင်း</v-card-title>
           <v-card-subtitle>
-            <a href="#" class="blue--text">
-              #NweOoSMSReporter
-            </a>
+            <a href="#" class="blue--text"> #NweOoSMSReporter </a>
           </v-card-subtitle>
-          <v-card-text>
+          <v-card-text ref="smsreporter">
             <p>
               SMS ပေးပို့ပြီး
-              <a href="https://nweoo.com/fb" ref="no referral" target="_blank">
+              <a
+                href="https://fb.me/nweoo22222"
+                ref="no referral"
+                target="_blank"
+              >
                 NweOo Facebook Page
               </a>
               ပေါ် တိုက်ရိုက်သတင်းများ တင်နိုင်ပါတယ်။ ပို့တဲ့အခါ
@@ -43,55 +57,54 @@
         </v-card>
       </v-col>
       <v-col cols="12" sm="6">
-        <v-card elevation="12">
-          <v-img src="@/assets/images/smsbot-cover.jpg" height="360px"></v-img>
+        <v-card elevation="12" @click="viewSMSBot">
+          <v-img :src="SMSBot" height="360px"></v-img>
           <v-card-title>သတင်းများရယူခြင်း</v-card-title>
           <v-card-subtitle>
-            <a href="#" class="blue--text">
-              #NweOoSMSBot
-            </a>
+            <a href="#" class="blue--text"> #NweOoSMSBot </a>
           </v-card-subtitle>
-          <v-card-text>
+          <v-card-text ref="smsbot">
             <p>
               SMS ပို့ပြီးသတင်းတွေရယူလိုတယ်ဆိုရင်တော့
               <strong><code>news</code></strong> ဒါမှမဟုတ်
               <strong><code>သတင်း</code></strong>
               လို့ပို့ပြီးသတင်းများရယူနိုင်ပါတယ်။
-              <i>**​Telenor များသာရပါတယ်။**</i>
             </p>
             <p>
-              သတင်းတစ်ခါရယူရင် နောက်ဆုံးရသတင်းခေါင်းစဥ် (၅) ခုပြန်ပို့ပါတယ်။ SMS
-              ဖြင့်ပို့ရတာဖြစ်တာအတွက် အချိန်ကြာမြင့်တတ်သလို
-              မရောက်လာတာတွေလည်းရှိတတ်ပါတယ်။ Bot ကတော့မသိတဲ့အတွက် သတင်းခေါင်းစဥ်
-              အခု (၃၀) မပြည့်သေးဘဲ
-              <b>"သတင်းလက်ကျန်မရှိပါ။"</b> လို့ပို့တဲ့အခါ
-              <strong><code>reset</code></strong> လို့ပို့ပြီး
-              သတင်းခေါင်းစဥ်တွေကို အစကနေပြန်လည်ရယူနိုင်ပါတယ်။ reset ချတဲ့အခါ
-              အစကနေပြန်ပို့တာကြောင့် သတင်းတွေထပ်နိုင်ပါတယ်။
+              သတင်းတစ်ခါရယူရင် သတင်းခေါင်းစဥ် ၃ ခုကို ၃
+              စောင်နှုန်းနဲ့ပြန်ပို့ပါတယ်။ SMS နဲ့ ပို့ရတဲ့အတွက်
+              အချိန်ကြာမြင့်တတ်တာကြောင့် တစ်စောင်နဲ့တစ်စောင်
+              ခြားပြီးပို့စောင်ပေးပါ။
             </p>
             <p>
-              တခြားနံပါတ်နဲ့ ပြန်ပို့ပေးတဲ့အခါ အဲဒီနံပါတ်တွေကို မပို့ဘဲ
-              ကြေငြာထားတဲ့နံပါတ်ကိုသာ ပို့ပေးပါ။
-            </p>
-            <p>
-              <strong>
-                လက်ရှိပို့ဆောင်နေသည့် သတင်းခေါင်းစဥ်များသည်
-                <a
-                  href="http://burmese.dvb.no/archives/category/news"
-                  rel="no referral"
-                  target="_blank"
-                >
-                  DVB
-                </a>
-                အွန်လိုင်းစာမျက်နှာပေါ်ရှိ သတင်းများသာဖြစ်ပြီး
-                ပြန်လည်ကူးယူဖော်ပြထားခြင်းဖြစ်သာပါတယ်။
-              </strong>
+              <i>**​Telenor များသာ**</i>
+              <br />
+              <i>**ဇော်ဂျီဖောင့်အသုံးမပြုပါ။</i>
             </p>
           </v-card-text>
         </v-card>
       </v-col>
+
+      <!-- notice -->
       <v-col cols="12">
-        <h2>SMS Bot တွင် အသုံးပြုနိုင်သော စကားလုံးများ</h2>
+        <v-alert type="info">
+          ပို့ရမဲ့ဖုန်းနံပါတ်ကို
+          <a
+            class="link text-decoration-underline"
+            target="_blank"
+            rel="no referral"
+            href="https://m.me/nweoo22222"
+            >Facebook Messenger</a
+          >
+          က တဆင့်ရယူနိုင်ပါတယ်။ နှစ်ခုစလုံး ပို့ရမဲ့ ဖုန်းနံပါတ်က အတူတူပါပဲ။
+        </v-alert>
+      </v-col>
+
+      <!-- keywords -->
+      <v-col cols="12" class="mt-2" ref="keywords">
+        <a href="javascript:void(0);" id="keywords">
+          <h2 class="mt-1 mb-2">အသုံးပြုနိုင်သော စကားလုံးများ</h2>
+        </a>
         <v-simple-table>
           <thead>
             <tr>
@@ -102,9 +115,20 @@
             </tr>
           </thead>
           <tr>
-            <td colspan="4" class="py-2 pl-4 title">
-              v1.1 (current)
+            <td colspan="4" class="py-2 pl-4 title">v1.2 (current)</td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <code>info</code>
             </td>
+            <td class="text-center"></td>
+            <td class="text-center"><v-icon>mdi-check</v-icon></td>
+            <td class="text-left">
+              <p>ပြန်လည်ပို့စောင်ပေးမည့်အစောင်အရေအတွက်ကိုသိရှိရန်</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" class="py-2 pl-4 title">v1.1</td>
           </tr>
           <tr>
             <td class="text-center">
@@ -117,23 +141,19 @@
               <v-icon>mdi-check</v-icon>
             </td>
             <td>
-              <p>
-                သတင်းခေါင်းစဥ်တွေရယူရန်
-              </p>
+              <p>သတင်းခေါင်းစဥ်များရယူရန်</p>
             </td>
           </tr>
           <tr>
-            <td class="text-center"><code>help</code> or <code>info</code></td>
+            <td class="text-center"><code>help</code></td>
             <td class="text-center">
               <code>ကူညီ</code>
             </td>
             <td class="text-center">
-              <v-icon>mdi-check</v-icon>
+              <v-icon>mdi-close</v-icon>
             </td>
             <td>
-              <p>
-                ပို့ဆောင်နိုင်သော စကားလုံးများကို သိရှိရန်
-              </p>
+              <p>ပို့ဆောင်နိုင်သော စကားလုံးများကို သိရှိရန်</p>
             </td>
           </tr>
           <tr>
@@ -144,12 +164,10 @@
               <code>ပြန်စ</code>
             </td>
             <td class="text-center">
-              <v-icon>mdi-check</v-icon>
+              <v-icon>mdi-close</v-icon>
             </td>
             <td>
-              <p>
-                သတင်းများကို အစမှပြန်လည်ရယူရန်
-              </p>
+              <p>သတင်းများကို အစမှပြန်လည်ရယူရန်</p>
             </td>
           </tr>
           <tr>
@@ -167,7 +185,11 @@
             </td>
             <td>
               <p>
-                သတင်းဆောင်းပါးအမှတ် &lt;id&gt; ကို အပြည့်အစုံဖတ်ရန်
+                သတင်းဆောင်းပါးအပြည့်အစုံကိုဖတ်ရန်။<br />
+                <i>
+                  <code>&lt;id&gt;</code> ဆိုတဲ့နေရာမှာ
+                  သတင်းခေါင်းစဉ်ရဲ့အမှတ်စဉ်ကိုအစားသွင်းရမှာပါ။
+                </i>
               </p>
             </td>
           </tr>
@@ -179,23 +201,124 @@
               <code>ကျန်သေးလား</code>
             </td>
             <td class="text-center">
-              <v-icon>mdi-close</v-icon>
+              <v-icon>mdi-check</v-icon>
             </td>
             <td>
-              <p>
-                ကျန်ရှိသည့်သတင်းအရေအတွက်ကိုသိရှိရန်
-              </p>
+              <p>ကျန်ရှိသည့်သတင်းအရေအတွက်ကိုသိရှိရန်</p>
             </td>
           </tr>
         </v-simple-table>
+      </v-col>
+
+      <v-col cols="12">
+        <v-divider></v-divider>
+      </v-col>
+
+      <!-- rate limits -->
+      <v-col cols="12" class="mt-2" ref="rateLimits">
+        <a href="javascript:void(0);" id="rate-limits">
+          <h2 class="mb-2 mt-1">သတ်မှတ်ထားသော ကန့်သတ်ချက်များ</h2>
+        </a>
+        <v-simple-table>
+          <thead>
+            <tr>
+              <th class="text-center">အမျိုးအစား</th>
+              <th class="text-center">အတိုင်းအတာ</th>
+              <th class="text-center">အရေအတွက်</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">
+                <p>ဝင်စာ</p>
+              </td>
+              <td class="text-center">
+                <p><code>၃၀ စက္ကန့်</code> အတွင်း</p>
+              </td>
+              <td class="text-center">
+                <p><code>၁</code> စောင်</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="text-center">
+                <p>ပြန်စာ</p>
+              </td>
+              <td class="text-center">
+                <p><code>၁ နာရီ</code> အတွင်း</p>
+              </td>
+              <td class="text-center">
+                <p><code>၁၂</code> စောင်</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="text-center">
+                <p>ပြန်စာ</p>
+              </td>
+              <td class="text-center">
+                <p><code>၂၄ နာရီ</code> အတွင်း</p>
+              </td>
+              <td class="text-center">
+                <p><code>၆၀</code> စောင်</p>
+              </td>
+            </tr>
+          </tbody>
+        </v-simple-table>
+      </v-col>
+
+      <!-- updated at -->
+      <v-col cols="12">
+        <p>
+          နောက်ဆုံးပြောင်းသည့်နေ့
+          <code>{{ new Date("2021-05-03T04:41Z").toLocaleString() }}</code>
+        </p>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import SMSBot from "@/assets/images/smsbot-cover.jpg";
+import SMSReporter from "@/assets/images/sms-reporting-ads.jpg";
+
 export default {
-  name: "Services",
-  //
+  data: () => ({
+    SMSReporter,
+    SMSBot,
+    selected: false,
+    selectedTitle: "",
+    selectedImage: "",
+    selectedDescription: "",
+  }),
+  methods: {
+    viewSMSBot({ target }) {
+      this.selectedTitle = "သတင်းများရယူခြင်း";
+      this.selectedImage = SMSBot;
+      this.selectedDescription = `${this.$refs["smsbot"].innerHTML}
+<br><hr><br>
+${this.$refs["keywords"].innerHTML}
+<br><hr><br>
+${this.$refs["rateLimits"].innerHTML}`;
+      this.selected = true;
+    },
+    viewSMSReporter({ target }) {
+      this.selectedTitle = "သတင်းများပေးပို့ခြင်း";
+      this.selectedImage = SMSReporter;
+      this.selectedDescription = this.$refs["smsreporter"].innerHTML;
+      this.selected = true;
+    },
+  },
 };
 </script>
+
+
+<style scoped>
+.link {
+  color: rgb(255, 255, 255);
+}
+
+.link:hover {
+  color: rgb(182, 182, 182);
+}
+</style>

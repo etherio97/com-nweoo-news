@@ -17,7 +17,12 @@
     "redirects": [
       {
         "source": "/fb",
-        "destination": "https://facebook.com/nweoo22222",
+        "destination": "https://fb.me/nweoo22222",
+        "type": 301
+      },
+      {
+        "source": "/me",
+        "destination": "https://m.me/nweoo22222",
         "type": 301
       }
     ],

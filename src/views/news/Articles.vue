@@ -47,13 +47,14 @@
           />
         </v-col>
       </template>
+
       <template v-else>
         <v-col v-for="article of items" :key="article.id" cols="12" md="6">
           <article-card
             :id="article.id"
             :title="article.title"
             :content="article.content"
-            :datetime="article.datetime"
+            :timestamp="article.timestamp"
             :image="article.image"
             :link="article.link"
             :post_id="article.post_id"

@@ -13,13 +13,13 @@ export default [
   },
   {
     title: "ပေးပို့ချက်များ",
-    icon: " mdi-library-books",
+    icon: " mdi-message",
     path: "/reports",
     visible: true
   },
   {
     title: "ဝန်ဆောင်မှုများ",
-    icon: "mdi-account-multiple",
+    icon: "mdi-information",
     path: "/services",
     visible: true
   },

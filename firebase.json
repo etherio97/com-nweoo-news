@@ -24,6 +24,11 @@
         "source": "/me",
         "destination": "https://m.me/nweoo22222",
         "type": 301
+      },
+      {
+        "source": "/tm",
+        "destination": "https://t.me/nweoonews",
+        "type": 301
       }
     ],
     "rewrites": [

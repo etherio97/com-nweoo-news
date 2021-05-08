@@ -49,7 +49,26 @@
       </template>
 
       <template v-else>
-        <v-col v-for="article of items" :key="article.id" cols="12" md="6">
+        <v-col cols="12">
+          <article-card
+            :id="latestArticle.id"
+            :title="latestArticle.title"
+            :content="latestArticle.content"
+            :timestamp="latestArticle.timestamp"
+            :image="latestArticle.image"
+            :link="latestArticle.link"
+            :post_id="latestArticle.post_id"
+            :source="latestArticle.source"
+            :imageHeight="380"
+          ></article-card>
+        </v-col>
+
+        <v-col
+          v-for="article of latestArticles"
+          :key="article.id"
+          cols="12"
+          md="6"
+        >
           <article-card
             :id="article.id"
             :title="article.title"
@@ -92,6 +111,15 @@ export default {
   },
   computed: {
     ...mapState("articles", ["items"]),
+
+    latestArticle() {
+      return this.items[0];
+    },
+
+    latestArticles() {
+      return this.items.slice(1);
+    },
+
     usingRTDB() {
       return this.$root.network_mode === "rtdb";
     },

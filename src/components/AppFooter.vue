@@ -22,10 +22,28 @@
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
           icon
-          href="https://facebook.com/nweoo22222"
+          href="https://fb.me/nweoo22222"
           target="_blank"
         >
           <v-icon size="24px">mdi-facebook</v-icon>
+        </v-btn>
+
+        <v-btn
+          class="mx-4 secondary darken-1 white--text text-center"
+          icon
+          href="https://m.me/nweoo22222"
+          target="_blank"
+        >
+          <v-icon size="24px">mdi-facebook-messenger</v-icon>
+        </v-btn>
+
+        <v-btn
+          class="mx-4 secondary darken-1 white--text text-center"
+          icon
+          href="https://t.me/nweoonews"
+          target="_blank"
+        >
+          <v-icon size="24px">mdi-telegram</v-icon>
         </v-btn>
       </v-card-text>
 

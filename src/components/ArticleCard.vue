@@ -4,6 +4,7 @@
       v-if="image"
       aspect-ratio="1.7778"
       lazy-src="@/assets/images/image.jpg"
+      :max-height="imageHeight"
       :src="image"
     />
 
@@ -56,6 +57,7 @@ export default {
     link: { required: true, type: String },
     timestamp: { required: false, type: Number },
     source: { required: true, type: String },
+    imageHeight: { required: false, type: Number },
   },
   data: () => ({
     readmore: false,

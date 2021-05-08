@@ -22,7 +22,7 @@ export default {
     FETCH_ARTICLES({ commit }, payload) {
       if (payload.network_mode === "api") {
         return axios
-          .get(`${payload.api}/articles?limit=20`)
+          .get(`${payload.api}/articles?limit=21`)
           .then(({ data }) =>
             Object.values(data).forEach(article =>
               commit("PUSH_ARTICLE", article)
@@ -33,7 +33,7 @@ export default {
         .database()
         .ref("/v1/articles")
         .orderByChild("timestamp")
-        .limitToLast(20)
+        .limitToLast(21)
         .on("child_added", snap => {
           commit("PUSH_ARTICLE", snap.toJSON());
         });

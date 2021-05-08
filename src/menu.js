@@ -24,9 +24,9 @@ export default [
     visible: true
   },
   {
-    title: "Online Reporter",
-    icon: "mdi-desktop-mac-dashboard",
-    path: "/new/reports",
-    visible: false
-  }
+    title: "ကျွန်ုပ်တို့အကြောင်း",
+    icon: "mdi-help-circle",
+    path: "/about",
+    visible: true
+  },
 ];

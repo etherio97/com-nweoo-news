@@ -295,11 +295,7 @@ export default {
     viewSMSBot({ target }) {
       this.selectedTitle = "သတင်းများရယူခြင်း";
       this.selectedImage = SMSBot;
-      this.selectedDescription = `${this.$refs["smsbot"].innerHTML}
-<br><hr><br>
-${this.$refs["keywords"].innerHTML}
-<br><hr><br>
-${this.$refs["rateLimits"].innerHTML}`;
+      this.selectedDescription = this.$refs["smsbot"].innerHTML;
       this.selected = true;
     },
     viewSMSReporter({ target }) {

@@ -4,7 +4,6 @@
       <v-card elevation="0" color="transparent">
         <v-card-title class="text-h5">
           SMS မှ တဆင့် ပေးပို့ချက်များ
-          <device-status />
         </v-card-title>
 
         <v-card-text>

@@ -35,8 +35,8 @@ export default [
     component: () => import("../views/Services.vue")
   },
   {
-    name: "SMSNews",
-    path: "/sms",
-    component: () => import("../views/sms/faq.vue")
+    name: "AboutUs",
+    path: "/about",
+    component: () => import('../views/About.vue')
   }
 ];

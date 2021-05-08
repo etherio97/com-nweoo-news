@@ -2,7 +2,10 @@
   <v-container class="mt-5">
     <v-row>
       <v-col cols="12">
-        <h2 class="py-4">ရုပ်သံသတင်းများ</h2>
+        <v-row class="px-2" justify="space-between">
+          <h2>ရုပ်သံသတင်းများ</h2>
+          <live-button :loaded="!loading" />
+        </v-row>
       </v-col>
 
       <template v-if="loading">
@@ -49,24 +52,30 @@
 </template>
 
 <script>
-import VideoCard from "@/components/VideoCard.vue";
 import { mapActions, mapState } from "vuex";
+import VideoCard from "@/components/VideoCard.vue";
+import LiveButton from "@/components/LiveButton.vue";
 
 export default {
   name: "VideoNews",
+  components: {
+    VideoCard,
+    LiveButton,
+  },
   data: () => ({
     loading: true,
     error: null,
   }),
-  components: {
-    VideoCard,
-  },
   computed: mapState("videos", ["items"]),
   methods: mapActions("videos", ["FETCH_VIDEOS"]),
   beforeMount() {
     this.FETCH_VIDEOS(this.$root)
-      .catch((e) => (this.error = e.message))
-      .finally(() => (this.loading = false));
+      .catch((e) => {
+        this.error = e.message;
+      })
+      .finally(() => {
+        this.loading = !Boolean(this.items.length);
+      });
   },
 };
 </script>

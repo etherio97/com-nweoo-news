@@ -49,8 +49,13 @@
 
       <v-divider></v-divider>
 
-      <v-card-text class="white--text">
+      <v-card-text class="body-2 white--text">
         &copy; {{ new Date().getFullYear() }} — NweOo.
+        <div class="text-center">
+          <router-link to="/terms-of-services">Terms of Services</router-link>
+          |
+          <router-link to="/privacy-policy">Privacy Policy</router-link>
+        </div>
       </v-card-text>
     </v-card>
   </v-footer>

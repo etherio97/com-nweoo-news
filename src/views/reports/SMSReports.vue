@@ -3,7 +3,8 @@
     <v-container class="mt-4">
       <v-card elevation="0" color="transparent">
         <v-card-title class="text-h5">
-          SMS မှ တဆင့် ပေးပို့ချက်များ
+          ပေးပို့ချက်များ
+          <live-button :loaded="!loading"></live-button>
         </v-card-title>
 
         <v-card-text>
@@ -62,6 +63,7 @@
 import { mapActions, mapState } from "vuex";
 import DeviceStatus from "@/components/DeviceStatus.vue";
 import ReportCard from "@/components/ReportCard.vue";
+import LiveButton from "@/components/LiveButton.vue";
 
 const MAX_TIMEOUT = 30000; // 30s
 
@@ -76,6 +78,7 @@ export default {
   components: {
     DeviceStatus,
     ReportCard,
+    LiveButton,
   },
   name: "Home",
   computed: mapState("reports", ["reports"]),
@@ -83,7 +86,8 @@ export default {
     ...mapActions("reports", ["UPDATE_REPORTS"]),
     update() {
       this.UPDATE_REPORTS({
-        url: this.$root.api,
+        url: this.$root["api"],
+        network_mode: this.$root["network_mode"],
       })
         .then(() => {
           this.updated_at = new Date();
@@ -91,7 +95,7 @@ export default {
           this.loading = false;
         })
         .catch((e) => {
-          this.loading = false;
+          this.loading = !Boolean(this.reports.length);
           this.error = e.message;
         });
     },

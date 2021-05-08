@@ -122,12 +122,14 @@ export default {
     poster() {
       return this.thumbnails[5].uri;
     },
+    usingAPI() {
+      this.$root["network_mode"] === "api";
+    },
   },
-
   beforeMount() {
-    let matched = this.source.match(/^https:\/\/(.+)-.+-.+\.xx\.fbcdn\.net/);
     let uri = new URL(this.source);
-    if (matched) {
+    let matched = this.source.match(/^https:\/\/(.+)-.+-.+\.xx\.fbcdn\.net/);
+    if (this.usingAPI && matched) {
       switch (matched[1]) {
         case "external":
           uri = "https://cdn.nweoo.com/e" + uri.pathname + uri.search;
@@ -139,10 +141,10 @@ export default {
           uri = "https://cdn.nweoo.com/v" + uri.pathname + uri.search;
           break;
       }
-      this.playerOptions.sources[0].title = this.title;
-      this.playerOptions.sources[0].type = "video/mp4";
-      this.playerOptions.sources[0].src = uri.toString();
     }
+    this.playerOptions.sources[0].title = this.title;
+    this.playerOptions.sources[0].type = "video/mp4";
+    this.playerOptions.sources[0].src = uri.toString();
   },
 };
 </script>

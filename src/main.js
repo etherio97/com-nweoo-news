@@ -15,10 +15,6 @@ const data = {
   network_mode: localStorage.getItem("network_mode") || "api", // 'rtdb' or 'api'
 };
 
-if (process.env.NODE_ENV !== "production") {
-  // data.api = "http://localhost:3000";
-}
-
 new Vue({
   data,
   router,

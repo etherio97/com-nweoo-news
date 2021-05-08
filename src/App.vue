@@ -2,53 +2,6 @@
   <v-app>
     <v-app-bar color="secondary" dark dense app fixed v-if="appBarVisible">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <headline-bar></headline-bar>
-
-      <v-navigation-drawer
-        v-model="drawer"
-        app
-        fixed
-        light
-        temporary
-        hide-overlay
-      >
-        <template v-slot:prepend v-if="loggedIn">
-          <v-list-item two-line>
-            <v-list-item-avatar>
-              <v-img v-if="user.photoURL" :src="user.photoURL" />
-              <v-icon v-else large>mdi-account</v-icon>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-subtitle class="ml-2 mt-1">
-                {{ user.displayName || user.email || user.phoneNumber }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-        </template>
-
-        <v-list nav dense>
-          <v-list-item-group active-class="secondary--text text--accent-4">
-            <template v-for="(item, index) in menu">
-              <v-list-item
-                :to="item.path"
-                :key="`nav-${index}`"
-                v-if="item.visible"
-              >
-                <v-list-item-icon>
-                  <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item>
-            </template>
-          </v-list-item-group>
-        </v-list>
-
-        <template v-slot:append>
-          <log-in></log-in>
-        </template>
-      </v-navigation-drawer>
-
       <v-spacer></v-spacer>
       <router-link to="/">
         <v-img
@@ -61,8 +14,54 @@
         />
       </router-link>
       <v-spacer></v-spacer>
+      <headline-bar></headline-bar>
     </v-app-bar>
     <side-bar :items="menu" :can="can" v-else />
+
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      fixed
+      light
+      temporary
+      hide-overlay
+    >
+      <template v-slot:prepend v-if="loggedIn">
+        <v-list-item two-line>
+          <v-list-item-avatar>
+            <v-img v-if="user.photoURL" :src="user.photoURL" />
+            <v-icon v-else large>mdi-account</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-subtitle class="ml-2 mt-1">
+              {{ user.displayName || user.email || user.phoneNumber }}
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+      </template>
+
+      <v-list nav dense>
+        <v-list-item-group active-class="secondary--text text--accent-4">
+          <template v-for="(item, index) in menu">
+            <v-list-item
+              :to="item.path"
+              :key="`nav-${index}`"
+              v-if="item.visible"
+            >
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-list-item-group>
+      </v-list>
+
+      <template v-slot:append>
+        <log-in></log-in>
+      </template>
+    </v-navigation-drawer>
 
     <v-main class="mt-5 mb-15 mx-2">
       <headline-bar v-if="!appBarVisible" top="0" />

@@ -38,5 +38,15 @@ export default [
     name: "AboutUs",
     path: "/about",
     component: () => import('../views/About.vue')
+  },
+  {
+    name: "TermsAndConditions",
+    path: "/terms-of-services",
+    component: () => import('../views/TermsOfServices.vue')
+  }
+  , {
+    name: "PrivacyPolicy",
+    path: "/privacy-policy",
+    component: () => import('../views/PrivacyPolicy.vue')
   }
 ];

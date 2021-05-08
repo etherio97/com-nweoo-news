@@ -5,8 +5,7 @@
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
           icon
-          href="tel:+66928650591"
-          target="_blank"
+          href="tel:+959758035929"
         >
           <v-icon size="24px">mdi-phone</v-icon>
         </v-btn>

@@ -25,7 +25,7 @@
       </v-list-item>
     </template>
     <v-form @submit.prevent="signInWithEmailAndPassword">
-      <v-card :loading="loading">
+      <v-card :loading="loading" class="px-4 pb-6">
         <v-card-title class="font-weight-black"></v-card-title>
         <v-card-text>
           <v-expand-transition>
@@ -38,6 +38,7 @@
             outlined
             ref="usn"
             autocapitalize="off"
+            :disabled="!loading"
           />
           <v-text-field
             label="Password"
@@ -45,6 +46,7 @@
             type="password"
             prepend-inner-icon="mdi-lock"
             outlined
+            :disabled="!loading"
           />
         </v-card-text>
         <v-card-actions>
@@ -59,6 +61,28 @@
             Log In
           </v-btn>
         </v-card-actions>
+        <v-card-text class="mt-3">
+          <v-btn
+            class="mb-2"
+            color="red darken-1"
+            @click="signInWithGoogle"
+            block
+            dark
+          >
+            <v-icon class="mr-2">mdi-google</v-icon>
+            Log in with Google
+          </v-btn>
+          <v-btn
+            class="mt-2"
+            color="blue darken-2"
+            @click="signInWithFacebook"
+            block
+            dark
+          >
+            <v-icon class="mr-2">mdi-facebook</v-icon>
+            Log in with Facebook
+          </v-btn>
+        </v-card-text>
       </v-card>
     </v-form>
   </v-dialog>
@@ -76,22 +100,40 @@ export default {
     loading: false,
     dialog: false,
   }),
-  watch: {
-    dialog(value) {
-      if (value) {
-        setTimeout(
-          () => this.$refs.usn.$el.querySelector("input").focus(),
-          320
-        );
-      }
-    },
-  },
   methods: {
     signOut() {
       const auth = firebase.auth();
       auth.signOut().then(() => {
         this.$root.user = null;
       });
+    },
+    signInWithGoogle() {
+      this.error = false;
+      this.loading = true;
+      let provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((u) => {
+          this.$root.user = u;
+        })
+        .catch((e) => {
+          this.loading = false;
+        });
+    },
+    signInWithFacebook() {
+      this.error = false;
+      this.loading = true;
+      let provider = new firebase.auth.FacebookAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((u) => {
+          this.$root.user = u;
+        })
+        .catch((e) => {
+          this.loading = false;
+        });
     },
     signInWithEmailAndPassword() {
       this.error = false;
@@ -101,8 +143,8 @@ export default {
         this.error = "Must fill all required fields";
         return;
       }
-      const auth = firebase.auth();
-      auth
+      firebase
+        .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((user) => {
           this.$root.user = user;
@@ -114,6 +156,16 @@ export default {
           this.loading = false;
           this.dialog = false;
         });
+    },
+  },
+  watch: {
+    dialog(value) {
+      if (value) {
+        setTimeout(
+          () => this.$refs.usn.$el.querySelector("input").focus(),
+          320
+        );
+      }
     },
   },
   computed: {

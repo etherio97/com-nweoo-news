@@ -26,12 +26,12 @@ export default {
 
   actions: {
     UPDATE_REPORTS({ commit }, payload) {
-      if (payload.network_mode === "api") {
-        return axios(`${payload.url}/report?limit=20`)
-          .then(({ data }) =>
-            commit("SET_REPORTS", data)
-          );
-      }
+      // if (payload.network_mode === "api") {
+      return axios(`${payload.url}/report?limit=20`)
+        .then(({ data }) =>
+          commit("SET_REPORTS", data)
+        );
+      // }
       return firebase.
         database()
         .ref('/v1/reports')

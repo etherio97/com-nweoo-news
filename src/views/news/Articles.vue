@@ -2,7 +2,7 @@
   <v-container class="mt-5">
     <v-row class="px-2" justify="space-between">
       <h2>သတင်းများ</h2>
-      <live-button :loaded="!loading" />
+      <live-button :items="items" :loaded="!loading" />
     </v-row>
 
     <v-row>

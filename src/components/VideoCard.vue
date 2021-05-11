@@ -127,8 +127,9 @@ export default {
     },
   },
   beforeMount() {
+    /*
     let uri = new URL(this.source);
-    let matched = this.source.match(/^https:\/\/(.+)-.+-.+\.xx\.fbcdn\.net/);
+     let matched = this.source.match(/^https:\/\/(.+)-.+-.+\.xx\.fbcdn\.net/);
     if (this.usingAPI && matched) {
       switch (matched[1]) {
         case "external":
@@ -142,9 +143,10 @@ export default {
           break;
       }
     }
+     */
     this.playerOptions.sources[0].title = this.title;
     this.playerOptions.sources[0].type = "video/mp4";
-    this.playerOptions.sources[0].src = uri.toString();
+    this.playerOptions.sources[0].src = this.source;
   },
 };
 </script>

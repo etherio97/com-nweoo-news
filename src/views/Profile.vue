@@ -230,7 +230,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchProviderData();
+   setTimeout(()=> this.fetchProviderData(), 3000);
   },
   computed: {
     currentUser() {

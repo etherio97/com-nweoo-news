@@ -10,7 +10,7 @@ Vue.config.productionTip = false;
 
 const data = {
   loaded: false,
-  user: null,
+  user: {},
   api: "https://api.nweoo.com",
   network_mode: localStorage.getItem("network_mode") || "api", // 'rtdb' or 'api'
 };

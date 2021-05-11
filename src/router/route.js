@@ -44,9 +44,20 @@ export default [
     path: "/terms-of-services",
     component: () => import('../views/TermsOfServices.vue')
   }
-  , {
+  ,
+  {
     name: "PrivacyPolicy",
     path: "/privacy-policy",
     component: () => import('../views/PrivacyPolicy.vue')
-  }
+  },
+  {
+    name: "LogIn",
+    path: "/login",
+    component: () => import('../views/auth/Login.vue')
+  },
+  {
+    name: "MyAccount",
+    path: "/profile",
+    component: () => import('../views/Profile.vue')
+  },
 ];

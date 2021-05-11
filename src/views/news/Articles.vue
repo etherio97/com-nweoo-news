@@ -2,7 +2,7 @@
   <v-container class="mt-5">
     <v-row class="px-2" justify="space-between">
       <h2>သတင်းများ</h2>
-      <live-button :items="items" :loaded="!loading" />
+      <!-- <live-button :items="items" :loaded="!loading" /> -->
     </v-row>
 
     <v-row>
@@ -72,13 +72,13 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import ArticleCard from "@/components/ArticleCard.vue";
-import LiveButton from "@/components/LiveButton.vue";
+// import LiveButton from "@/components/LiveButton.vue";
 
 export default {
   name: "NewsArticles",
   components: {
     ArticleCard,
-    LiveButton,
+    // LiveButton,
   },
   data: () => ({
     loading: true,

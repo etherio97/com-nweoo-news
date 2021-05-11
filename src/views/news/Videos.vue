@@ -4,7 +4,7 @@
       <v-col cols="12">
         <v-row class="px-2" justify="space-between">
           <h2>ရုပ်သံသတင်းများ</h2>
-          <live-button :loaded="!loading" />
+          <!-- <live-button :loaded="!loading" /> -->
         </v-row>
       </v-col>
 
@@ -54,13 +54,13 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import VideoCard from "@/components/VideoCard.vue";
-import LiveButton from "@/components/LiveButton.vue";
+// import LiveButton from "@/components/LiveButton.vue";
 
 export default {
   name: "VideoNews",
   components: {
     VideoCard,
-    LiveButton,
+    // LiveButton,
   },
   data: () => ({
     loading: true,

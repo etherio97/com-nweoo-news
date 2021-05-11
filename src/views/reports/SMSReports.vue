@@ -4,11 +4,11 @@
       <v-card elevation="0" color="transparent">
         <v-card-title class="text-h5">
           ပေးပို့ချက်များ
-          <live-button
+          <!-- <live-button
             :items="items"
             :loaded="!loading"
             :timeout="timeout"
-          ></live-button>
+          ></live-button> -->
         </v-card-title>
 
         <v-card-text>
@@ -66,20 +66,17 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import ReportCard from "@/components/ReportCard.vue";
-import LiveButton from "@/components/LiveButton.vue";
-
-const MAX_TIMEOUT = 1500;
+// import LiveButton from "@/components/LiveButton.vue";
 
 export default {
   data: () => ({
     error: null,
     loading: true,
     updated_at: undefined,
-    timeout: MAX_TIMEOUT,
   }),
   components: {
     ReportCard,
-    LiveButton,
+    // LiveButton,
   },
   name: "Home",
   computed: mapState("reports", ["reports"]),

@@ -4,51 +4,29 @@
       <v-card-text>
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
-          icon
-          href="tel:+959758035929"
-        >
-          <v-icon size="24px">mdi-phone</v-icon>
-        </v-btn>
-
-        <v-btn
-          class="mx-4 secondary darken-1 white--text text-center"
-          icon
-          href="mailto:nweoo22222@yandex.com"
-          target="_blank"
-        >
-          <v-icon size="24px">mdi-email</v-icon>
-        </v-btn>
-
-        <v-btn
-          class="mx-4 secondary darken-1 white--text text-center"
-          icon
           href="https://fb.me/nweoo22222"
           target="_blank"
+          icon
         >
           <v-icon size="24px">mdi-facebook</v-icon>
         </v-btn>
-
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
+          href="mailto:nweoo22222@yandex.com"
           icon
-          href="https://m.me/nweoo22222"
-          target="_blank"
         >
-          <v-icon size="24px">mdi-facebook-messenger</v-icon>
+          <v-icon size="24px">mdi-email</v-icon>
         </v-btn>
-
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
-          icon
           href="https://t.me/nweoonews"
           target="_blank"
+          icon
         >
           <v-icon size="24px">mdi-telegram</v-icon>
         </v-btn>
       </v-card-text>
-
       <v-divider></v-divider>
-
       <v-card-text class="body-2 white--text">
         &copy; {{ new Date().getFullYear() }} — NweOo.
         <div class="text-center">

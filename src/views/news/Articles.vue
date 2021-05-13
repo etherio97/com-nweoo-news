@@ -24,6 +24,12 @@
       </v-expand-transition>
 
       <template v-if="!items.length">
+        <v-col cols="12">
+          <v-skeleton-loader
+            max-width="100%"
+            type="image, card-heading, divider, list-item-three-line"
+          />
+        </v-col>
         <v-col v-for="n of [1, 2, 3]" :key="n" cols="12" md="6">
           <v-skeleton-loader
             max-width="100%"

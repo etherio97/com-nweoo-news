@@ -30,6 +30,11 @@ export default [
     component: () => import("../views/news/Videos.vue")
   },
   {
+    name: "News & Article",
+    path: "/news/:id",
+    component: () => import("../views/news/Article.vue")
+  },
+  {
     name: "Services",
     path: "/services",
     component: () => import("../views/Services.vue")

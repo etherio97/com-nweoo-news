@@ -1,5 +1,5 @@
 <template>
-  <v-card class="articleCard">
+  <v-card class="articleCard" :to="`/news/${id}`">
     <v-img
       v-if="image"
       aspect-ratio="1.7778"
@@ -17,24 +17,15 @@
       <a :href="sourceUrl" target="_blank">{{ source }}</a>
     </v-card-subtitle>
 
-    <v-card-text @click="readmore = !readmore">
-      <span v-html="readmore ? html : wrap"></span>
-      <a v-show="textWrap && !readmore" href="javascript:void(0)">
-        ပိုမိုဖတ်ရန်
-      </a>
+    <v-card-text>
+      <span>{{ description }}</span>
+      <!-- <a v-show="textWrap && !readmore" href="javascript:void(0)">ပိုဖတ်ရန်</a> -->
     </v-card-text>
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn
-        color="primary"
-        class="font-weight-bold"
-        rel="noreferrer noopener"
-        :href="link"
-        target="_blank"
-        text
-      >
-        မူရင်းသတင်းသို့
+      <v-btn color="primary" class="font-weight-bold" :to="`/news/${id}`" text>
+        အပြည့်အစုံ
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -52,6 +43,7 @@ const newsMedia = {
 export default {
   name: "ArticleCard",
   props: {
+    id: { required: true, type: String },
     title: { required: true, type: String },
     image: { type: String },
     content: { required: true, type: String },
@@ -73,6 +65,9 @@ export default {
     html() {
       let content = this.content.replace(/\n\n?/gim, "<br>");
       return parseUrl(content);
+    },
+    description() {
+      return this.content.split("\n").filter((n) => !!n)[0];
     },
     textWrap() {
       return this.content.length > 255;

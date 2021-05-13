@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-5">
+  <v-container class="mt-5 mx-auto" max-width="800px">
     <v-row class="px-2" justify="space-between">
       <h2>သတင်းများ</h2>
       <!-- <live-button :items="items" :loaded="!loading" /> -->

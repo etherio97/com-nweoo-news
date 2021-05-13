@@ -35,7 +35,8 @@
         {{ title }}
       </v-card-title>
       <v-card-subtitle>
-        <a href="sourceURL" rel="no referral" target="_blank">{{ source }}</a> -
+        <a :href="sourceURL" rel="no referral" target="_blank">{{ source }}</a>
+        -
         {{ datetime }}
       </v-card-subtitle>
       <v-card-text v-html="description"></v-card-text>
@@ -106,6 +107,10 @@ export default {
         this.photo_id = data.photo_id;
         this.video_id = data.video_id;
         this.timestamp = data.timestamp;
+        let title = window.document.querySelector("title");
+        if (title) {
+          title.textContent = `${data.title} - ${data.source} | ${title.textContent}`;
+        }
       })
       .catch((e) => {
         if (e.status == 404) {

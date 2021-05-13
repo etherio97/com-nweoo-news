@@ -1,5 +1,5 @@
 <template>
-  <v-card class="articleCard" :to="`/news/${id}`">
+  <v-card class="articleCard" :to="`/articles/${id}`">
     <v-img
       v-if="image"
       aspect-ratio="1.7778"
@@ -24,7 +24,7 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" class="font-weight-bold" :to="`/news/${id}`" text>
+      <v-btn color="primary" class="font-weight-bold" :to="`/articles/${id}`" text>
         အပြည့်အစုံ
       </v-btn>
     </v-card-actions>

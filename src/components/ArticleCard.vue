@@ -46,6 +46,7 @@ import { parseUrl } from "@/functions/formatter";
 const newsMedia = {
   RFA: "https://www.rfa.org/burmese",
   DVB: "https://burmese.dvb.no",
+  VOA: "https://burmese.voanews.com",
 };
 
 export default {

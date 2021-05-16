@@ -47,7 +47,7 @@ export default [
   {
     name: "TermsAndConditions",
     path: "/terms-of-services",
-    component: () => import('../views/TermsOfServices.vue')
+    component: () => import('../views/TermsOfService.vue')
   }
   ,
   {

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-5 mx-auto" max-width="800px">
+  <v-container class="mt-5 mx-auto container">
     <v-row class="px-2" justify="space-between">
       <h2>သတင်းများ</h2>
       <!-- <live-button :items="items" :loaded="!loading" /> -->
@@ -78,13 +78,11 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import ArticleCard from "@/components/ArticleCard.vue";
-// import LiveButton from "@/components/LiveButton.vue";
 
 export default {
   name: "NewsArticles",
   components: {
     ArticleCard,
-    // LiveButton,
   },
   data: () => ({
     loading: true,
@@ -115,3 +113,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.container {
+  max-width: 1000px;
+}
+</style>

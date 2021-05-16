@@ -30,7 +30,7 @@
       <v-card-text class="body-2 white--text">
         &copy; {{ new Date().getFullYear() }} — NweOo.
         <div class="text-center">
-          <router-link to="/terms-of-services">Terms of Services</router-link>
+          <router-link to="/terms-of-services">Terms of Service</router-link>
           |
           <router-link to="/privacy-policy">Privacy Policy</router-link>
         </div>

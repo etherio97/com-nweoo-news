@@ -1,11 +1,11 @@
 <template>
-  <v-container class="mt-5">
+  <v-container class="mt-5 container">
     <v-expand-transition>
       <v-alert v-if="error" type="error">
         {{ error }}
       </v-alert>
     </v-expand-transition>
-    <v-card v-if="loaded && !error" max-width="800px" class="mx-auto">
+    <v-card v-if="loaded && !error" class="mx-auto">
       <v-img
         :src="image"
         aspect-ratio="1.7778"
@@ -32,22 +32,24 @@
         </template>
       </v-img>
       <v-card-title>
-        {{ title }}
+        <h1 class="h6">
+          {{ title }}
+        </h1>
       </v-card-title>
       <v-card-subtitle>
-        <a :href="sourceURL" rel="no referral" target="_blank">{{ source }}</a>
-        -
-        {{ datetime }}
+        <a id="source" :href="sourceURL" rel="no referral" target="_blank">
+          {{ source }}
+        </a>
+        <span id="datetime">
+          {{ datetime }}
+        </span>
       </v-card-subtitle>
       <v-card-text v-html="description"></v-card-text>
       <v-card-actions>
-        <v-spacer />
         <v-btn
-          class="font-weight-bold"
+          class="font-weight-medium"
           color="blue darken-2"
-          :href="`https://www.facebook.com/nweoo22222/posts/${post_id
-            .split('_')
-            .pop()}`"
+          :href="`https://www.facebook.com/${post_id}`"
           rel="noreferrer noopener"
           target="_blank"
           text
@@ -57,21 +59,42 @@
           </v-icon>
           တွင်ကြည့်ရန်
         </v-btn>
+        <v-spacer />
         <v-btn
           color="primary"
-          class="font-weight-bold"
           rel="noreferrer noopener"
-          :to="link"
+          :href="`${link.replace('http:', 'https:')}`"
           target="_blank"
-          v-text="'မူရင်းသတင်းသို့'"
           text
-        />
+        >
+          <v-icon small dark color="primary" class="mr-1">
+            mdi-open-in-new
+          </v-icon>
+          မူရင်းသတင်းသို့
+        </v-btn>
       </v-card-actions>
     </v-card>
+
+    <v-divider class="my-10"></v-divider>
+    <v-row>
+      <v-col cols="12">
+        <h2 class="h6">နောက်ဆုံးရသတင်းများ</h2>
+      </v-col>
+      <v-col cols="4" v-for="(item, i) in latest" :key="i">
+        <v-card @click="$router.push(`/articles/${item.id}`)">
+          <v-img :src="item.image"></v-img>
+          <v-card-subtitle>
+            {{ item.title }}
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 const newsMedia = {
   RFA: "https://www.rfa.org/burmese",
   DVB: "https://burmese.dvb.no",
@@ -93,6 +116,7 @@ export default {
     timestamp: undefined,
     loaded: false,
   }),
+  methods: mapActions("articles", ["FETCH_ARTICLES"]),
   mounted() {
     let { id } = this.$route.params;
     this.axios
@@ -120,8 +144,18 @@ export default {
         }
       })
       .finally(() => (this.loaded = true));
+
+    if (!this.items) {
+      this.FETCH_ARTICLES(this.$root);
+    }
   },
   computed: {
+    ...mapState("articles", ["items"]),
+    latest() {
+      return this.items
+        .filter((item) => item["id"] !== this.$route.params.id)
+        .slice(0, 3);
+    },
     datetime() {
       return new Date(this.timestamp).toLocaleString("my-MM", {
         timeZone: "Asia/Yangon",
@@ -143,4 +177,20 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/components/articleCard.scss";
+
+h1 {
+  font-size: 1.5rem;
+}
+
+.v-card__subtitle {
+  padding-top: 10px;
+}
+
+#datetime::before {
+  content: " | ";
+}
+
+.container {
+  max-width: 800px;
+}
 </style>

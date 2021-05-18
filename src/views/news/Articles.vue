@@ -23,7 +23,7 @@
         </v-col>
       </v-expand-transition>
 
-      <template v-if="!items.length">
+      <template v-if="!loaded">
         <v-col cols="12">
           <v-skeleton-loader
             max-width="100%"
@@ -53,12 +53,7 @@
           ></article-card>
         </v-col>
 
-        <v-col
-          v-for="article of latestArticles"
-          :key="article.id"
-          cols="12"
-          md="6"
-        >
+        <v-col v-for="(article, i) of latestArticles" :key="i" cols="12" md="6">
           <article-card
             :id="article.id"
             :title="article.title"
@@ -69,6 +64,16 @@
             :post_id="article.post_id"
             :source="article.source"
           />
+        </v-col>
+
+        <v-col cols="12" class="text-center">
+          <v-btn
+            color="primary"
+            :loading="loading"
+            @click="fetchMoreArticles()"
+          >
+            နောက်ထပ်
+          </v-btn>
         </v-col>
       </template>
     </v-row>
@@ -86,10 +91,26 @@ export default {
   },
   data: () => ({
     loading: true,
+    loaded: false,
     error: null,
   }),
   methods: {
     ...mapActions("articles", ["FETCH_ARTICLES"]),
+    fetchMoreArticles() {
+      let item = this.items.sort((a, b) => a.timestamp - b.timestamp)[0];
+      let last_timestamp = item.timestamp;
+      this.loading = true;
+      this.axios
+        .get(
+          `https://rtdb.nweoo.com/v1/articles.json?orderBy="timestamp"&limitToLast=10&endAt=${last_timestamp}`
+        )
+        .then(({ data }) => {
+          this.items.push(...Object.values(data).reverse());
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
   },
   computed: {
     ...mapState("articles", ["items"]),
@@ -109,6 +130,7 @@ export default {
       })
       .finally(() => {
         this.loading = !Boolean(this.items.length);
+        this.loaded = !this.loading;
       });
   },
 };

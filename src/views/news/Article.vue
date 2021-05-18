@@ -3,9 +3,12 @@
     <v-expand-transition>
       <v-alert v-if="error" type="error">
         {{ error }}
+        <v-btn @click="$router.reload()" color="secondary" dark>
+          ပြန်လည်ကြိုးစားပါ
+        </v-btn>
       </v-alert>
     </v-expand-transition>
-    <v-card v-if="loaded && !error" class="mx-auto">
+    <v-card v-if="loaded" class="mx-auto">
       <v-img
         :src="image"
         aspect-ratio="1.7778"
@@ -44,7 +47,21 @@
           {{ datetime }}
         </span>
       </v-card-subtitle>
-      <v-card-text v-html="description"></v-card-text>
+      <v-card-text>
+        <article v-html="description"></article>
+        <div class="text-center mt-15">
+          <iframe
+            :src="`https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fnweoo22222%2Fvideos%2F${video_id}%2F&show_text=false&width=560`"
+            width="560"
+            height="314"
+            style="border: none; overflow: hidden"
+            scrolling="no"
+            frameborder="0"
+            allowfullscreen="true"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          ></iframe>
+        </div>
+      </v-card-text>
       <v-card-actions>
         <v-btn
           class="font-weight-medium"
@@ -74,18 +91,22 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-
+    <v-skeleton-loader
+      v-else
+      max-width="100%"
+      type="image, card-heading, divider, list-item-three-line"
+    />
     <v-divider class="my-10"></v-divider>
     <v-row>
       <v-col cols="12">
         <h2 class="h6">နောက်ဆုံးရသတင်းများ</h2>
       </v-col>
-      <v-col cols="4" v-for="(item, i) in latest" :key="i">
+      <v-col cols="12" sm="6" md="4" v-for="(item, i) in latest" :key="i">
         <v-card @click="$router.push(`/articles/${item.id}`)">
           <v-img :src="item.image"></v-img>
-          <v-card-subtitle>
+          <v-card-text class="text--primary font-weight-bold">
             {{ item.title }}
-          </v-card-subtitle>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -95,18 +116,13 @@
 <script>
 import { mapState, mapActions } from "vuex";
 
-const newsMedia = {
-  RFA: "https://www.rfa.org/burmese",
-  DVB: "https://burmese.dvb.no",
-  VOA: "https://burmese.voanews.com",
-};
-
 export default {
   name: "Article",
   data: () => ({
     error: null,
     title: undefined,
     source: undefined,
+    sourceURL: undefined,
     link: undefined,
     content: undefined,
     image: undefined,
@@ -126,6 +142,7 @@ export default {
         this.source = data.source;
         this.image = data.image;
         this.link = data.link;
+        this.sourceURL = new URL(data.link).host;
         this.content = data.content;
         this.post_id = data.post_id;
         this.photo_id = data.photo_id;
@@ -145,7 +162,7 @@ export default {
       })
       .finally(() => (this.loaded = true));
 
-    if (!this.items) {
+    if (!this.items?.length) {
       this.FETCH_ARTICLES(this.$root);
     }
   },
@@ -162,14 +179,13 @@ export default {
       });
     },
     description() {
-      return this.content
+      let content = this.content
         .split("\n")
         .filter((n) => !!n)
         .map((n) => "<p>" + n + "</p>")
         .join("\n");
-    },
-    sourceUrl() {
-      return newsMedia[this.source] || "#";
+
+      return content;
     },
   },
 };

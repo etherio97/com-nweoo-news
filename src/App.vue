@@ -27,7 +27,7 @@
       hide-overlay
     >
       <template v-slot:prepend v-if="loggedIn">
-        <v-list-item two-line>
+        <v-list-item two-line to="/profile">
           <v-list-item-avatar>
             <v-img v-if="user.photoURL" :src="user.photoURL" />
             <v-icon v-else large>mdi-account</v-icon>

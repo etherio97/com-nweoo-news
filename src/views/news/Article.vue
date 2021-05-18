@@ -3,7 +3,7 @@
     <v-expand-transition>
       <v-alert v-if="error" type="error">
         {{ error }}
-        <v-btn @click="$router.reload()" color="secondary" dark>
+        <v-btn @click="$router.go()" color="secondary" dark>
           ပြန်လည်ကြိုးစားပါ
         </v-btn>
       </v-alert>

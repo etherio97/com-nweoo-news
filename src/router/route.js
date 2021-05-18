@@ -63,6 +63,6 @@ export default [
   {
     name: "MyAccount",
     path: "/profile",
-    component: () => import('../views/Profile.vue')
+    component: () => import('../views/auth/Profile.vue')
   },
 ];

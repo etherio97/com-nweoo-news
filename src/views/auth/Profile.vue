@@ -1,106 +1,106 @@
 <template>
   <v-container class="mt-4">
     <h2 class="h2 mb-4">သင့်အကောင့်</h2>
-
-    <v-expand-transition>
-      <v-alert type="error" v-show="error">
-        {{ error }}
-      </v-alert>
-    </v-expand-transition>
-
-    <v-row>
-      <!-- facebook pages -->
-      <v-col cols="12">
-        <h4 class="h2">သင့်ဖေ့ဘွတ်စာမျက်နှာများ</h4>
-        <v-list>
-          <v-list-item v-for="page in facebook_pages" :key="page.id">
-            <v-list-item-content>
-              <v-list-item-title>
-                <v-row class="pa-3">
-                  <h4 class="h2">
-                    {{ page.name }}
-                  </h4>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue lighten-1"
-                    text
-                    @click="clipboardCopied(page.access_token)"
-                  >
-                    <v-icon>mdi-clipboard-outline</v-icon>
-                  </v-btn>
-                </v-row>
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                {{ page.category }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+    <v-row justify="space-between" align="start">
+      <v-col sm="5" cols="12" class="text-center">
+        <v-avatar
+          class="profile"
+          color="grey"
+          size="200"
+          @click="readonly || askPhotoURL()"
+        >
+          <v-img :src="avatar"></v-img>
+        </v-avatar>
+      </v-col>
+      <v-col sm="7" cols="12">
+        <v-text-field
+          v-model="name"
+          label="သင့်နာမည်"
+          :readonly="readonly"
+          outlined
+          ref="displayName"
+          value=" "
+        />
+        <v-text-field
+          v-model="email"
+          label="သင့်အီးမေးလ်"
+          value=" "
+          :readonly="readonly"
+          outlined
+        />
+        <v-row class="pr-4">
+          <v-spacer></v-spacer>
+          <v-btn
+            :loading="loading"
+            :color="readonly ? 'secondary lighten-2' : 'primary'"
+            depressed
+            @click="readonly = !readonly"
+          >
+            <v-icon
+              class="pr-2"
+              small
+              v-text="readonly ? 'mdi-pencil' : 'mdi-content-save'"
+            ></v-icon>
+            <span v-text="readonly ? 'ပြင်ရန်' : 'သိမ်းရန်'"></span>
+          </v-btn>
+        </v-row>
       </v-col>
 
-      <!-- link with Google -->
-      <v-col cols="6" sm="12">
+      <v-col cols="12" sm="6">
         <v-btn
-          v-if="linkedWithGoogle"
-          class="font-weight-bold"
-          color="red darken-2 my-2"
-          block
-          text
-          @click="unlinkWithGoogle()"
-        >
-          <v-icon class="mr-2">mdi-google</v-icon>
-          ချိတ်ဆက်မှုရပ်တန့်ရန်
-        </v-btn>
-        <v-btn
-          v-else
-          class="font-weight-bold my-2"
-          color="red darken-2"
-          dark
-          block
+          v-if="!linkedWithGoogle"
           @click="linkWithGoogle"
-        >
-          <v-icon class="mr-2">mdi-google</v-icon>
-          ချိတ်ဆက်ရန်
-        </v-btn>
-      </v-col>
-
-      <!-- link with Facebook -->
-      <v-col cols="6" sm="12">
-        <v-btn
-          v-show="linkedWithFacebook"
-          class="font-weight-bold my-2"
-          color="blue darken-2"
-          block
+          class="mt-3 mb-3 font-weight-bold"
+          color="red"
           dark
-          @click="reauthenticateWithFacebook"
-        >
-          <v-icon class="mr-2">mdi-facebook</v-icon>
-          ပြန်လည်ချိတ်ဆက်ရန်
-        </v-btn>
-        <v-btn
-          v-if="linkedWithFacebook"
-          class="font-weight-bold my-2"
-          color="blue darken-2"
           block
-          text
-          @click="unlinkWithFacebook"
         >
-          <v-icon class="mr-2">mdi-facebook</v-icon>
-          ချိတ်ဆက်မှုရပ်တန့်ရန်
+          <v-icon class="pr-2" small>mdi-google</v-icon> ဖြင့်ချိတ်ဆက်ရန်
         </v-btn>
         <v-btn
           v-else
-          class="font-weight-bold"
+          @click="unlinkWithFacebook"
+          class="mt-3 mb-3 font-weight-bold"
+          color="red"
+          dark
+          text
+        >
+          <v-icon small class="pr-2">mdi-google</v-icon>
+          ဖြင့်ချိတ်ဆက်မှုဖြုတ်ရန်​
+        </v-btn>
+      </v-col>
+      <v-col cols="12" sm="6">
+        <v-btn
+          v-if="!linkedWithFacebook"
+          @click="linkWithFacebook"
+          class="mt-3 mb-3 font-weight-bold"
           color="blue darken-2"
           dark
           block
-          @click="linkWithFacebook"
         >
-          <v-icon class="mr-2">mdi-facebook</v-icon>
-          ချိတ်ဆက်ရန်
+          <v-icon small class="pr-2">mdi-facebook</v-icon> ဖြင့်ချိတ်ဆက်ရန်
         </v-btn>
+        <v-btn
+          v-else
+          @click="unlinkWithFacebook"
+          class="mt-3 mb-3 font-weight-bold"
+          color="blue darken-2"
+          dark
+          text
+        >
+          <v-icon small class="pr-2">mdi-facebook</v-icon>
+          ဖြင့်ချိတ်ဆက်မှုဖြုတ်ရန်​
+        </v-btn>
+      </v-col>
+      <v-col cols="12">
+        <div style="height: 60px"></div>
+        <!-- <delete-profile-modal /> -->
       </v-col>
     </v-row>
+
+    <v-overlay :value="!loaded" opacity="1" color="white darken-1">
+      <v-progress-circular indeterminate size="168" color="primary" />
+    </v-overlay>
   </v-container>
 </template>
 
@@ -117,13 +117,23 @@ export default {
   name: "Profile",
   data: () => ({
     error: undefined,
+    readonly: true,
+    loaded: false,
+    loading: false,
     linkedWithGoogle: false,
     linkedWithFacebook: false,
     linkedWithEmailAndPassword: false,
     access_token: undefined,
     facebook_pages: [],
+    avatar: undefined,
+    name: undefined,
+    email: undefined,
   }),
   methods: {
+    askPhotoURL() {
+      this.avatar = prompt("Enter your profile image URL", this.avatar || "");
+      this.avatar && this.currentUser.updateProfile({ photoURL: this.avatar });
+    },
     clipboardCopied(access_token) {
       if (access_token) {
         let input = window.document.createElement("input");
@@ -213,6 +223,7 @@ export default {
         return;
       }
       this.error = undefined;
+      this.loaded = true;
       this.currentUser.providerData.forEach((provider) => {
         let authProvider = AUTH_PROVIDERS[provider.providerId];
         switch (authProvider) {
@@ -230,11 +241,30 @@ export default {
     },
   },
   mounted() {
-   setTimeout(()=> this.fetchProviderData(), 3000);
+    setTimeout(() => {
+      this.avatar = this.currentUser.photoURL;
+      this.name = this.currentUser.displayName;
+      this.email = this.currentUser.email;
+      this.fetchProviderData();
+    }, 3000);
   },
   computed: {
     currentUser() {
       return firebase.auth().currentUser;
+    },
+  },
+  watch: {
+    readonly(value) {
+      if (!value) return;
+      let user = this.currentUser;
+      if (this.name !== user.displayName) {
+        user.updateProfile({ displayName: this.name });
+      }
+      if (this.email !== user.email) {
+        user.updateEmail(this.email).then(() => {
+          user.sendEmailVerification();
+        });
+      }
     },
   },
 };

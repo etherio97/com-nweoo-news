@@ -49,7 +49,7 @@
       </v-card-subtitle>
       <v-card-text>
         <article v-html="description"></article>
-        <div class="text-center mt-15">
+        <div v-if="video_id" class="text-center mt-15">
           <iframe
             :src="`https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fnweoo22222%2Fvideos%2F${video_id}%2F&show_text=false&width=560`"
             width="560"

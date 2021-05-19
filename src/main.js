@@ -12,11 +12,10 @@ const data = {
   loaded: false,
   user: {},
   api: "https://api.nweoo.com",
-  network_mode: localStorage.getItem("network_mode") || "api", // 'rtdb' or 'api'
 };
 
 if (process.env.NODE_ENV !== 'production') {
-  data.api = "http://localhost:3000";
+  // data.api = "http://localhost:3000";
 }
 
 new Vue({

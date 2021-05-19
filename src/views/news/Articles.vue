@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-5 mx-auto container">
+  <v-container class="mt-5 mx-auto">
     <v-row class="px-2" justify="space-between">
       <h2>သတင်းများ</h2>
       <!-- <live-button :items="items" :loaded="!loading" /> -->
@@ -70,9 +70,11 @@
           <v-btn
             color="primary"
             :loading="loading"
+            :text="loading"
             @click="fetchMoreArticles()"
+            rounded
           >
-            နောက်ထပ်
+            နောက်ထပ်...
           </v-btn>
         </v-col>
       </template>
@@ -95,21 +97,12 @@ export default {
     error: null,
   }),
   methods: {
-    ...mapActions("articles", ["FETCH_ARTICLES"]),
+    ...mapActions("articles", ["FETCH_ARTICLES", "MORE_ARTICLES"]),
     fetchMoreArticles() {
-      let item = this.items.sort((a, b) => a.timestamp - b.timestamp)[0];
-      let last_timestamp = item.timestamp;
       this.loading = true;
-      this.axios
-        .get(
-          `https://rtdb.nweoo.com/v1/articles.json?orderBy="timestamp"&limitToLast=10&endAt=${last_timestamp}`
-        )
-        .then(({ data }) => {
-          this.items.push(...Object.values(data).reverse());
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      this.MORE_ARTICLES(this.$root).finally(() => {
+        this.loading = false;
+      });
     },
   },
   computed: {
@@ -135,9 +128,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.container {
-  max-width: 1000px;
-}
-</style>

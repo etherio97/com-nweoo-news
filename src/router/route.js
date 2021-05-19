@@ -20,6 +20,11 @@ export default [
     component: () => import("../views/reports/Report.vue")
   },
   {
+    name: "CitizenReport",
+    path: "/reports/:id",
+    component: () => import("../views/reports/Report.vue")
+  },
+  {
     name: "News",
     path: "/news",
     component: () => import("../views/news/Articles.vue")

@@ -18,34 +18,34 @@ export default {
   },
 
   actions: {
-    FETCH_ARTICLES({ commit }, payload) {
+    FETCH_ARTICLES({ state, commit }, payload) {
+      if (state.items.length) {
+        return;
+      }
       return axios
         .get(`${payload.api}/news/articles?limit=11`)
         .then(({ data }) =>
-          Object.values(data).reverse().forEach(article =>
-            commit("PUSH_ARTICLE", article)
-          )
+          data.forEach(article => commit("PUSH_ARTICLE", article))
         );
     },
 
     MORE_ARTICLES({ state, commit }, payload) {
       let latest = state.items[state.items.length - 1];
       return axios
-        .get(`${payload.api}/news/articles?limit=10&endAt=${latest.timestamp}`)
+        .get(`${payload.api}/news/articles?limit=10&paging=${latest.article_id}`)
         .then(({ data }) =>
-          Object.values(data).reverse().forEach(article =>
-            commit("PUSH_ARTICLE", article)
-          )
+          data.forEach(article => commit("PUSH_ARTICLE", article))
         );
     },
 
-    FETCH_HEADLINES({ commit }, payload) {
+    FETCH_HEADLINES({ state, commit }, payload) {
+      if (state.items.length) {
+        return;
+      }
       return axios
         .get(`${payload.api}/news/headlines?limit=10`)
-        .then(({ data }) =>
-          Object.values(data).reverse().forEach(headline =>
-            commit("PUSH_HEADLINE", headline)
-          )
+        .then(({ data }) => data.reverse()
+          .forEach(headline => commit("PUSH_HEADLINE", headline))
         );
     }
   }

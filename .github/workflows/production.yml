@@ -4,6 +4,7 @@ on:
     paths:
       - 'src/**'
       - 'public/**'
+      - 'firebase.json'
     branches:
       - master
 jobs:

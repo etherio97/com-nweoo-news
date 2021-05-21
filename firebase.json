@@ -33,7 +33,7 @@
         "source": "/r/:id",
         "destination": "https://api.nweoo.com/reports/:id",
         "type": 301
-      },
+      }
     ],
     "rewrites": [
       {

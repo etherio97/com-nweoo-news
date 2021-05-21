@@ -1,9 +1,10 @@
 <template>
   <v-container class="mt-5 mx-auto">
-    <v-row class="px-2" justify="space-between">
-      <h2>သတင်းများ</h2>
-      <!-- <live-button :items="items" :loaded="!loading" /> -->
-    </v-row>
+    <h2 class="title">သတင်းများ</h2>
+
+    <div class="mt-5 mb-3">
+      <search-input></search-input>
+    </div>
 
     <v-row>
       <v-expand-transition>
@@ -85,11 +86,13 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import ArticleCard from "@/components/ArticleCard.vue";
+import SearchInput from "@/components/SearchInput.vue";
 
 export default {
   name: "NewsArticles",
   components: {
     ArticleCard,
+    SearchInput,
   },
   data: () => ({
     loading: true,

@@ -44,7 +44,7 @@ export default {
       }
       return axios
         .get(`${payload.api}/news/headlines?limit=10`)
-        .then(({ data }) => data.reverse()
+        .then(({ data }) => Object.values(data || []).reverse()
           .forEach(headline => commit("PUSH_HEADLINE", headline))
         );
     }

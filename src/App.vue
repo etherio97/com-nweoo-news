@@ -17,7 +17,6 @@
       <headline-bar></headline-bar>
     </v-app-bar>
     <side-bar :items="menu" :can="can" v-else />
-
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -81,20 +80,17 @@ import AppFooter from "./components/AppFooter.vue";
 
 export default {
   name: "App",
-
   components: {
     SideBar,
     HeadlineBar,
     AppFooter,
     LogIn,
   },
-
   data: () => ({
     menu,
     loaded: false,
     drawer: false,
   }),
-
   methods: {
     can(visible) {
       if (!visible) return false;

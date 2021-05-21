@@ -26,12 +26,12 @@
       },
       {
         "source": "/a/:id",
-        "destination": "https://api.nweoo.com/articles/:id"
+        "destination": "https://api.nweoo.com/articles/:id",
         "type": 301
       },
       {
         "source": "/r/:id",
-        "destination": "https://api.nweoo.com/reports/:id"
+        "destination": "https://api.nweoo.com/reports/:id",
         "type": 301
       },
     ],

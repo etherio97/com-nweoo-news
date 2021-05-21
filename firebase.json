@@ -27,6 +27,10 @@
     ],
     "rewrites": [
       {
+        "source": "/a/:id",
+        "destination": "https://api.nweoo.com/articles/:id"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

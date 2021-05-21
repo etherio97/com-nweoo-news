@@ -45,7 +45,7 @@
           </v-btn>
         </v-row>
       </v-col>
-
+<!--
       <v-col cols="12" sm="6">
         <v-btn
           v-if="!linkedWithGoogle"
@@ -95,7 +95,7 @@
       <v-col cols="12">
         <div style="height: 60px"></div>
         <!-- <delete-profile-modal /> -->
-      </v-col>
+      </v-col> -->
     </v-row>
 
     <v-overlay :value="!loaded" opacity="1" color="white darken-1">

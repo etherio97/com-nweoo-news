@@ -171,7 +171,12 @@ export default {
             this.error = e.response?.data?.error || e.message;
           }
         })
-        .finally(() => (this.loaded = true));
+        .finally(() => {
+          document.querySelector("title").innerText = this.title
+            ? `${this.title} - ${this.source} | NweOo`
+            : "Article Not Found- NweOo";
+          this.loaded = true;
+        });
     }
     if (!this.items?.length) {
       this.FETCH_ARTICLES(this.$root);

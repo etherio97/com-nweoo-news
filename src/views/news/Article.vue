@@ -135,33 +135,44 @@ export default {
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
   mounted() {
     let { id } = this.$route.params;
-    this.axios
-      .get(`${this.$root.api}/news/articles/${id}`)
-      .then(({ data }) => {
-        this.title = data.title;
-        this.source = data.source;
-        this.image = data.image;
-        this.link = data.link;
-        this.sourceURL = new URL(data.link).host;
-        this.content = data.content;
-        this.post_id = data.post_id;
-        this.photo_id = data.photo_id;
-        this.video_id = data.video_id;
-        this.timestamp = data.timestamp;
-        let title = window.document.querySelector("title");
-        if (title) {
-          title.textContent = `${data.title} - ${data.source} | ${title.textContent}`;
-        }
-      })
-      .catch((e) => {
-        if (e.status == 404) {
-          this.error = "ရှာမတွေ့ပါ။";
-        } else {
-          this.error = e.response?.data?.error || e.message;
-        }
-      })
-      .finally(() => (this.loaded = true));
-
+    if ("article" in window) {
+      let data = window.article;
+      let url = new URL(data.link);
+      this.title = data.title;
+      this.source = data.source;
+      this.image = data.image;
+      this.link = data.link;
+      this.sourceURL = url.protocols + "//" + url.host;
+      this.content = data.content;
+      this.post_id = data.post_id;
+      this.photo_id = data.photo_id;
+      this.video_id = data.video_id;
+      this.timestamp = data.timestamp;
+    } else {
+      this.axios
+        .get(`${this.$root.api}/news/articles/${id}`)
+        .then(({ data }) => {
+          let url = new URL(data.link);
+          this.title = data.title;
+          this.source = data.source;
+          this.image = data.image;
+          this.link = data.link;
+          this.sourceURL = url.protocols + "//" + url.host;
+          this.content = data.content;
+          this.post_id = data.post_id;
+          this.photo_id = data.photo_id;
+          this.video_id = data.video_id;
+          this.timestamp = data.timestamp;
+        })
+        .catch((e) => {
+          if (e.status == 404) {
+            this.error = "ရှာမတွေ့ပါ။";
+          } else {
+            this.error = e.response?.data?.error || e.message;
+          }
+        })
+        .finally(() => (this.loaded = true));
+    }
     if (!this.items?.length) {
       this.FETCH_ARTICLES(this.$root);
     }

@@ -23,16 +23,6 @@
         "source": "/tm",
         "destination": "https://t.me/nweoonews",
         "type": 301
-      },
-      {
-        "source": "/a/:id",
-        "destination": "https://api.nweoo.com/articles/:id",
-        "type": 301
-      },
-      {
-        "source": "/r/:id",
-        "destination": "https://api.nweoo.com/reports/:id",
-        "type": 301
       }
     ],
     "rewrites": [

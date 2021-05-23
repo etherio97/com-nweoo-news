@@ -4,13 +4,13 @@ import _ from "lodash";
 import routes from "./route";
 import goTo from "vuetify/es5/services/goto";
 
-let appName;
+let appName = 'NweOo';
 
 const setTitle = title => {
   if (typeof document === "undefined") return;
   const el = document.querySelector("title");
-  appName = appName || el.textContent.trim();
-  el.textContent = `${_.startCase(title)} - ${appName}`;
+  // appName = appName || el.textContent.trim();
+  el.textContent = `${_.startCase(title)} | ${appName}`;
 };
 
 const scrollBehavior = (from, to, pos) => {

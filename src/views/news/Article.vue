@@ -114,7 +114,6 @@
 </template>
 
 <script>
-import { delete } from "node_modules/vue/types/umd";
 import { mapState, mapActions } from "vuex";
 
 export default {

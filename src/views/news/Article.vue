@@ -133,9 +133,12 @@ export default {
     loaded: false,
   }),
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
+  beforeRouteLeave() {
+    window.article = undefined;
+  },
   beforeMount() {
     let { id } = this.$route.params;
-    if (article in window) {
+    if ("article" in window) {
       let data = window.article;
       let url = new URL(data.link);
       this.title = data.title;
@@ -148,6 +151,7 @@ export default {
       this.video_id = data.video_id;
       this.timestamp = data.timestamp;
       this.sourceURL = url.protocols + "//" + url.host;
+      this.loaded = true;
       document.querySelector("title").innerText = this.title
         ? `${this.title} - ${this.source} | NweOo`
         : "Article Not Found- NweOo";
@@ -184,11 +188,6 @@ export default {
     if (!this.items?.length) {
       this.FETCH_ARTICLES(this.$root);
     }
-    window.article = undefined;
-    delete window.article;
-  },
-  beforeDestroy() {
-    window.article = undefined;
   },
   computed: {
     ...mapState("articles", ["items"]),

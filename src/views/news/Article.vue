@@ -133,12 +133,9 @@ export default {
     loaded: false,
   }),
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
-  beforeRouteLeave() {
-    window.article = undefined;
-  },
   beforeMount() {
     let { id } = this.$route.params;
-    if ("article" in window) {
+    if ("article" in window && window.article) {
       let data = window.article;
       let url = new URL(data.link);
       this.title = data.title;
@@ -152,6 +149,7 @@ export default {
       this.timestamp = data.timestamp;
       this.sourceURL = url.protocols + "//" + url.host;
       this.loaded = true;
+      window.article = undefined;
       document.querySelector("title").innerText = this.title
         ? `${this.title} - ${this.source} | NweOo`
         : "Article Not Found- NweOo";

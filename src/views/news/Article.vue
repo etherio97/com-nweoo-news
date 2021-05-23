@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import { delete } from "node_modules/vue/types/umd";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -181,6 +182,8 @@ export default {
     if (!this.items?.length) {
       this.FETCH_ARTICLES(this.$root);
     }
+    window.article = undefined;
+    delete window.article;
   },
   computed: {
     ...mapState("articles", ["items"]),

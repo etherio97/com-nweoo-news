@@ -133,21 +133,24 @@ export default {
     loaded: false,
   }),
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
-  mounted() {
+  beforeMount() {
     let { id } = this.$route.params;
-    if ("article" in window) {
+    if (article in window) {
       let data = window.article;
       let url = new URL(data.link);
       this.title = data.title;
       this.source = data.source;
       this.image = data.image;
       this.link = data.link;
-      this.sourceURL = url.protocols + "//" + url.host;
       this.content = data.content;
       this.post_id = data.post_id;
       this.photo_id = data.photo_id;
       this.video_id = data.video_id;
       this.timestamp = data.timestamp;
+      this.sourceURL = url.protocols + "//" + url.host;
+      document.querySelector("title").innerText = this.title
+        ? `${this.title} - ${this.source} | NweOo`
+        : "Article Not Found- NweOo";
     } else {
       this.axios
         .get(`${this.$root.api}/news/articles/${id}`)
@@ -168,13 +171,13 @@ export default {
           if (e.status == 404) {
             this.error = "ရှာမတွေ့ပါ။";
           } else {
+            document.querySelector("title").innerText = this.title
+              ? `${this.title} - ${this.source} | NweOo`
+              : "Article Not Found- NweOo";
             this.error = e.response?.data?.error || e.message;
           }
         })
         .finally(() => {
-          document.querySelector("title").innerText = this.title
-            ? `${this.title} - ${this.source} | NweOo`
-            : "Article Not Found- NweOo";
           this.loaded = true;
         });
     }
@@ -183,6 +186,9 @@ export default {
     }
     window.article = undefined;
     delete window.article;
+  },
+  beforeDestroy() {
+    window.article = undefined;
   },
   computed: {
     ...mapState("articles", ["items"]),

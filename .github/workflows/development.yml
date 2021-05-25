@@ -17,17 +17,20 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Add Remote
+      - name: Initializing
         run: |
-          echo '- deleting .git/'
           rm -rf .git
           git config --global init.defaultBranch master
-          git config --global user.name "NweOo Developer"
-          git config --global user.email "nweoo22222@yandex.com"
           git init
+          git config user.name "NweOo Developer"
+          git config user.email "nweoo22222@yandex.com"
+      - name: Committing
+        run: |
           git add .
           git commit -m 'auto push from Github Workflow (development)'
+      - name: Add Remote
+        run: |
           git remote add origin https://${{ secrets.GITHUB_USER }}:${{ secrets.GITHUB_PASSWORD }}@github.com/${{ secrets.GITHUB_USER }}/${{ secrets.GITHUB_REPOSITORY }}.git
-      - name: Push Git
+      - name: Pushing
         run: |
           git push origin master --force

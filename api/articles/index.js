@@ -57,11 +57,12 @@ module.exports = (req, res) => {
             inLanguage: 'my-MM',
           };
           let link = document.createElement('link');
+          let script = document.createElement('script');
           link.rel = 'amphtml';
           link.href = url + '/amp/' + data.id;
-          let script = document.createElement('script');
           script.type = 'application/ld+json';
           script.innerHTML = JSON.stringify(ld);
+          document.head.prepend(link);
           for (let i = 0; i < tags.length; i++) {
             let tag = tags[i];
             let name = tag.getAttribute('title');

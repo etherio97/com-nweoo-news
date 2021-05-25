@@ -50,7 +50,7 @@ module.exports = (req, res) => {
         contents,
         description: contents[0],
         content: contents.join('\n\n'),
-        ld,
+        ld, url,
       }).then((html) => res.send(html));
     })
     .catch((e) => {

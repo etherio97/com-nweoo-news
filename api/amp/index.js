@@ -51,10 +51,15 @@ module.exports = (req, res) => {
         description: contents[0],
         content: contents.join('\n\n'),
         ld, url,
-      }).then((html) => res.send(html));
+      }).then((html) => res.send(html))
+        .catch(e => {
+          console.error(e.response?.data || e.message);
+          res.status(500);
+          res.end();
+        });
     })
     .catch((e) => {
-      console.error(e, e.response?.data || e.message);
+      console.error(e.response?.data || e.message);
       res.status(404);
       res.end();
     });

@@ -14,7 +14,7 @@
 
     <v-card-subtitle>
       {{ new Date(timestamp).toLocaleString() }} -
-      <a :href="sourceUrl" target="_blank">{{ source }}</a>
+      <a :href="sourceUrl" rel="noreferrer" target="_blank">{{ source }}</a>
     </v-card-subtitle>
 
     <v-card-text>
@@ -24,7 +24,12 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" class="font-weight-bold" :to="`/articles/${id}`" text>
+      <v-btn
+        color="primary"
+        class="font-weight-bold"
+        :to="`/articles/${id}`"
+        text
+      >
         အပြည့်အစုံ
       </v-btn>
     </v-card-actions>

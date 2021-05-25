@@ -8,7 +8,7 @@
           alt="NweOo Logo"
           class="shrink mr-10"
           contain
-          src="@/assets/images/nweoo-logo.png"
+          src="/images/logo/nweoo-text.png"
           transition="scale-transition"
           width="40"
         />

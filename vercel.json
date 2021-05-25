@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/articles/:id", "destination": "/api/articles" },
+    {
+      "source": "/feed.xml",
+      "destination": "https://nweoo-developer.herokuapp.com/feed"
+    },
+    {
+      "source": "/search",
+      "destination": "https://nweoo-developer.herokuapp.com/search?q="
+    }
+  ]
+}

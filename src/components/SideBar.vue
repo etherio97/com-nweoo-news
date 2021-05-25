@@ -4,7 +4,7 @@
       <router-link to="/">
         <v-list-item class="sidebar__logo">
           <v-list-item-title class="sidebar__logo__img">
-            <v-img src="../assets/images/nweoo-logo.png" />
+            <v-img src="/images/logo/nweoo-text.png" />
           </v-list-item-title>
           <v-list-item-subtitle class="sidebar__logo__brand">
             နွေဦးတော်လှန်ရေး

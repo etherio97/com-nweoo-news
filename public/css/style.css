@@ -1,4 +1,5 @@
-/* @font-face {
+/*
+ @font-face {
   font-family: 'Noto Sans Myanmar';
   src: local('Noto Sans Myanmar'), url('./fonts/NotoSansMyanmar-Regular.woff') format('woff'), url('./fonts/NotoSansMyanmar-Regular.ttf') format('ttf');
 }
@@ -7,7 +8,7 @@
   font-family: 'Noto Sans Myanmar';
   src: local('Noto Sans Myanmar'), url('./fonts/NotoSansMyanmar-Bold.woff') format('woff'), url('./fonts/NotoSansMyanmar-Bold.ttf') format('ttf');
   font-weight: bold;
-} */
+}
 
 @font-face {
   font-family: 'Noto Sans Zawgyi';
@@ -15,7 +16,15 @@
 }
 
 @font-face {
-  font-family: 'Noto Sans Zawgyi';
-  src: local('Noto Sans Zawgyi'), url('./fonts/NotoSansZawgyi-Bold.woff') format('woff'), url('https://www.mmwebfonts.com/fonts/NotoSansZawgyi-Bold.ttf') format('ttf');
+  font-family: "Noto Sans Zawgyi";
+  src: local("Noto Sans Zawgyi"),
+    url("./fonts/NotoSansZawgyi-Bold.woff") format("woff"),
+    url("https://www.mmwebfonts.com/fonts/NotoSansZawgyi-Bold.ttf")
+      format("ttf");
   font-weight: bold;
+} */
+
+[lang="my-MM"],
+[lang="my-MM"] * {
+  font-family: "Padauk", "Pyidaungsu", sans-serif;
 }

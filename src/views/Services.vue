@@ -18,6 +18,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
     <v-row>
       <v-col cols="12">
         <h2>စာတိုဝန်ဆောင်မှု</h2>
@@ -25,12 +26,16 @@
       </v-col>
       <v-col cols="12" sm="6">
         <v-card elevation="12" @click="viewSMSReporter">
-          <v-img :src="SMSReporter" height="360px"></v-img>
+          <v-img
+            src="@/assets/images/sms-reporting-ads.jpg"
+            height="360px"
+            contain
+          ></v-img>
           <v-card-title>သတင်းများပေးပို့ခြင်း</v-card-title>
           <v-card-subtitle>
-            <a href="#" class="blue--text"> #NweOoSMSReporter </a>
+            <a href="javascript:void(0);">#NweOoSMSReporter</a>
           </v-card-subtitle>
-          <v-card-text ref="smsreporter">
+          <v-card-text>
             <p>
               SMS ပေးပို့ပြီး
               <a
@@ -58,12 +63,16 @@
       </v-col>
       <v-col cols="12" sm="6">
         <v-card elevation="12" @click="viewSMSBot">
-          <v-img :src="SMSBot" height="360px"></v-img>
+          <v-img
+            src="@/assets/images/smsbot-cover.jpg"
+            height="360px"
+            contain
+          ></v-img>
           <v-card-title>သတင်းများရယူခြင်း</v-card-title>
           <v-card-subtitle>
-            <a href="#" class="blue--text"> #NweOoSMSBot </a>
+            <a href="javascript:void(0);">#NweOoSMSBot</a>
           </v-card-subtitle>
-          <v-card-text ref="smsbot">
+          <v-card-text>
             <p>
               SMS ပို့ပြီးသတင်းတွေရယူလိုတယ်ဆိုရင်တော့
               <strong><code>news</code></strong> ဒါမှမဟုတ်
@@ -270,8 +279,8 @@
       <!-- updated at -->
       <v-col cols="12">
         <p>
-          နောက်ဆုံးပြောင်းသည့်နေ့
-          <code>{{ new Date("2021-05-03T04:41Z").toLocaleString() }}</code>
+          နောက်ဆုံးပြန်လည်ပြင်ဆင်ခဲ့သည့်ရက်စွဲ -
+          <code>{{ new Date("2021-05-25T02:18Z").toLocaleString() }}</code>
         </p>
       </v-col>
     </v-row>
@@ -279,29 +288,22 @@
 </template>
 
 <script>
-import SMSBot from "@/assets/images/smsbot-cover.jpg";
-import SMSReporter from "@/assets/images/sms-reporting-ads.jpg";
-
 export default {
   data: () => ({
-    SMSReporter,
-    SMSBot,
     selected: false,
     selectedTitle: "",
     selectedImage: "",
     selectedDescription: "",
   }),
   methods: {
-    viewSMSBot({ target }) {
+    viewSMSBot() {
       this.selectedTitle = "သတင်းများရယူခြင်း";
       this.selectedImage = SMSBot;
-      this.selectedDescription = this.$refs["smsbot"].innerHTML;
       this.selected = true;
     },
-    viewSMSReporter({ target }) {
+    viewSMSReporter() {
       this.selectedTitle = "သတင်းများပေးပို့ခြင်း";
       this.selectedImage = SMSReporter;
-      this.selectedDescription = this.$refs["smsreporter"].innerHTML;
       this.selected = true;
     },
   },

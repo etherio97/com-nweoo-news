@@ -4,6 +4,7 @@
       <v-card-text>
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
+          rel="noreferrer"
           href="https://fb.me/nweoo22222"
           target="_blank"
           icon
@@ -20,6 +21,7 @@
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
           href="https://t.me/nweoonews"
+          rel="noreferrer"
           target="_blank"
           icon
         >

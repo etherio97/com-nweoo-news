@@ -1,0 +1,30 @@
+name: CI [Development]
+on:
+  push:
+    paths:
+      - "src/**"
+      - "public/**"
+    branches:
+      - dev
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Add Remote
+        run: |
+        echo '- deleting .git/'
+        rm -rf .git
+        git init
+        git add .
+        git commit -m 'auto push from Github Workflow (development)'
+        git remote add origin https://${{ secrets.GITHUB_USER }}:${{ secrets.GITHUB_PASSWORD }}@github.com/${{ secrets.GITHUB_USER }}/${{ secrets.GITHUB_REPOSITORY }}.git
+      - name: Push Git
+        run: |
+          git push origin master --force
+

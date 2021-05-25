@@ -1,4 +1,17 @@
 {
+  "functions": {
+    "api/**.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/fb", "destination": "https://fb.me/nweoo22222" },
+    { "source": "/me", "destination": "https://m.me/nweoo22222" },
+    { "source": "/tm", "destination": "https://t.me/nweoonews" },
+    { "source": "/ig", "destination": "https://instagram.com/nweoonews" }
+  ],
   "rewrites": [
     { "source": "/articles/:id", "destination": "/api/articles" },
     {

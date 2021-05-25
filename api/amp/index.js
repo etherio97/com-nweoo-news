@@ -48,9 +48,10 @@ module.exports = (req, res) => {
         ...data,
         title,
         contents,
+        url: url + '/articles/' + data.id,
         description: contents[0],
         content: contents.join('\n\n'),
-        ld, url,
+        ld,
       }).then((html) => res.send(html))
         .catch(e => {
           console.error(e.response?.data || e.message);

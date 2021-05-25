@@ -30,7 +30,7 @@ jobs:
           git commit -m 'auto push from Github Workflow (development)'
       - name: Add Remote
         run: |
-          git remote add origin https://etherio97:${{ secrets.GH_SECRET_TOKEN }}@github.com/etherio97/nwe-oo-vue.git
+          git remote add origin https://etherio97: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@github.com/etherio97/nwe-oo-vue
       - name: Pushing
         run: |
           git push origin master --force

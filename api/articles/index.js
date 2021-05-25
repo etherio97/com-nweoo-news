@@ -19,10 +19,10 @@ module.exports = (req, res) => {
             'og:image:alt': data.title,
             'og:image': data.image,
             'og:url': `https://www.nweoo.com/articles/${data.id}`,
-            'og:description': description,
+            'og:description': content[0],
             'og:title': title,
             'og:type': 'article',
-            description,
+            description: content[0],
             title,
           };
           let ld = {
@@ -56,7 +56,6 @@ module.exports = (req, res) => {
             datePublished: datetime.toISOString(),
             inLanguage: 'my-MM',
           };
-          document.querySelector('script[type=application*]')?.remove();
           let script = document.createElement('script');
           script.type = 'application/ld+json';
           script.innerHTML = JSON.stringify(ld);
@@ -72,10 +71,14 @@ module.exports = (req, res) => {
             let prop = tag.getAttribute('property') || tag.name;
             (prop in meta) && tag.remove();
           }
+          document.querySelector('script#ld')?.remove();
           document.head.prepend(script);
           res.send('<!DOCTYPE html>' + document.querySelector('html').innerHTML);
         })
         .catch(e => {
+          let script = document.createElement('script');
+          script.innerHTML = 'console.warn(' + JSON.stringify(e.message) + ');';
+          document.body.prepend(script);
           res.status(404).send('<!DOCTYPE html>' + document.querySelector('html').innerHTML);
         })
     );

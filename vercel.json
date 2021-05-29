@@ -11,11 +11,11 @@
     { "source": "/tm", "destination": "https://t.me/nweoonews" }
   ],
   "rewrites": [
+    { "source": "/:match*", "destination": "/index.html" },
     { "source": "/articles/:id", "destination": "/api/articles" },
     {
       "source": "/feed.xml",
       "destination": "https://nweoo-developer.herokuapp.com/feed"
-    },
-    { "source": "/:match*", "destination": "/index.html" }
+    }
   ]
 }

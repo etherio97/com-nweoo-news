@@ -16,6 +16,6 @@
       "source": "/feed.xml",
       "destination": "https://nweoo-developer.herokuapp.com/feed"
     },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/:match*", "destination": "/index.html" }
   ]
 }

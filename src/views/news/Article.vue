@@ -1,10 +1,14 @@
 <template>
-  <v-container class="mt-5 container">
+  <article class="mt-5 container">
     <v-expand-transition>
       <v-alert v-if="error" type="error">
-        {{ error }}
+        သင်ရှာနေသောသတင်းဆောင်းပါးအား ရှာမတွေပါ။
+        <code>{{ error }}</code>
         <v-btn @click="$router.go()" color="secondary" dark>
-          ပြန်လည်ကြိုးစားပါ
+          ပြန်လည်ကြိုးစာကြည့်ပါ။
+        </v-btn>
+        <v-btn @click="$router.push('/articles')" color="primary" dark>
+          ရှေ့သို့ပြန်သွားရန်
         </v-btn>
       </v-alert>
     </v-expand-transition>
@@ -19,7 +23,7 @@
           <v-btn
             color="grey lighten-4"
             icon
-            @click="$router.push('/news')"
+            @click="$router.push('/articles')"
             x-large
           >
             <v-icon>mdi-chevron-left</v-icon>
@@ -35,33 +39,20 @@
         </template>
       </v-img>
       <v-card-title>
-        <h1 class="h6">
+        <h1 id="title" class="h6">
           {{ title }}
         </h1>
       </v-card-title>
       <v-card-subtitle>
-        <a id="source" :href="sourceURL" rel="no referral" target="_blank">
+        <a id="publusher" :href="sourceURL" rel="no referral" target="_blank">
           {{ source }}
         </a>
-        <span id="datetime">
-          {{ datetime }}
-        </span>
+        <time :datetime="datetimeISO">
+          {{ datetimeLocale }}
+        </time>
+        <v-divider class="my-2"></v-divider>
       </v-card-subtitle>
-      <v-card-text>
-        <article v-html="description"></article>
-        <div v-if="video_id" class="text-center mt-15">
-          <iframe
-            :src="`https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fnweoo22222%2Fvideos%2F${video_id}%2F&show_text=false&width=560`"
-            width="560"
-            height="314"
-            style="border: none; overflow: hidden"
-            scrolling="no"
-            frameborder="0"
-            allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          ></iframe>
-        </div>
-      </v-card-text>
+      <v-card-text class="content" v-html="description"></v-card-text>
       <v-card-actions>
         <v-btn
           class="font-weight-medium"
@@ -80,7 +71,7 @@
         <v-btn
           color="primary"
           rel="noreferrer noopener"
-          :href="`${link.replace('http:', 'https:')}`"
+          :href="`${link}`"
           target="_blank"
           text
         >
@@ -96,7 +87,7 @@
       max-width="100%"
       type="image, card-heading, divider, list-item-three-line"
     />
-    <v-divider class="my-10"></v-divider>
+    <v-divider class="my-4"></v-divider>
     <v-row>
       <v-col cols="12">
         <h2 class="h6">နောက်ဆုံးရသတင်းများ</h2>
@@ -110,7 +101,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </article>
 </template>
 
 <script>
@@ -135,7 +126,8 @@ export default {
   methods: mapActions("articles", ["FETCH_ARTICLES"]),
   beforeMount() {
     let { id } = this.$route.params;
-    if ("article" in window && window.article) {
+    let title = document.querySelector("title");
+    if ("article" in window) {
       let data = window.article;
       let url = new URL(data.link);
       this.title = data.title;
@@ -147,12 +139,11 @@ export default {
       this.photo_id = data.photo_id;
       this.video_id = data.video_id;
       this.timestamp = data.timestamp;
-      this.sourceURL = url.protocols + "//" + url.host;
+      this.sourceURL = url.protocol + "//" + url.host;
       this.loaded = true;
+      title.textContent = `${this.title} - ${this.source} | NweOo`;
       window.article = undefined;
-      document.querySelector("title").innerText = this.title
-        ? `${this.title} - ${this.source} | NweOo`
-        : "Article Not Found- NweOo";
+      delete window.article;
     } else {
       this.axios
         .get(`${this.$root.api}/news/articles/${id}`)
@@ -162,22 +153,16 @@ export default {
           this.source = data.source;
           this.image = data.image;
           this.link = data.link;
-          this.sourceURL = url.protocols + "//" + url.host;
+          this.sourceURL = url.protocol + "//" + url.host;
           this.content = data.content;
           this.post_id = data.post_id;
           this.photo_id = data.photo_id;
           this.video_id = data.video_id;
           this.timestamp = data.timestamp;
+          title.textContent = `${this.title} - ${this.source} | NweOo`;
         })
         .catch((e) => {
-          if (e.status == 404) {
-            this.error = "ရှာမတွေ့ပါ။";
-          } else {
-            document.querySelector("title").innerText = this.title
-              ? `${this.title} - ${this.source} | NweOo`
-              : "Article Not Found- NweOo";
-            this.error = e.response?.data?.error || e.message;
-          }
+          this.error = e.response?.data?.error || e.message;
         })
         .finally(() => {
           this.loaded = true;
@@ -194,7 +179,10 @@ export default {
         .filter((item) => item["id"] !== this.$route.params.id)
         .slice(0, 3);
     },
-    datetime() {
+    datetimeISO() {
+      return new Date(this.timestamp).toISOString();
+    },
+    datetimeLocale() {
       return new Date(this.timestamp).toLocaleString("my-MM", {
         timeZone: "Asia/Yangon",
       });
@@ -203,7 +191,7 @@ export default {
       let content = this.content
         .split("\n")
         .filter((n) => !!n)
-        .map((n) => "<p>" + n + "</p>")
+        .map((n) => '<p class="text-body-1">' + n + "</p>")
         .join("\n");
 
       return content;

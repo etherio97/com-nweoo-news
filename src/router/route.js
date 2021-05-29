@@ -25,8 +25,8 @@ export default [
     component: () => import("../views/reports/Report.vue")
   },
   {
-    name: "News",
-    path: "/news",
+    name: "NewsArticles",
+    path: "/articles",
     component: () => import("../views/news/Articles.vue")
   },
   {

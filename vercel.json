@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/*/*.js": {
+    "api/**/*.js": {
       "excludeFiles": "*.ejs"
     }
   },
@@ -8,19 +8,14 @@
   "redirects": [
     { "source": "/fb", "destination": "https://fb.me/nweoo22222" },
     { "source": "/me", "destination": "https://m.me/nweoo22222" },
-    { "source": "/tm", "destination": "https://t.me/nweoonews" },
-    { "source": "/ig", "destination": "https://instagram.com/nweoonews" }
+    { "source": "/tm", "destination": "https://t.me/nweoonews" }
   ],
   "rewrites": [
     { "source": "/articles/:id", "destination": "/api/articles" },
-    { "source": "/amp/:id", "destination": "/api/amp" },
     {
       "source": "/feed.xml",
       "destination": "https://nweoo-developer.herokuapp.com/feed"
     },
-    {
-      "source": "/search",
-      "destination": "https://nweoo-developer.herokuapp.com/search?q="
-    }
+    { "source": "/:match*", "destination": "/dist/index.html" }
   ]
 }

@@ -9,8 +9,10 @@ let appName = 'NweOo';
 const setTitle = title => {
   if (typeof document === "undefined") return;
   const el = document.querySelector("title");
-  // appName = appName || el.textContent.trim();
-  el.textContent = `${_.startCase(title)} | ${appName}`;
+  if (!('article' in window)) {
+    console.log('no var:article');
+    el.textContent = `${_.startCase(title)} | ${appName}`;
+  }
 };
 
 const scrollBehavior = (from, to, pos) => {

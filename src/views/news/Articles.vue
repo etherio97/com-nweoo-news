@@ -68,15 +68,17 @@
         </v-col>
 
         <v-col cols="12" class="text-center">
-          <v-btn
-            color="primary"
-            :loading="loading"
-            :text="loading"
-            @click="fetchMoreArticles()"
-            rounded
-          >
-            နောက်ထပ်...
-          </v-btn>
+          <v-lazy v-model="isActive" transition="fade-transition">
+            <v-btn
+              color="primary"
+              :loading="loading"
+              :text="loading"
+              @click="fetchMoreArticles"
+              rounded
+            >
+              နောက်ထပ်...
+            </v-btn>
+          </v-lazy>
         </v-col>
       </template>
     </v-row>
@@ -98,13 +100,21 @@ export default {
     loading: true,
     loaded: false,
     error: null,
+    isActive: false,
   }),
+  watch: {
+    isActive(val) {
+      this.loading = true;
+      setTimeout(() => this.fetchMoreArticles(), 800);
+    },
+  },
   methods: {
     ...mapActions("articles", ["FETCH_ARTICLES", "MORE_ARTICLES"]),
     fetchMoreArticles() {
       this.loading = true;
       this.MORE_ARTICLES(this.$root).finally(() => {
         this.loading = false;
+        this.isActive = false;
       });
     },
   },

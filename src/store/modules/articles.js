@@ -32,7 +32,7 @@ export default {
     MORE_ARTICLES({ state, commit }, payload) {
       let latest = state.items[state.items.length - 1];
       return axios
-        .get(`${payload.api}/news/articles?limit=10&paging=${latest.article_id}`)
+        .get(`${payload.api}/news/articles?limit=10&paging=${latest['$ref']}`)
         .then(({ data }) =>
           data.forEach(article => commit("PUSH_ARTICLE", article))
         );

@@ -49,20 +49,15 @@ module.exports = (req, res) => {
                 url: url + '/assets/images/logo/' + data.source.toLowerCase() + '.png'
               }
             },
-            articleBody: content.join('\n\n'),
-            creditText: 'Originally published from ' + data.source + ' at ' + data.link,
             dateCreated: datetime.toISOString(),
             dateModified: datetime.toISOString(),
             datePublished: datetime.toISOString(),
-            inLanguage: 'my-MM',
+            inLanguage: 'my',
           };
-          let link = document.createElement('link');
           let script = document.createElement('script');
-          link.rel = 'amphtml';
-          link.href = url + '/amp/' + data.id;
-          script.type = 'application/ld+json';
-          script.innerHTML = JSON.stringify(ld);
-          document.head.prepend(link);
+          script.innerHTML = 'window.article=' + JSON.stringify(data) + ';';
+          document.head.append(script);
+          document.querySelector('title').textContent = title + ' | NweOo';
           for (let i = 0; i < tags.length; i++) {
             let tag = tags[i];
             let name = tag.getAttribute('title');
@@ -81,11 +76,14 @@ module.exports = (req, res) => {
             el.setAttribute('content', entry[1]);
             document.head.prepend(el);
           }
-          let el = document.querySelector('script#ld')
+          let el = document.querySelector('script#ld');
           if (el) {
-            el.innerHTML = script.innerHTML;
+            el.innerHTML = JSON.stringify(ld);
           } else {
-            document.head.prepend(script);
+            let rrt = document.createElement('script');
+            rrt.type = 'application/ld+json';
+            rrt.innerHTML = JSON.stringify(ld);
+            document.head.prepend(rrt);
           }
           res.send('<!DOCTYPE html>' + document.querySelector('html').innerHTML);
         })

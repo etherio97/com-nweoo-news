@@ -15,7 +15,7 @@ const data = {
 };
 
 if (process.env.NODE_ENV !== 'production') {
-  // data.api = "http://localhost:3000";
+  data.api = "http://localhost:5500";
 }
 
 new Vue({

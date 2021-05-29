@@ -4,14 +4,12 @@
       "excludeFiles": "*.ejs"
     }
   },
-  "cleanUrls": true,
   "redirects": [
     { "source": "/fb", "destination": "https://fb.me/nweoo22222" },
     { "source": "/me", "destination": "https://m.me/nweoo22222" },
     { "source": "/tm", "destination": "https://t.me/nweoonews" }
   ],
   "rewrites": [
-    { "source": "/:match*", "destination": "/index.html" },
     { "source": "/articles/:id", "destination": "/api/articles" },
     {
       "source": "/feed.xml",

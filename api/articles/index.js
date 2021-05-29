@@ -16,6 +16,11 @@ module.exports = (req, res) => {
           let title = data.title + ' - ' + data.source;
           let tags = document.querySelectorAll('meta');
           let meta = {
+            'twitter:image': data.image,
+            'twitter:url': url + '/articles/' + data.id,
+            'twitter:description': content[0],
+            'twitter:title': title,
+            'twitter:card': 'summary_large_image',
             'og:image:alt': data.title,
             'og:image': data.image,
             'og:url': url + '/articles/' + data.id,
@@ -85,13 +90,13 @@ module.exports = (req, res) => {
             rrt.innerHTML = JSON.stringify(ld);
             document.head.prepend(rrt);
           }
-          res.send('<!DOCTYPE html>' + document.querySelector('html').innerHTML);
+          res.send('<!DOCTYPE html>' + document.querySelector('html').outerHTML);
         })
         .catch(e => {
           let script = document.createElement('script');
           script.innerHTML = 'console.warn(' + JSON.stringify(e.message) + ');';
           document.body.prepend(script);
-          res.status(404).send('<!DOCTYPE html>' + document.querySelector('html').innerHTML);
+          res.status(404).send('<!DOCTYPE html>' + document.querySelector('html').outerHTML);
         })
     );
 };

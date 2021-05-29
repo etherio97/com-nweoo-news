@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "firebase:deploy": "firebase deploy --project nwe-oo",
-    "deploy": "npm run build && npm run firebase:deploy"
+    "dev": "vue-cli-service serve --port $PORT",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "axios": "^0.21.1",

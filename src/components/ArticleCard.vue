@@ -7,7 +7,7 @@
       @click="$router.push(`/articles/${id}`)"
       lazy-src="@/assets/images/image.jpg"
       :max-height="imageHeight"
-      :src="image"
+      :src="`https://api.nweoo.com/open?url=${encodeURLComponent(image)}`"
     />
 
     <v-card-title class="mb-1">

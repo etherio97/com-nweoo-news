@@ -15,14 +15,15 @@ module.exports = (req, res) => {
           let content = data.content.split("\n").filter(n => !!n);
           let title = data.title + ' - ' + data.source;
           let tags = document.querySelectorAll('meta');
+          let image = 'https://api.nweoo.com/open?url=' + encodeURIComponent(data.image);
           let meta = {
-            'twitter:image': data.image,
+            'twitter:image': image,
             'twitter:url': url + '/articles/' + data.id,
             'twitter:description': content[0],
             'twitter:title': title,
             'twitter:card': 'summary_large_image',
             'og:image:alt': data.title,
-            'og:image': data.image,
+            'og:image': image,
             'og:url': url + '/articles/' + data.id,
             'og:description': content[0],
             'og:title': title,

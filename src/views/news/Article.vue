@@ -14,7 +14,7 @@
     </v-expand-transition>
     <v-card v-if="loaded" class="mx-auto">
       <v-img
-        :src="`https://api.nweoo.com/open?url=${encodeURLComponent(image)}`"
+        :src="imageURL"
         aspect-ratio="1.7778"
         lazy-src="@/assets/images/image.jpg"
         class="grey lighten-2"
@@ -94,11 +94,7 @@
       </v-col>
       <v-col cols="12" sm="6" md="4" v-for="(item, i) in latest" :key="i">
         <v-card @click="$router.push(`/articles/${item.id}`)">
-          <v-img
-            :src="`https://api.nweoo.com/open?url=${encodeURLComponent(
-              item.image
-            )}`"
-          ></v-img>
+          <v-img :src="imageURL"></v-img>
           <v-card-text class="text--primary font-weight-bold">
             {{ item.title }}
           </v-card-text>
@@ -178,6 +174,9 @@ export default {
   },
   computed: {
     ...mapState("articles", ["items"]),
+    imageURL() {
+      return this.$root.api + "/open?url=" + encodeURIComponent(this.image);
+    },
     latest() {
       return this.items
         .filter((item) => item["id"] !== this.$route.params.id)

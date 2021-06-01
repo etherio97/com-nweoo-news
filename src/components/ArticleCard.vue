@@ -7,7 +7,7 @@
       @click="$router.push(`/articles/${id}`)"
       lazy-src="@/assets/images/image.jpg"
       :max-height="imageHeight"
-      :src="`https://api.nweoo.com/open?url=${encodeURLComponent(image)}`"
+      :src="imageURL"
     />
 
     <v-card-title class="mb-1">
@@ -64,6 +64,9 @@ export default {
     readmore: false,
   }),
   computed: {
+    imageURL() {
+      return this.$root.api + "/open?url=" + encodeURIComponent(this.image);
+    },
     sourceUrl() {
       return newsMedia[this.source] || "#";
     },

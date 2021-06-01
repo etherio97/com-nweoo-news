@@ -94,7 +94,7 @@
       </v-col>
       <v-col cols="12" sm="6" md="4" v-for="(item, i) in latest" :key="i">
         <v-card @click="$router.push(`/articles/${item.id}`)">
-          <v-img :src="imageURL"></v-img>
+          <v-img :src="`https://api.nweoo.com/open?url=${item.image}`"></v-img>
           <v-card-text class="text--primary font-weight-bold">
             {{ item.title }}
           </v-card-text>

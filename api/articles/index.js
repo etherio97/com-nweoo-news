@@ -33,16 +33,17 @@ module.exports = (req, res) => {
           };
           let ld = {
             '@schema': 'https://schema.org',
-            '@type': 'NewsArticle',
+            '@type': 'Article',
             mainEntityOfPage: {
               '@type': 'WebPage',
               '@id': url + '/articles/' + data.id,
             },
-            name: title,
             headline: data.title,
             description: content[0],
-            image: data.image,
-            url: data.link,
+            image: {
+              "@type": "ImageObject",
+              url: data.image,
+            },
             author: {
               "@type": "Organization",
               name: data.source,
@@ -53,12 +54,10 @@ module.exports = (req, res) => {
               logo: {
                 '@type': "ImageObject",
                 url: url + '/assets/images/logo/' + data.source.toLowerCase() + '.png'
-              }
+              },
             },
-            dateCreated: datetime.toISOString(),
-            dateModified: datetime.toISOString(),
-            datePublished: datetime.toISOString(),
-            inLanguage: 'my',
+            dateModified: datetime.toLocaleDateString(),
+            datePublished: datetime.toLocaleDateString(),
           };
           let script = document.createElement('script');
           script.innerHTML = 'window.article=' + JSON.stringify(data) + ';';

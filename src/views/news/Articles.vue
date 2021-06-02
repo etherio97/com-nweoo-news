@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-5 mx-auto">
+  <v-container class="mt-5 mx-auto container">
     <h2 class="title">သတင်းများ</h2>
 
     <div class="mt-5 mb-3">
@@ -141,3 +141,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.container {
+  max-width: 920px;
+}
+</style>

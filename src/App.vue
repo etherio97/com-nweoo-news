@@ -64,7 +64,7 @@
 
     <v-main class="mt-5 mb-15 mx-2">
       <headline-bar v-if="!appBarVisible" top="0" />
-      <router-view class="container" :key="$route.path" />
+      <router-view :key="$route.path" />
     </v-main>
 
     <app-footer />
@@ -126,9 +126,5 @@ export default {
 
 a {
   text-decoration: none;
-}
-
-.container {
-  max-width: 800px;
 }
 </style>

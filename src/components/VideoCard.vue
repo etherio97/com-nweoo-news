@@ -96,7 +96,7 @@ export default {
       fluid: true,
       aspectRatio: "16:9",
       notSupportedMessage: "",
-      playbackRates: [0.7, 1.0, 1.5, 2.0],
+      playbackRates: [0.75, 1.0, 1.25, 1.5, 1.75, 2.0],
       sources: [
         {
           withCredentials: false,

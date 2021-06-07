@@ -31,6 +31,11 @@ export default [
   },
   {
     name: "VideoNews",
+    path: "/media",
+    component: () => import("../views/news/Videos.vue")
+  },
+  {
+    name: "VideoNews",
     path: "/news/videos",
     component: () => import("../views/news/Videos.vue")
   },

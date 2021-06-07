@@ -1,6 +1,7 @@
 <template>
   <v-card class="videoCard">
     <video-player
+      ref="player"
       class="vjs-custom-skin"
       :playsinline="true"
       :options="playerOptions"
@@ -14,7 +15,7 @@
     </v-card-title>
 
     <v-card-subtitle>
-      {{ new Date(created_time).toLocaleString() }}
+      {{ datetime }}
     </v-card-subtitle>
 
     <v-card-text>
@@ -51,6 +52,8 @@
 import VideoPlayer from "vue-video-player-vjs";
 import "video.js/dist/video-js.css";
 import { parseUrl } from "@/functions/formatter";
+
+let __i;
 
 export default {
   name: "VideoCard",
@@ -93,6 +96,7 @@ export default {
       fluid: true,
       aspectRatio: "16:9",
       notSupportedMessage: "",
+      playbackRates: [0.7, 1.0, 1.5, 2.0],
       sources: [
         {
           withCredentials: false,
@@ -107,6 +111,7 @@ export default {
         durationDisplay: true,
       },
     },
+    indexOfPoster: null,
   }),
   computed: {
     html() {
@@ -119,34 +124,28 @@ export default {
     textWrap() {
       return this.description.length > 255;
     },
-    poster() {
-      return this.thumbnails[5].uri;
+    datetime() {
+      return new Date(this.created_time).toLocaleString("my-MM");
     },
-    usingAPI() {
-      this.$root["network_mode"] === "api";
+    poster() {
+      const images = this.thumbnails;
+      const image =
+        images[5] ||
+        images[4] ||
+        images[3] ||
+        images[2] ||
+        images[1] ||
+        images[0];
+      return `${this.$root["api"]}/open?url=${encodeURIComponent(image.uri)}`;
     },
   },
   beforeMount() {
-    /*
-    let uri = new URL(this.source);
-     let matched = this.source.match(/^https:\/\/(.+)-.+-.+\.xx\.fbcdn\.net/);
-    if (this.usingAPI && matched) {
-      switch (matched[1]) {
-        case "external":
-          uri = "https://cdn.nweoo.com/e" + uri.pathname + uri.search;
-          break;
-        case "scontent":
-          uri = "https://cdn.nweoo.com/s" + uri.pathname + uri.search;
-          break;
-        case "video":
-          uri = "https://cdn.nweoo.com/v" + uri.pathname + uri.search;
-          break;
-      }
-    }
-     */
     this.playerOptions.sources[0].title = this.title;
     this.playerOptions.sources[0].type = "video/mp4";
-    this.playerOptions.sources[0].src = this.source;
+    this.playerOptions.sources[0].src = `${
+      this.$root["api"]
+    }/open?url=${encodeURIComponent(this.source)}`;
+    this.playerOptions.poster = this.poster;
   },
 };
 </script>

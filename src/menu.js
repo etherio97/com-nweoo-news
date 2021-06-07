@@ -8,7 +8,7 @@ export default [
   {
     title: "ရုပ်သံများ",
     icon: "mdi-video",
-    path: "/news/videos",
+    path: "/media",
     visible: true
   },
   {
@@ -21,7 +21,7 @@ export default [
     title: "ဝန်ဆောင်မှုများ",
     icon: "mdi-information",
     path: "/services",
-    visible: true
+    visible: false
   },
   {
     title: "ကျွန်ုပ်တို့အကြောင်း",

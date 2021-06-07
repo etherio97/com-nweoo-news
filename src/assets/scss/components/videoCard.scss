@@ -1,12 +1,10 @@
 .videoCard {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow) !important;
-  cursor: pointer;
+  cursor: default;
   overflow: hidden;
 
   .video-player {
-    
-
     .vjs-big-play-button {
       background-color: rgba(var(--color-orange-dark-rgb), 0.7);
       border-color: rgba(var(--color-orange-dark-rgb), 0.7);
@@ -26,6 +24,4 @@
       border-color: rgba(var(--color-red-rgb), 0.7);
     }
   }
-
-  
 }

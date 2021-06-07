@@ -1,19 +1,19 @@
 {
   "functions": {
-    "api/**/*.js": {
-      "excludeFiles": "*.ejs"
+    "api/**": {
+      "memory": 1024
     }
   },
-  "redirects": [
-    { "source": "/fb", "destination": "https://fb.me/nweoo22222" },
-    { "source": "/me", "destination": "https://m.me/nweoo22222" },
-    { "source": "/tm", "destination": "https://t.me/nweoonews" }
-  ],
   "rewrites": [
     { "source": "/articles/:id", "destination": "/api/articles" },
     {
       "source": "/feed.xml",
       "destination": "https://nweoo-developer.herokuapp.com/feed"
     }
+  ],
+  "redirects": [
+    { "source": "/fb", "destination": "https://fb.me/nweoo22222" },
+    { "source": "/me", "destination": "https://m.me/nweoo22222" },
+    { "source": "/tm", "destination": "https://t.me/nweoonews" }
   ]
 }

@@ -56,8 +56,8 @@ module.exports = (req, res) => {
                 url: url + '/assets/images/logo/' + data.source.toLowerCase() + '.png'
               },
             },
-            dateModified: datetime.toLocaleDateString(),
-            datePublished: datetime.toLocaleDateString(),
+            dateModified: datetime.toISOString(),
+            datePublished: datetime.toISOString(),
           };
           let script = document.createElement('script');
           script.innerHTML = 'window.article=' + JSON.stringify(data) + ';';

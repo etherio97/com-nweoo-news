@@ -11,7 +11,6 @@ export function parseUrl(context, matched = null) {
     if (m[m.length - 1] === ".") {
       m = m.slice(0, -1);
     }
-    console.log('m', m);
     let r = new RegExp(`${m}`, "gim");
     context = context.replace(
       r,

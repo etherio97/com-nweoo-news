@@ -57,41 +57,19 @@ import LogIn from "./LogIn.vue";
 
 export default {
   name: "SideBar",
-
   props: {
     items: {
       type: Array,
       required: true,
     },
   },
-
   data: () => ({
     drawer: false,
-    mini: true,
+    mini: false,
   }),
-
   components: {
     LogIn,
   },
-
-  watch: {
-    mini(value) {
-      if ("localStorage" in window) {
-        value
-          ? window.localStorage.setItem("_sidebar_open", "1")
-          : window.localStorage.setItem("_sidebar_open", "");
-      }
-    },
-  },
-
-  beforeMount() {
-    if ("localStorage" in window) {
-      this.mini = Boolean(
-        window.localStorage.getItem("_sidebar_open") || false
-      );
-    }
-  },
-
   computed: {
     loggedIn() {
       return Boolean(this.user["uid"]);

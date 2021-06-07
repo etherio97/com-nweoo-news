@@ -16,36 +16,6 @@ As far as our database is from [Firebase](https://firebase.google.com/docs/datab
 
 #### Retrieving Data
 
-```yml
-swagger: '2.0'
-info:
-  title: NweOo API
-host: https://api.nweoo.com
-paths:
-  '/news/article':
-    parameters:
-      - in: query
-        name: limit
-        schema:
-          type: integer
-          format: int32
-          default: 10
-          maximum: 100
-      - in: query
-        name: paging
-        schema:
-          type: string
-          format: byte
-    responses:
-      200:
-        content:
-          - json
-        json:
-          type: array
-          items:
-            '$ref': '#/components/schemas/Article'
-```
-
 In this example, let's request the list of latest news articles.
 
 ```http
@@ -59,4 +29,3 @@ Content-Type: application/json; charset=utf-8
 
 [{...},{...},{...},{...},{...},{...},{...},{...},{...},{...}]
 ```
-

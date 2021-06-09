@@ -28,18 +28,12 @@ module.exports = (req, res) => {
   <priority>1</priority>
 </url>
 <url>
-  <loc>https://nweoo.com/about</loc>
+  <loc>https://www.nweoo.com/about</loc>
   <lastmod>2021-05-09T17:53:28+00:00</lastmod>
-</url>
-<url>
-  <loc>https://nweoo.com/terms-of-services</loc>
-  <lastmod>2021-05-09T17:53:28+00:00</lastmod>
-</url>
-<url>
-  <loc>https://nweoo.com/privacy-policy</loc>
-  <lastmod>2021-05-09T17:53:28+00:00</lastmod>
+  <priority>1</priority>
+  <lastmod>2021-06-09T20:30:28+00:00</lastmod>
 </url>`];
-      Object.values(data).forEach(article => {
+      Object.values(data).map(article => {
         responses.push(`<url>
   <loc>https://www.nweoo.com/articles/${article.id}</loc>
   <lastmod>${new Date(article.timestamp).toISOString()}</lastmod>
@@ -47,6 +41,14 @@ module.exports = (req, res) => {
   <priority>1</priority>
 </url>`);
       });
+      responses.push(`<url>
+  <loc>https://www.nweoo.com/terms-of-services</loc>
+  <lastmod>2021-05-09T17:53:28+00:00</lastmod>
+</url>
+<url>
+  <loc>https://www.nweoo.com/privacy-policy</loc>
+  <lastmod>2021-05-09T17:53:28+00:00</lastmod>
+</url>`)
       responses.push('</urlset>');
       res.setHeader('content-type', 'application/xml;charset=utf-8');
       res.send(responses.join("\n"));

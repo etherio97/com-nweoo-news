@@ -6,6 +6,7 @@
   },
   "rewrites": [
     { "source": "/articles/:id", "destination": "/api/articles" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     {
       "source": "/feed.xml",
       "destination": "https://nweoo-developer.herokuapp.com/feed"

@@ -1,6 +1,14 @@
 <template>
   <v-app>
-    <v-app-bar color="secondary" dark dense app fixed v-if="appBarVisible">
+    <v-app-bar
+      v-if="appBarVisible"
+      color="secondary"
+      dark
+      dense
+      app
+      absolute
+      hide-on-scroll
+    >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
       <router-link to="/">
@@ -14,7 +22,7 @@
         />
       </router-link>
       <v-spacer></v-spacer>
-      <headline-bar></headline-bar>
+      <!-- <headline-bar></headline-bar> -->
     </v-app-bar>
     <side-bar :items="menu" :can="can" v-else />
     <v-navigation-drawer

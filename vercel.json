@@ -13,8 +13,8 @@
     }
   ],
   "redirects": [
-    { "source": "/fb", "destination": "https://fb.me/nweoo22222" },
-    { "source": "/me", "destination": "https://m.me/nweoo22222" },
+    { "source": "/fb", "destination": "https://fb.me/nweoonews" },
+    { "source": "/me", "destination": "https://m.me/nweoonews" },
     { "source": "/tm", "destination": "https://t.me/nweoonews" }
   ]
 }

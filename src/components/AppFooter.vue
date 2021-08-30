@@ -5,7 +5,7 @@
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
           rel="noreferrer"
-          href="https://fb.me/nweoo22222"
+          href="https://fb.me/nweoonews"
           target="_blank"
           icon
         >
@@ -13,7 +13,7 @@
         </v-btn>
         <v-btn
           class="mx-4 secondary darken-1 white--text text-center"
-          href="mailto:nweoo22222@yandex.com"
+          href="mailto:nweoo967@gmail.com"
           icon
         >
           <v-icon size="24px">mdi-email</v-icon>

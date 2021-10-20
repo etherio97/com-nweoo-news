@@ -20,7 +20,7 @@
     </v-list-item>
     <v-divider></v-divider>
 
-    <v-list-item v-if="loggedIn" to="/profile">
+    <!-- <v-list-item v-if="loggedIn" to="/profile">
       <v-list-item-avatar class="ml-n1">
         <v-img v-if="user.photoURL" :src="user.photoURL"></v-img>
         <v-icon v-else>mdi-account</v-icon>
@@ -28,7 +28,7 @@
       <v-list-item-subtitle>
         {{ user.displayName || user.email || user.phoneNumber }}
       </v-list-item-subtitle>
-    </v-list-item>
+    </v-list-item> -->
 
     <v-divider></v-divider>
 
@@ -46,14 +46,14 @@
       </template>
     </v-list>
 
-    <template v-slot:append v-if="!mini">
+    <!-- <template v-slot:append v-if="!mini">
       <log-in></log-in>
-    </template>
+    </template> -->
   </v-navigation-drawer>
 </template>
 
 <script>
-import LogIn from "./LogIn.vue";
+// import LogIn from "./LogIn.vue";
 
 export default {
   name: "SideBar",
@@ -67,17 +67,17 @@ export default {
     drawer: false,
     mini: false,
   }),
-  components: {
-    LogIn,
-  },
-  computed: {
-    loggedIn() {
-      return Boolean(this.user["uid"]);
-    },
-    user() {
-      return this.$root.user || {};
-    },
-  },
+  // components: {
+  //   LogIn,
+  // },
+  // computed: {
+  //   loggedIn() {
+  //     return Boolean(this.user["uid"]);
+  //   },
+  //   user() {
+  //     return this.$root.user || {};
+  //   },
+  // },
 };
 </script>
 

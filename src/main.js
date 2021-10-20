@@ -14,20 +14,14 @@ const data = {
   api: "https://api.nweoo.com",
 };
 
-if (process.env.NODE_ENV !== 'production') {
-  // data.api = "http://localhost:5500";
-}
+// if (process.env.NODE_ENV !== 'production') {
+// data.api = "http://localhost:5500";
+// }
 
 new Vue({
   data,
   router,
-  render: h => {
-    return h(App);
-  },
+  render: h => h(App),
   store,
-  vuetify
+  vuetify,
 }).$mount("#app");
-
-firebase.auth().onAuthStateChanged(user => {
-  data.user = user;
-});

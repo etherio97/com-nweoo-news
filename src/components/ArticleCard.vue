@@ -65,7 +65,8 @@ export default {
   }),
   computed: {
     imageURL() {
-      return this.$root.api + "/open?url=" + encodeURIComponent(this.image);
+      // return this.$root.api + "/open?url=" + encodeURIComponent(this.image);
+      return this.image;
     },
     sourceUrl() {
       return newsMedia[this.source] || "#";

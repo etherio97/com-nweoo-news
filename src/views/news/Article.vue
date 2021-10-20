@@ -94,7 +94,7 @@
       </v-col>
       <v-col cols="12" sm="6" md="4" v-for="(item, i) in latest" :key="i">
         <v-card @click="$router.push(`/articles/${item.id}`)">
-          <v-img :src="`https://api.nweoo.com/open?url=${item.image}`"></v-img>
+          <v-img :src="item.image"></v-img>
           <v-card-text class="text--primary font-weight-bold">
             {{ item.title }}
           </v-card-text>
@@ -175,7 +175,7 @@ export default {
   computed: {
     ...mapState("articles", ["items"]),
     imageURL() {
-      return this.$root.api + "/open?url=" + encodeURIComponent(this.image);
+      return this.image;
     },
     latest() {
       return this.items
@@ -196,7 +196,6 @@ export default {
         .filter((n) => !!n)
         .map((n) => '<p class="text-body-1">' + n + "</p>")
         .join("\n");
-
       return content;
     },
   },

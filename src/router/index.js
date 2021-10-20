@@ -4,13 +4,12 @@ import _ from "lodash";
 import routes from "./route";
 import goTo from "vuetify/es5/services/goto";
 
-let appName = 'NweOo';
+let appName = "NweOo";
 
 const setTitle = title => {
   if (typeof document === "undefined") return;
   const el = document.querySelector("title");
-  if (!('article' in window)) {
-    console.log('no var:article');
+  if (!("article" in window)) {
     el.textContent = `${_.startCase(title)} | ${appName}`;
   }
 };
@@ -31,17 +30,17 @@ Vue.mixin({
   beforeRouteEnter(to, from, next) {
     setTitle(to["title"] || to["name"] || appName);
     next();
-  }
+  },
 });
 
 routes.push({
   name: "NotFound",
   path: "*",
-  component: () => import("../views/errors/404.vue")
+  component: () => import("../views/errors/404.vue"),
 });
 
 export default new VueRouter({
   routes,
   scrollBehavior,
-  mode: "history"
+  mode: "history",
 });

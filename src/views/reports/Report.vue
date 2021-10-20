@@ -36,34 +36,36 @@
         <v-stepper-content step="2">
           <v-card elevation="0">
             <v-card-title>
-              <v-chip color="secondary" class="mr-2">
-                စာစုအမှတ် #{{ id }}
-              </v-chip>
-              ကို ဘာလုပ်နိုင်ပါသလဲ။
+              <div class="d-flex body-1">
+                <v-chip color="secondary" class="mr-2">
+                  စာစုအမှတ် #{{ id }}
+                </v-chip>
+                ကို ဘာလုပ်နိုင်ပါသလဲ။
+              </div>
             </v-card-title>
             <v-card-text class="mt-5 pb-4">
               <v-row justify="space-between">
                 <v-col cols="12" sm="6">
                   <v-btn
-                    block
                     color="primary"
+                    block
                     dark
                     large
                     @click="(error = null) | (step = 3)"
                   >
-                    ပယ်ဖျက်ရန်တောင်းဆိုခြင်း
+                    တိုင်ကြားရန်
                   </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-btn
+                    color="red darken-2"
                     block
                     dark
-                    color="red darken-2"
                     large
                     :disabled="disabled"
                     @click="(error = null) | (step = 4)"
                   >
-                    ချက်ချင်းပယ်ဖျက်ခြင်း
+                    ပြန်ဖျက်ရန်
                   </v-btn>
                 </v-col>
                 <v-col cols="12" v-if="post_id">
@@ -89,15 +91,16 @@
               <v-btn @click="step = 2" icon color="primary">
                 <v-icon>mdi-chevron-left</v-icon>
               </v-btn>
-              <v-chip color="secondary" class="mr-2">
-                စာစုအမှတ် #{{ id }}
-              </v-chip>
-              ကို ပယ်ဖျက်ရန်တောင်းဆိုခြင်း
+              <div class="d-flex body-1">
+                <v-chip color="secondary" class="mr-2">
+                  စာစုအမှတ် #{{ id }}
+                </v-chip>
+                ကို တိုင်ကြားရန်။
+              </div>
             </v-card-title>
             <v-card-text>
               <v-alert type="warning">
-                အခုလောလောဆယ် ပယ်ဖျက်ရန်တောင်းဆိုလိုပါက chatbox ကတဆင့်သာသ
-                ဆက်သွယ်တောင်းဆိုပေးပါ။
+                တိုင်ကြားစာများကို လက်မခံနိုင်သေးပါ။
               </v-alert>
               <v-select
                 label="အကြောင်းအရာ"
@@ -134,10 +137,12 @@
               <v-btn @click="step = 2" icon color="primary">
                 <v-icon>mdi-chevron-left</v-icon>
               </v-btn>
-              <v-chip color="secondary" class="mr-2">
-                စာစုအမှတ် #{{ id }}
-              </v-chip>
-              ကို ချက်ချင်းဖျက်ရန်
+              <div class="d-flex body-1">
+                <v-chip color="secondary" class="mr-2">
+                  စာစုအမှတ် #{{ id }}
+                </v-chip>
+                ကို ချက်ချင်းဖျက်ရန်
+              </div>
             </v-card-title>
             <v-card-text>
               <v-text-field
@@ -211,7 +216,7 @@ export default {
     disabled: false,
     error: null,
     step: 1,
-    id: "",
+    id: null,
     phone: "",
     reason: "",
     status: "",
@@ -224,39 +229,32 @@ export default {
     instantDelete() {
       this.step = 5;
       this.error = null;
-      this.status = "လုပ်ဆောင်နေပါတယ်";
-
+      this.status = "ပြန်ဖျက်နေပါတယ်...";
       return this.axios
-        .delete(`${this.$root.api}/report/${this.id}?phone=${this.phone}`)
+        .delete(`${this.$root.api}/reports/${this.id}?phone=${this.phone}`)
         .then(() => (this.step = 6))
-        .catch((e) => {
-          let error = e.message;
-          if (
-            e.response &&
-            e.response["data"] &&
-            e.response["data"]["message"]
-          ) {
-            error = e.response["data"]["message"]["error"];
-          }
-          this.withError(error, 4);
-        });
+        .catch(() =>
+          this.withError(
+            "တစ်ခုခုမှားယွင်းနေပါသောကြောင့် ပြန်ဖျက်၍မရနိုင်ပါ။",
+            4
+          )
+        );
     },
     submitReport() {
-      this.step = 2;
-      return;
-      this.step = 5;
-      this.error = null;
-      this.status = "လုပ်ဆောင်နေပါတယ်";
-      const report = {
-        reason: this.reason,
-        otherReson: this.otherReason,
-      };
-      this.axios
-        .put(`${this.$root.api}/report/${this.id}`, report)
-        .then(({ data }) => {
-          this.step = 6;
-        })
-        .catch((e) => this.withError("လုပ်ဆောင်မှုမအောင်မြင်ပါ", 3));
+      this.withError("");
+      // this.step = 5;
+      // this.error = null;
+      // this.status = "လုပ်ဆောင်နေပါတယ်";
+      // const report = {
+      //   reason: this.reason,
+      //   otherReson: this.otherReason,
+      // };
+      // this.axios
+      //   .put(`${this.$root.api}/report/${this.id}`, report)
+      //   .then(({ data }) => {
+      //     this.step = 6;
+      //   })
+      //   .catch((e) => this.withError("လုပ်ဆောင်မှုမအောင်မြင်ပါ", 3));
     },
     withError(error, step) {
       this.step = step || 2;
@@ -277,7 +275,7 @@ export default {
   beforeMount() {
     if (!this.$route.params["id"]) {
       if (this.$route.query["id"]) {
-        return this.$router.push(`/report/${this.$route.query["id"]}`);
+        return this.$router.push(`/reports/${this.$route.query["id"]}`);
       }
       this.loading = false;
       this.loaded = true;
@@ -298,17 +296,9 @@ export default {
       this.phone = this.$route.query["phone"];
     }
     if (this.id) {
-      this.axios(`${this.$root.api}/report/${this.id}`)
-        .then(({ data }) => {
-          this.post_id = data.post_id.split("_").pop();
-          if (data.deleted) {
-            this.step = 6;
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-          this.disabled = true;
-        })
+      this.axios(`${this.$root.api}/reports/${this.id}`)
+        .then(({ data: { deleted } }) => deleted && (this.step = 6))
+        .catch((e) => (this.disabled = true))
         .finally(() => {
           this.loading = false;
           this.loaded = true;

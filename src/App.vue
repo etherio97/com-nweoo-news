@@ -24,7 +24,7 @@
       <v-spacer></v-spacer>
       <!-- <headline-bar></headline-bar> -->
     </v-app-bar>
-    <side-bar :items="menu" :can="can" v-else />
+    <side-bar :items="menu" v-else />
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -33,41 +33,16 @@
       temporary
       hide-overlay
     >
-      <template v-slot:prepend v-if="loggedIn">
-        <v-list-item two-line to="/profile">
-          <v-list-item-avatar>
-            <v-img v-if="user.photoURL" :src="user.photoURL" />
-            <v-icon v-else large>mdi-account</v-icon>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-subtitle class="ml-2 mt-1">
-              {{ user.displayName || user.email || user.phoneNumber }}
-            </v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider></v-divider>
-      </template>
-
       <v-list nav dense>
         <v-list-item-group active-class="secondary--text text--accent-4">
-          <template v-for="(item, index) in menu">
-            <v-list-item
-              :to="item.path"
-              :key="`nav-${index}`"
-              v-if="item.visible"
-            >
-              <v-list-item-icon>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-icon>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </template>
+          <v-list-item v-for="item in menu" :to="item.path" :key="item.path">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
-
-      <template v-slot:append>
-        <log-in></log-in>
-      </template>
     </v-navigation-drawer>
 
     <v-main class="mt-5 mb-15 mx-2">
@@ -81,7 +56,6 @@
 
 <script>
 import menu from "./menu";
-import LogIn from "./components/LogIn.vue";
 import SideBar from "./components/SideBar.vue";
 import HeadlineBar from "./components/HeadlineBar.vue";
 import AppFooter from "./components/AppFooter.vue";
@@ -92,37 +66,18 @@ export default {
     SideBar,
     HeadlineBar,
     AppFooter,
-    LogIn,
   },
   data: () => ({
     menu,
     loaded: false,
     drawer: false,
   }),
-  methods: {
-    can(visible) {
-      if (!visible) return false;
-      if (typeof visible === "boolean") return true;
-      if (!this.loggedIn) return false;
-      return visible.includes(this.role);
-    },
-  },
-
   computed: {
     appBarVisible() {
       return ["sm", "xs"].includes(this.breakpoint);
     },
-
     breakpoint() {
       return this.$vuetify.breakpoint.name;
-    },
-
-    loggedIn() {
-      return Boolean(this.user?.uid);
-    },
-
-    user() {
-      return this.$root.user;
     },
   },
 };

@@ -104,8 +104,10 @@ export default {
   }),
   watch: {
     isActive(val) {
-      this.loading = true;
-      setTimeout(() => this.fetchMoreArticles(), 800);
+      if (val) {
+        this.loading = true;
+        setTimeout(() => this.fetchMoreArticles(), 800);
+      }
     },
   },
   methods: {
@@ -120,11 +122,9 @@ export default {
   },
   computed: {
     ...mapState("articles", ["items"]),
-
     latestArticle() {
       return this.items[0];
     },
-
     latestArticles() {
       return this.items.slice(1);
     },

@@ -128,23 +128,16 @@ export default {
       return new Date(this.created_time).toLocaleString("my-MM");
     },
     poster() {
-      const images = this.thumbnails;
-      const image =
-        images[5] ||
-        images[4] ||
-        images[3] ||
-        images[2] ||
-        images[1] ||
-        images[0];
-      return `${this.$root["api"]}/open?url=${encodeURIComponent(image.uri)}`;
+      let image = this.thumbnails || [];
+      image =
+        image[5] || image[4] || image[3] || image[2] || image[1] || image[0];
+      return image.uri;
     },
   },
   beforeMount() {
     this.playerOptions.sources[0].title = this.title;
     this.playerOptions.sources[0].type = "video/mp4";
-    this.playerOptions.sources[0].src = `${
-      this.$root["api"]
-    }/open?url=${encodeURIComponent(this.source)}`;
+    this.playerOptions.sources[0].src = this.source;
     this.playerOptions.poster = this.poster;
   },
 };

@@ -5,19 +5,17 @@ export default [
     component: () => import("../views/news/Articles.vue"),
   },
   {
+    path: "/report",
+    redirect: "/reports",
+  },
+  {
     name: "Reports",
     path: "/reports",
     component: () => import("../views/reports/SMSReports.vue"),
   },
   {
-    name: "ReportPost",
-    path: "/report",
-    component: () => import("../views/reports/Report.vue"),
-  },
-  {
-    name: "ReportPostID",
     path: "/report/:id",
-    component: () => import("../views/reports/Report.vue"),
+    redirect: "/reports/:id",
   },
   {
     name: "CitizenReport",
@@ -30,14 +28,14 @@ export default [
     component: () => import("../views/news/Articles.vue"),
   },
   {
-    name: "VideoNews",
+    name: "NewsMedia",
     path: "/media",
     component: () => import("../views/news/Videos.vue"),
   },
   {
     name: "VideoNews",
     path: "/news/videos",
-    component: () => import("../views/news/Videos.vue"),
+    redirect: "/media",
   },
   {
     name: "Article",
@@ -64,14 +62,4 @@ export default [
     path: "/privacy-policy",
     component: () => import("../views/PrivacyPolicy.vue"),
   },
-  // {
-  //   name: "LogIn",
-  //   path: "/login",
-  //   component: () => import('../views/auth/Login.vue')
-  // },
-  // {
-  //   name: "MyAccount",
-  //   path: "/profile",
-  //   component: () => import("../views/auth/Profile.vue"),
-  // },
 ];

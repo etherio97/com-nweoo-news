@@ -11,5 +11,5 @@ export default new Store({
     reports,
     articles,
     videos,
-  }
+  },
 });

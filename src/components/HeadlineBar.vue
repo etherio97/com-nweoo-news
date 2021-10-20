@@ -17,34 +17,25 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "HeadlineBar",
-
   props: {
     top: { default: "47" },
   },
-
   methods: {
-    ...mapActions("articles", ["FETCH_HEADLINES"]),
-
     resync() {
       const el = this.$refs.ticker;
       if (!el) return;
       const duration = 15.2 * this.headlines.length;
-      el.style.animationDuration = el.style.webkitAnimationDuration = `${duration}s`;
+      el.style.animationDuration =
+        el.style.webkitAnimationDuration = `${duration}s`;
       el.style.animationPlayState = el.style.webkitAnimationPlayState =
         "running";
     },
   },
-
   computed: mapState("articles", ["headlines"]),
-
   watch: {
     headlines() {
       this.resync();
     },
-  },
-
-  beforeMount() {
-    this.FETCH_HEADLINES(this.$root);
   },
 };
 </script>

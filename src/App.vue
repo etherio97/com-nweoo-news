@@ -6,8 +6,6 @@
       dark
       dense
       app
-      absolute
-      hide-on-scroll
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>

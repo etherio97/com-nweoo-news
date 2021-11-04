@@ -15,8 +15,7 @@ module.exports = (req, res) => {
           let content = data.content.split("\n").filter(n => !!n);
           let title = data.title + " - " + data.source;
           let tags = document.querySelectorAll("meta");
-          let image =
-            "https://api.nweoo.com/open?url=" + encodeURIComponent(data.image);
+          let image = data.image;
           let meta = {
             "twitter:image": image,
             "twitter:url": url + "/articles/" + data.id,
@@ -32,7 +31,7 @@ module.exports = (req, res) => {
             description: content[0],
             title,
           };
-          let ld = {
+          /* let ld = {
             "@schema": "https://schema.org",
             "@type": "Article",
             mainEntityOfPage: {
@@ -63,11 +62,15 @@ module.exports = (req, res) => {
             },
             dateModified: datetime.toISOString(),
             datePublished: datetime.toISOString(),
-          };
+          }; */
+
+          // adding article data into script tag
           let script = document.createElement("script");
           script.innerHTML = "window.article=" + JSON.stringify(data) + ";";
           document.head.append(script);
           document.querySelector("title").textContent = title + " | NweOo";
+
+          // overwriting meta tags properties
           for (let i = 0; i < tags.length; i++) {
             let tag = tags[i];
             let name = tag.getAttribute("title");
@@ -79,6 +82,8 @@ module.exports = (req, res) => {
               delete meta[prop];
             }
           }
+
+          // creating new meta tags
           for (let entry of Object.entries(meta)) {
             let el = document.createElement("meta");
             el.setAttribute("name", entry[0]);
@@ -86,7 +91,9 @@ module.exports = (req, res) => {
             el.setAttribute("content", entry[1]);
             document.head.prepend(el);
           }
-          let el = document.querySelector("script#ld");
+
+          // Rich Text Support [ld+json]
+          /* let el = document.querySelector("script#ld");
           if (el) {
             el.innerHTML = JSON.stringify(ld);
           } else {
@@ -94,7 +101,8 @@ module.exports = (req, res) => {
             rrt.type = "application/ld+json";
             rrt.innerHTML = JSON.stringify(ld);
             document.head.prepend(rrt);
-          }
+          } */
+
           res.send(
             "<!DOCTYPE html>" + document.querySelector("html").outerHTML
           );

@@ -103,17 +103,21 @@ module.exports = (req, res) => {
             document.head.prepend(rrt);
           } */
 
+          // add cache-control header
+          res.setHeader("cache-control", "public,max-age=84600,s-max-age=86400");
+
+          // sending html response
           res.send(
             "<!DOCTYPE html>" + document.querySelector("html").outerHTML
           );
         })
         .catch(e => {
-          let script = document.createElement("script");
-          script.innerHTML = "console.warn(" + JSON.stringify(e.message) + ");";
-          document.body.prepend(script);
+          // sending html response with erorr
           res
             .status(404)
-            .send("<!DOCTYPE html>" + document.querySelector("html").outerHTML);
+            .send(
+              "<!DOCTYPE html>" + document.querySelector("html").outerHTML
+            );
         })
     );
 };

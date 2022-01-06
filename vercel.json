@@ -10,6 +10,10 @@
     {
       "source": "/feed.xml",
       "destination": "https://nweoo-developer.herokuapp.com/feed"
+    },
+    {
+      "source": "/api/:match*",
+      "destination": "https://nweoo-developer.herokuapp.com/:match*"
     }
   ],
   "redirects": [

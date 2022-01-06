@@ -10,7 +10,7 @@ Vue.config.productionTip = false;
 
 const data = {
   loaded: false,
-  api: "https://api.nweoo.com",
+  api: "/api",
 };
 
 if (process.env.NODE_ENV !== "production") {

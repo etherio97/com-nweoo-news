@@ -9,7 +9,7 @@ module.exports = (req, res) => {
   axios(url)
     .then(({ data }) => new JSDOM(data))
     .then(({ window: { document } }) =>
-      axios("https://api.nweoo.com/news/articles/" + id)
+      axios("https://nweoo-developer.herokuapp.com/news/articles/" + id)
         .then(({ data }) => {
           let datetime = new Date(data.timestamp);
           let content = data.content.split("\n").filter(n => !!n);

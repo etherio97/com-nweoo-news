@@ -31,7 +31,7 @@ module.exports = (req, res) => {
             description: content[0],
             title,
           };
-          /* let ld = {
+          let ld = {
             "@schema": "https://schema.org",
             "@type": "Article",
             mainEntityOfPage: {
@@ -62,7 +62,7 @@ module.exports = (req, res) => {
             },
             dateModified: datetime.toISOString(),
             datePublished: datetime.toISOString(),
-          }; */
+          };
 
           // adding article data into script tag
           let script = document.createElement("script");
@@ -93,15 +93,16 @@ module.exports = (req, res) => {
           }
 
           // Rich Text Support [ld+json]
-          /* let el = document.querySelector("script#ld");
+          let el = document.querySelector("script#ld");
           if (el) {
+            el.type = "application/ld+json";
             el.innerHTML = JSON.stringify(ld);
           } else {
             let rrt = document.createElement("script");
             rrt.type = "application/ld+json";
             rrt.innerHTML = JSON.stringify(ld);
             document.head.prepend(rrt);
-          } */
+          }
 
           // add cache-control header
           res.setHeader("cache-control", "public,max-age=84600,s-max-age=86400");

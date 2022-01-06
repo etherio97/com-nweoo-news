@@ -10,43 +10,43 @@ module.exports = (req, res) => {
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://www.nweoo.com/</loc>
+  <loc>https://news.nweoo.com/</loc>
   <lastmod>2021-06-09T20:30:28+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>1</priority>
 </url>
 <url>
-  <loc>https://www.nweoo.com/videos</loc>
+  <loc>https://news.nweoo.com/videos</loc>
   <changefreq>daily</changefreq>
   <priority>1</priority>
   <lastmod>2021-06-09T20:30:28+00:00</lastmod>
 </url>
 <url>
-  <loc>https://www.nweoo.com/reports</loc>
+  <loc>https://news.nweoo.com/reports</loc>
   <lastmod>2021-06-09T20:30:28+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>1</priority>
 </url>
 <url>
-  <loc>https://www.nweoo.com/about</loc>
+  <loc>https://news.nweoo.com/about</loc>
   <lastmod>2021-05-09T17:53:28+00:00</lastmod>
   <priority>1</priority>
   <lastmod>2021-06-09T20:30:28+00:00</lastmod>
 </url>`];
       Object.values(data).map(article => {
         responses.push(`<url>
-  <loc>https://www.nweoo.com/articles/${article.id}</loc>
+  <loc>https://news.nweoo.com/articles/${article.id}</loc>
   <lastmod>${new Date(article.timestamp).toISOString()}</lastmod>
   <changefreq>daily</changefreq>
   <priority>1</priority>
 </url>`);
       });
       responses.push(`<url>
-  <loc>https://www.nweoo.com/terms-of-services</loc>
+  <loc>https://news.nweoo.com/terms-of-services</loc>
   <lastmod>2021-05-09T17:53:28+00:00</lastmod>
 </url>
 <url>
-  <loc>https://www.nweoo.com/privacy-policy</loc>
+  <loc>https://news.nweoo.com/privacy-policy</loc>
   <lastmod>2021-05-09T17:53:28+00:00</lastmod>
 </url>`)
       responses.push('</urlset>');

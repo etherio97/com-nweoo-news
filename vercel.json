@@ -20,5 +20,23 @@
     { "source": "/fb", "destination": "https://fb.me/nweoonews" },
     { "source": "/me", "destination": "https://m.me/nweoonews" },
     { "source": "/tm", "destination": "https://t.me/nweoonews" }
-  ]
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers" : [
+        {
+          "key" : "X-Content-Type-Options",
+          "value" : "nosniff"
+        },
+        {
+          "key" : "X-Frame-Options",
+          "value" : "DENY"
+        },
+        {
+          "key" : "X-XSS-Protection",
+          "value" : "1; mode=block"
+        }
+      ]
+    }
 }

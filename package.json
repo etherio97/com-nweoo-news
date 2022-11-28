@@ -14,7 +14,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
-    "vue-axios": "^3.2.4",
+    "vue-axios": "^3.5.2",
     "vue-router": "^3.2.0",
     "vue-video-player-vjs": "^1.1.1",
     "vuetify": "^2.4.6",

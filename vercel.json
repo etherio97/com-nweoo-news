@@ -9,11 +9,11 @@
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     {
       "source": "/feed.xml",
-      "destination": "https://nweoo-developer.herokuapp.com/feed"
+      "destination": "https://nweoo-developer.onrender.com/feed"
     },
     {
       "source": "/api/:match*",
-      "destination": "https://nweoo-developer.herokuapp.com/:match*"
+      "destination": "https://nweoo-developer.onrender.com/:match*"
     }
   ],
   "redirects": [

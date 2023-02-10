@@ -1,7 +1,7 @@
 const { default: axios } = require("axios")
 
 module.exports = (req, res) => {
-  axios('https://nweoo-developer.herokuapp.com/news/articles?limit=15&title=id,timestamp')
+  axios('https://nweoo-developer.onrender.com/news/articles?limit=15&title=id,timestamp')
     .then(({ data }) => {
       const responses = [
         `<?xml version="1.0" encoding="UTF-8"?>
